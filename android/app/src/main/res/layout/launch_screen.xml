@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="120dp"
+    android:orientation="vertical"
+    android:background="@drawable/splash_screen_gradient">
+
+    <ImageView
+        android:id="@+id/tina"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tina" />
+
+    <ImageView
+        android:layout_width="165dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/tina"
+        android:layout_gravity="center"
+        android:src="@drawable/tina_header" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/welcome"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+</LinearLayout>

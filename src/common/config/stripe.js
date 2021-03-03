@@ -1,0 +1,4 @@
+export default stripeConfig = {
+  publishableKey: 'pk_live_51GyKxRDYa2At0Vkd9MrchaKD7A3dyTNjTyAJQz2YyguHZtmPGqVzsZ2TX7OhzuDXfmfiU1HQuc9JLLtzY1QaZaAv00cP8zOP3x',
+  privateKey: 'pk_test_51GyKxRDYa2At0Vkdl4yoCiI4qxyGAZvgKSzeBVf9DaqbW76fyKIRoUJeI7TMfguAOtTq2BHh5tQ71UjaMTJd4mRc00FamIVSez'
+}

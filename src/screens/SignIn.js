@@ -202,6 +202,7 @@ const styles = {
   }
 }
 
+
 const mapStateToProps = state => ({
   app: state.app || {},
   auth: state.auth || {}

@@ -13,7 +13,6 @@ import PostcodeItem from '../components/PostcodeItem';
 class SearchPostcode extends Component {
   constructor(props){
     super(props)
-
     this.state = {
       postCode: "",
       listData: []

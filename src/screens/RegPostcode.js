@@ -14,7 +14,7 @@ import { updateUserInfo } from '../common/firebase/database';
 import { LoginActions, AppActions } from '../actions';
 
 class RegPostcode extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {

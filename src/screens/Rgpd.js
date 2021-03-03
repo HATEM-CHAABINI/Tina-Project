@@ -25,7 +25,6 @@ const DATA = [
     title: "EN QUOI MES DONNÉES À CARACTÈRE PERSONNEL SONT-ELLES CONCERNÉES?",
     description: "Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
   },
-
   {
     id: 4,
     title: "QUI EST LE CONTRÔLEUR DES DONNÉES ET PUIS-JE LE CONTACTER?",

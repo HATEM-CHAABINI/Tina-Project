@@ -27,8 +27,7 @@ class Settings extends Component {
           // Update user info with new credential, changed the zipcode, lat, lng
           loginActions.loginUpdateInfo({...credential, _user:{..._user, receiveNoti:!receiveNoti}})
       }
-    })
-  }
+    })}
 
   render(){
     const receiveNoti = this.props.auth && this.props.auth.credential && 

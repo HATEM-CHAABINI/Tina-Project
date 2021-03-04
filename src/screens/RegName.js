@@ -46,7 +46,7 @@ class RegName extends Component {
           </View>
 
           <View style={styles.contentContainer}>
-            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} resizeMode={'stretch'} />
+            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} />
 
             <Text style={styles.titleText}>Super</Text>
 
@@ -91,8 +91,8 @@ const styles = {
   },
 
   tinaLogo:{
-    width:100*em,
-    height:85*em,
+    width: WIDTH * 0.3,
+    height:90*em,
     marginBottom: 15*em
   },
 
@@ -104,13 +104,13 @@ const styles = {
   },
 
   titleText:{
-    fontSize: 22*em,
+    fontSize: 25*em,
     color:"#251b4d",
     fontFamily:"Merriweather-Black"
   },
 
   contentText:{
-    fontSize: 13*em,
+    fontSize: 15*em,
     marginTop: 8*em,
     color:"#251b4d",
     fontFamily:"OpenSans-Regular"

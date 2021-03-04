@@ -129,7 +129,7 @@ const styles = {
   },
 
   descText:{
-    fontSize: 11*em, 
+    fontSize: 13*em, 
     marginTop: 11*em, 
     color:"#928da6", 
     fontFamily:"OpenSans-Regular"
@@ -147,7 +147,7 @@ const styles = {
 
   TextInput:{
     width: '98%',
-    height: 35*em, 
+    height: 40*em, 
     fontSize: 15*em, 
     color:"#28c7ee", 
     borderBottomWidth:1*em, 

@@ -202,7 +202,7 @@ class Home extends Component {
             </View>
 
             <View style={styles.tinaLogoWrapper}>
-              <Image source={require('../Assets/tina-start.png')} style={{width: 340*em, height:280*em}} resizeMode={'stretch'} />
+              <Image source={require('../Assets/tina-start.png')} style={{width: WIDTH * 0.8, height:230*em}}  />
               <View style={{position:'absolute', right:32*em, bottom:150*em}}><RectangleImage image={"B3"} size={17*em}/></View>
             </View>
 
@@ -216,7 +216,7 @@ class Home extends Component {
             </View>
           </View>
 
-          <View style={{height:310*em}}>
+          <View style={{height:390*em, }}>
             <ImageBackground source={require('../Assets/home_bg.png')} style={styles.menuBackgroundWrapper} resizeMode={'stretch'}>
               <View style={{flex:1, flexDirection:"column", marginRight:26*em}}>
                 <View style={{flex:1}}>
@@ -334,7 +334,7 @@ const styles = {
   },
 
   titleText:{
-    fontSize:18*em,
+    fontSize:22*em,
     fontFamily:"Merriweather-Black",
     color:"#251b4d"
   },
@@ -357,10 +357,10 @@ const styles = {
   },
 
   tinaLogoWrapper: {
-    marginTop: 20*em,
+    //marginTop: 20*em,
     flexDirection: 'row',
     justifyContent:'center',
-    alignItems:'flex-end'
+    alignItems:'center'
   },
 
   absolute: {

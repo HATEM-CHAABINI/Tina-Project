@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Info from '../components/svgicons/Info';
 import { Actions } from 'react-native-router-flux';
 import InfoModal from '../components/InfoModal';
-import {colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS} from '../common/constants';
+import {colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS, HEIGHT} from '../common/constants';
 import EvaluationModal from '../components/EvaluationModal';
 import { getQuestionByCategoryAndId } from '../common/firebase/database';
 import { getQuestionByCategory } from '../common/firebase/database';
@@ -364,15 +364,15 @@ class Questionnaire extends Component {
 
   renderImage(){
     if (this.props.qType == Q_TYPES.L){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: 250*em, height:250*em}}  />)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}  />)
     }else if (this.props.qType == Q_TYPES.O){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: 230*em, height:250*em}}  />)
+      return (<Image source={require('../Assets/tina-question-3.png')} style={{width: WIDTH * 0.7, height: 260* em}}  />)
     }else if (this.props.qType == Q_TYPES.P){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: 230*em, height:250*em}}/>)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: WIDTH * 0.6, height: 260* em}}/>)
     }else if (this.props.qType == Q_TYPES.I){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: 250*em, height:250*em}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}/>)
     }else if (this.props.qType == Q_TYPES.A){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: 250*em, height:250*em}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}/>)
     }
   }
   render(){
@@ -510,7 +510,7 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     flex:1,
-    marginTop: -120*em,
+    marginTop: -125*em,
     flexDirection: "column"
   },
 

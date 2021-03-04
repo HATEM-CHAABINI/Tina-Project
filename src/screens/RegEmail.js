@@ -60,7 +60,7 @@ class RegEmail extends Component {
               <Text style={styles.descText}>Adresse email</Text>
               <MyTextInput style={styles.TextInput} textContentType={"emailAddress"} autoFocus={true} value={this.state.email} handleChange={(text)=>this.setState({email:text})} />
 
-              <Text style={StyleSheet.flatten([styles.descText, {alignSelf:"center", fontSize: 13*em}])}>
+              <Text style={StyleSheet.flatten([styles.descText, {alignSelf:"center", fontSize: 14*em}])}>
                 Déjà un compte?
                 <Text style={styles.linkText} onPress={this.handleGoLogin}> Se connecter ici</Text>
               </Text>
@@ -101,8 +101,8 @@ const styles = {
   },
 
   tinaLogo:{
-    width: 120*em,
-    height:95*em,
+    width: WIDTH * 0.3,
+    height:90*em,
     marginBottom: 15*em
   },
 
@@ -114,13 +114,13 @@ const styles = {
   },
 
   titleText:{
-    fontSize: 22*em,
+    fontSize: 25*em,
     color:"#251b4d",
     fontFamily:"Merriweather-Black"
   },
 
   contentText:{
-    fontSize: 13*em,
+    fontSize: 15*em,
     marginTop: 8*em,
     color:"#251b4d",
     fontFamily:"OpenSans-Regular"

@@ -366,7 +366,7 @@ class Questionnaire extends Component {
     if (this.props.qType == Q_TYPES.L){
       return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}  />)
     }else if (this.props.qType == Q_TYPES.O){
-      return (<Image source={require('../Assets/tina-question-3.png')} style={{width: WIDTH * 0.7, height: 260* em}}  />)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: WIDTH * 0.6, height: 260* em}}  />)
     }else if (this.props.qType == Q_TYPES.P){
       return (<Image source={require('../Assets/tina-question.png')} style={{width: WIDTH * 0.6, height: 260* em}}/>)
     }else if (this.props.qType == Q_TYPES.I){

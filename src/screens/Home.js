@@ -174,7 +174,7 @@ class Home extends Component {
     getQuestionByCategoryAndId(type, "root").then(res => {
       if (res == null){
         //_this.props.appActions.setGlobalNotification({"message":"No Questions ready yet!"})
-        showRootToast('No Questions ready yet!')
+        showRootToast('Aucune question prête pour le moment!')
       }else{
         _this.props.questionActions.clearQuestions();
         Actions.questionnaire({qType:type, qinfo:res})
@@ -190,7 +190,7 @@ class Home extends Component {
           <View style={styles.helloContainer}>
               <ImageBackground source={require('../Assets/home_hello_bg.png')} style={styles.helloLogo} resizeMode={'stretch'}>
                 <Text style={styles.helloText}>
-                  {isAuthenticated && credential? ('Hello ' + credential._user.firstname + '!'):'Hello!'}
+                  {isAuthenticated && credential? ('Hello \n' + credential._user.firstname + '!'):'Hello!'}
                 </Text>
               </ImageBackground>
           </View>
@@ -216,7 +216,7 @@ class Home extends Component {
             </View>
           </View>
 
-          <View style={{height:390*em, }}>
+          <View style={{height:390*em}}>
             <ImageBackground source={require('../Assets/home_bg.png')} style={styles.menuBackgroundWrapper} resizeMode={'stretch'}>
               <View style={{flex:1, flexDirection:"column", marginRight:26*em}}>
                 <View style={{flex:1}}>
@@ -300,7 +300,7 @@ const styles = {
 
   helloText: {
     color:"#fff",
-    fontSize:20*em,
+    fontSize:18*em,
     fontFamily:"Merriweather-BlackItalic",
     paddingRight:10*em,
     paddingBottom:10*em,

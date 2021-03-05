@@ -28,11 +28,11 @@ class RegEmail extends Component {
     const {email} = this.state;
 
     if (!validateEmail(email)){
-      showRootToast('Please enter valid email address')
+      showRootToast("S'il vous plaît, mettez une adresse email valide.")
     }else{
       checkUserEmail(email).then(res => {
         if (res){
-          showRootToast('The email address already exists')
+          showRootToast("L'adresse e-mail existe déjà")
         }else{
           Actions.regname({email});
         }
@@ -52,9 +52,9 @@ class RegEmail extends Component {
           <View style={styles.contentContainer}>
             <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo}  />
 
-            <Text style={styles.titleText}>Bievenue!</Text>
+            <Text style={styles.titleText}>Bienvenue !</Text>
 
-            <Text style={styles.contentText}>Quel est votre email?</Text>
+            <Text style={styles.contentText}>Quel est votre email ?</Text>
 
             <View style={styles.contentWrapper}>
               <Text style={styles.descText}>Adresse email</Text>

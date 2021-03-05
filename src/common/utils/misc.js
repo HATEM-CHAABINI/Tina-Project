@@ -13,7 +13,7 @@ export const stripeDoubleLineBreak = str => str.replace(/\n{2,}/g, '\n');
 
 export const showRootToast = (text, position = 'bottom') => {
   const toastStyle = {
-    height: 35*em,
+    height: 60*em,
     borderRadius: 15*em,
     paddingHorizontal: 10*em,
     backgroundColor: 'rgba(34, 34, 34, 0.7)',

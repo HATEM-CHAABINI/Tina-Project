@@ -19,7 +19,7 @@ class RegName extends Component {
     const {username} = this.state;
 
     if (username == ""){
-      showRootToast('Please enter your name');
+      showRootToast("S'il vous plaît entrez votre nom");
     }else{
       const splits = username.split(" ");
       let firstname = "", lastname = " ";

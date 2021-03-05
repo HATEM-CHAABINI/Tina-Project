@@ -36,7 +36,7 @@ const number = value =>
 const minValue = min => value =>
   value && value < min ? `Must be at least ${min}` : undefined;
 const email = value =>
-  value && !validateEmail(value) ? 'Please enter a valid email address' : undefined;
+  value && !validateEmail(value) ? "S'il vous plaît, mettez une adresse email valide." : undefined;
 const positiveInteger = value =>
   value && !isNaN(Number(value)) && Number(value) <= 0
     ? 'Must be a positive number'

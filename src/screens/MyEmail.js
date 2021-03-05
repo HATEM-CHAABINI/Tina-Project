@@ -36,12 +36,12 @@ class MyEmail extends Component {
     const password = _user.password;
     
     if (!validateEmail(email)){
-      showRootToast('Please enter valid email address')
+      showRootToast("S'il vous plaît, mettez une adresse email valide.")
     }else{
       // Update the email on firebase auth.
       checkUserEmail(email).then(res => {
         if (res){
-          showRootToast('The email address already exists')
+          showRootToast("L'adresse e-mail existe déjà")
         }else{
           //This is from firebase doc, because this kind of sensitive data (email change) needs the credentials should be recent one.
           //Othewise error occurs

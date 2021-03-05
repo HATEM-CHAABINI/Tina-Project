@@ -40,8 +40,8 @@ class MenuModal extends Component {
 
   handleErrorAlert = () => {
     Alert.alert(
-      'Failed to pay.',
-      'Please input a valid card.',
+      'Annulé.',
+      'Votre paiement a été annulé.',
       [{
         text: 'Ok',
         onPress: () => console.log('==== ok')
@@ -74,25 +74,66 @@ class MenuModal extends Component {
       this.handleAlert();
       return;
     }
-    this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
-      try {
-        const token = await stripe.paymentRequestWithCardForm({
-          // Only iOS support this options
-          smsAutofillDisabled: true,
-        });
-        console.log('===== token: ', token);
-        this.setState({ loadingCard: false, token, showConfirmPayModal: true })
-      } catch (error) {
-        console.log('===== token: error: ', error);
-        this.setState(
-          { loadingCard: false, showConfirmPayModal: false },
-           () => this.handleErrorAlert()
-        );
-      }
-    })
+
+    const items = [{
+  label: 'TOTAL',
+  amount: '19.00',
+
+}]
+
+const shippingMethods = [{
+  id: 'fedex',
+  label: 'FedEX',
+  detail: 'Test @ 10',
+  amount: '10.00',
+}]
+
+const options = {
+  shippingContact: "full",
+  currencyCode: 'EUR',
+}
+this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
+    try {
+const token = await stripe.paymentRequestWithNativePay( options,items)
+
+console.log('===== token: ', token);
+    this.setState({ loadingCard: false, token, showConfirmPayModal: true })
+    stripe.completeNativePayRequest()
+    this.doPayment();
+
+  } catch (error) {
+      console.log('===== token: error: ', error);
+      this.setState(
+        { loadingCard: false, showConfirmPayModal: false },
+         () => this.handleErrorAlert()
+      );
+    }
+  })
+
+
+// Or cancel if an error occurred
+// stripe.cancelApplePayRequest()
+
+    // this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
+    //   try {
+    //     const token = await stripe.paymentRequestWithCardForm({
+    //       // Only iOS support this options
+    //       smsAutofillDisabled: true,
+    //     });
+    //     console.log('===== token: ', token);
+    //     this.setState({ loadingCard: false, token, showConfirmPayModal: true })
+    //   } catch (error) {
+    //     console.log('===== token: error: ', error);
+    //     this.setState(
+    //       { loadingCard: false, showConfirmPayModal: false },
+    //        () => this.handleErrorAlert()
+    //     );
+    //   }
+    // })
   }
 
   doPayment = async () => {
+    console.log("zeeeeeeeeeeeeeeeeee");
     const that = this;
     const { stripeMode, token } = this.state;
     const { auth, loginActions } = this.props;
@@ -161,16 +202,7 @@ class MenuModal extends Component {
 
   renderConfirmPaymentModal = () => {
     const { token, showConfirmPayModal } = this.state;
-    console.log('===== showConfirmPayModal: ', showConfirmPayModal);
-    return (
-      <ConfirmPaymentModal
-        isModalVisible={showConfirmPayModal}
-        token={token}
-        onPressPayer={this.doPayment}
-        onPressCancel={() => this.setState({ showConfirmPayModal: false })}
-        onPressScanCard={this.handlePayer}
-      />
-    );
+    console.log('===== showConfirmPayModal: ', token);
   }
 
   render() {

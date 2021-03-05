@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions, Platform } from 'react-native'
 import Modal from 'react-native-modal'
 import Button from './Button'
-
+import stripe from 'tipsi-stripe'
+import { initStripe } from '../common/stripe/stripe';
 const CREDIT_CARD_IMAGE = require('../Assets/menu-payment.png')
 const AMERICAN_EXPRESS_CARD_IMAGE = require('../Assets/american-express.png')
 const DISCOVER_CARD_IMAGE = require('../Assets/discover.png')
@@ -17,6 +18,7 @@ export default class ConfirmPaymentModal extends Component {
 
   renderTitle = (onPressCancel) => {
     return (
+    
       <View style={styles.titleContainer}>
         <View style={styles.titleLeft}>
           <Text style={styles.titleLeftText}>
@@ -139,6 +141,7 @@ export default class ConfirmPaymentModal extends Component {
   };
 
   renderButton = (onPressPayer) => {
+    stripe.completeApplePayRequest();
     return (
       <View style={styles.buttonContainer}>
         <Button

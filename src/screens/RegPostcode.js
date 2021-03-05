@@ -80,7 +80,7 @@ class RegPostcode extends Component {
     const {zipcode, lat, lng} = this.state;
 
     if (zipcode == ""){
-      showRootToast('Please enter your zipcode');
+      showRootToast("S'il vous plait, entrer votre code postal");
     }else{
       if (!isAuthenticated){
         Actions.regpassword({email, firstname, lastname, zipcode, lat, lng})

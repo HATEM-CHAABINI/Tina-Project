@@ -34,7 +34,7 @@ class MyName extends Component {
     const {_user} = credential;
 
     if (firstname == ""){
-      showRootToast('Please enter your firstname')
+      showRootToast("Entrez votre prénom s'il vous plait")
     }else{
       updateUserInfo({firstname, lastname}).then(res => {
         if (res){

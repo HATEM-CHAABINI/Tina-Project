@@ -17,6 +17,8 @@ export async function initStripe() {
         console.log('====== stripe publishableKey: ', publishableKey);
         stripe.setOptions({
           publishableKey: publishableKey || stripeConfig.publishableKey,
+          merchantId: 'merchant.laplus.tina'
+
         });
         return mode;
       }

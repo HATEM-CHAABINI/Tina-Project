@@ -15,17 +15,17 @@ export async function loginInWithEmailPassword({email, password}) {
     var errorType = e.code;
     switch (e.code) {
       case 'auth/invalid-email':
-        errorMessage = 'Please enter a valid email address.';
+        errorMessage = "S'il vous plaît, mettez une adresse email valide.";
         break;
       case 'auth/user-disabled':
-        errorMessage = 'This account has been disabled.';
+        errorMessage = 'Ce compte a été désactivé.';
         break;
       case 'auth/user-not-found':
       case 'auth/wrong-password':
-        errorMessage = 'No user found or wrong password.';
+        errorMessage = "Utilisateur inexistent ou mot de passe incorrect.";
         break;
       case 'auth/internal-error':
-        errorMessage = 'An internal error has occurred, please try again.'
+        errorMessage = "Une erreur interne s'est produite, veuillez réessayer."
         break;
       default:
         break;
@@ -42,13 +42,13 @@ export async function attemptSignInWithPhone(phoneNumber) {
     console.log('===== confirmation: ', confirmation);
   } catch (e) {
     console.log('===== error: ', e);
-    error = 'Failed to signin with phone number.';
+    error = "Échec de la connexion avec le numéro de téléphone.";
     switch (e.code) {
       case 'auth/invalid-phone-number':
-          error = 'Please enter a valid phone number.';
+          error = "Veuillez entrer un numéro de téléphone valide.";
         break;
       case 'auth/too-many-requests':
-          error = 'We have blocked all requests from this device due to unusual activity. Try again later.';
+          error = "Nous avons bloqué toutes les demandes de cet appareil en raison d'une activité inhabituelle. Réessayez plus tard.";
         break;
       default:
         console.error(e);
@@ -67,13 +67,13 @@ export async function resetPasswordWithEmail(email) {
     return {token: result, error: null, errorMessage: null};
   } catch (error) {
     console.log('==== resetPasswordWithEmail: ', resetPasswordWithEmail);
-    var errorMessage = 'Failed to reste password.';
+    var errorMessage = 'Échec de la réinitialisation du mot de passe.';
     switch(error.code) {
       case 'auth/invalid-email':
-        errorMessage = 'You inputed invalid email. Please input an email with correct format.';
+        errorMessage = 'Vous avez entré un e-mail non valide. Veuillez saisir un e-mail au format correct.';
         break;
       case 'auth/user-not-found':
-        errorMessage = 'Can not find user.';
+        errorMessage = "Impossible de trouver l'utilisateur.";
         break;
 
     }

@@ -7,7 +7,7 @@ import MyTextInput from '../components/MyTextInput';
 import Position from '../components/svgicons/Position';
 import CheckBox from '@react-native-community/checkbox';
 import TermsNormal from '../components/svgicons/TermsNormal';
-import { validateEmail, showRootToast } from '../common/utils';
+import { validateEmail, showRootToast,showBiggerRootToast } from '../common/utils';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppActions, LoginActions } from '../actions'
@@ -28,12 +28,12 @@ class SignIn extends Component {
     const {isFetching} = this.props.auth;
 
     if (!validateEmail(email)){
-      showRootToast('Please enter valid email address')
+      showRootToast("Veuillez mettez une adresse email valide.")
       return;
     }
 
     if (password == ""){
-      showRootToast('Please enter your password');
+      showRootToast("S'il vous plait entrez votre mot de passe");
       return;
     }
 
@@ -41,7 +41,7 @@ class SignIn extends Component {
        if (isFetching){
          loginActions.loginFailed("DB: Timeout")
          appActions.setGlobalNotification({
-          message: "Check the device network connection",
+          message: "Vérifiez la connexion internet de l'appareil",
         })
        }
     }, 5000);
@@ -67,7 +67,7 @@ class SignIn extends Component {
 
     if (app.globalNotification && app.globalNotification.message) {
       const { message, type, duration } = app.globalNotification;
-      showRootToast(message);
+      showBiggerRootToast(message);
       appActions.setGlobalNotification({"message":""});
     }
 

@@ -70,7 +70,9 @@ class MenuModal extends Component {
     if (!userInfo) return;
     // this.setState({ loadingCard: false, showConfirmPayModal: true })
     const stripeMode = await initStripe();
+    
     if (!stripeMode) {
+      console.log('===== initStripe: ', stripeMode)
       this.handleAlert();
       return;
     }
@@ -88,10 +90,28 @@ const shippingMethods = [{
   amount: '10.00',
 }]
 
-const options = {
-  shippingContact: "full",
+const options = Platform.select({
+  ios: {
   currencyCode: 'EUR',
-}
+  shippingType: 'full',
+},
+android: { 
+  total_price: '19.00',
+  currency_code: 'EUR',
+  line_items: [],
+},
+  /*shippingContact: "full",
+  total_price : '19.00',
+  currency_code: 'EUR',
+  line_items:[{
+    currency_code: 'EUR',
+    description: 'ads',
+    total_price: '19.00',
+    unit_price: '19.00',
+    quantity: '1',
+  }]*/
+})
+
 this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
     try {
 const token = await stripe.paymentRequestWithNativePay( options,items)

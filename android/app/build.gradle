@@ -221,7 +221,12 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //tipsi
+    implementation "com.google.android.gms:play-services-wallet:16.0.0"
 
+
+    compile project(':tipsi-stripe')
+    
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

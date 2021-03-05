@@ -156,7 +156,7 @@ const shippingMethods = [{
 const options = Platform.select({
   ios: {
   currencyCode: 'EUR',
-  shippingType: 'full',
+  shippingContact: "full",
 },
 android: { 
   total_price: '19.00',

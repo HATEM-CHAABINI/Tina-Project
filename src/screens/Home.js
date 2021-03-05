@@ -216,7 +216,7 @@ class Home extends Component {
             </View>
           </View>
 
-          <View style={{height:390*em}}>
+          <View style={{height:390*em, flex: .9 }}>
             <ImageBackground source={require('../Assets/home_bg.png')} style={styles.menuBackgroundWrapper} resizeMode={'stretch'}>
               <View style={{flex:1, flexDirection:"column", marginRight:26*em}}>
                 <View style={{flex:1}}>

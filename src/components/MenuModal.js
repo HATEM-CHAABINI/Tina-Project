@@ -38,6 +38,33 @@ class MenuModal extends Component {
     doingPayment: false
   }
 
+  handleButton = () =>{
+
+    Platform.select({
+      ios:{},
+      android:{}
+    });
+
+    Alert.alert(
+      'Mode de Paiement.',
+      'Choisissez votre mode de paiement.',
+      [{
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+      },{
+        text: Platform.OS === 'ios' ?'Apple Pay':'Google Pay',
+        onPress: () => this.handlePayer()
+      },
+      {
+        text: 'Card Pay',
+        onPress: () => this.handlePayerCard()
+      },
+       
+    ],
+      { cancelable: false },
+    );
+  }
   handleErrorAlert = () => {
     Alert.alert(
       'Annulé.',
@@ -62,6 +89,42 @@ class MenuModal extends Component {
     );
   }
 
+  handlePayerCard = async () =>{
+
+    console.log('===== handlePayer');
+    const { auth } = this.props;
+    const userInfo = (auth && auth.credential && auth.credential._user) || null;
+    console.log('===== userInfo: ', userInfo)
+    if (!userInfo) return;
+    // this.setState({ loadingCard: false, showConfirmPayModal: true })
+    const stripeMode = await initStripe();
+    
+    if (!stripeMode) {
+      console.log('===== initStripe: ', stripeMode)
+      this.handleAlert();
+      return;
+    }
+    
+    // Or cancel if an error occurred
+// stripe.cancelApplePayRequest()
+
+     this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
+       try {
+         const token = await stripe.paymentRequestWithCardForm({
+           // Only iOS support this options
+           smsAutofillDisabled: true,
+         });
+         console.log('===== token: ', token);
+         this.setState({ loadingCard: false, token, showConfirmPayModal: true })
+       } catch (error) {
+         console.log('===== token: error: ', error);
+         this.setState(
+           { loadingCard: false, showConfirmPayModal: false },
+            () => this.handleErrorAlert()
+         );
+       }
+     })
+  }
   handlePayer = async () => {
     console.log('===== handlePayer');
     const { auth } = this.props;
@@ -222,7 +285,20 @@ console.log('===== token: ', token);
 
   renderConfirmPaymentModal = () => {
     const { token, showConfirmPayModal } = this.state;
+    console.log('===== showConfirmPayModal: ', showConfirmPayModal);
+
     console.log('===== showConfirmPayModal: ', token);
+
+    return (
+      <ConfirmPaymentModal
+        isModalVisible={showConfirmPayModal}
+        token={token}
+        onPressPayer={this.doPayment}
+        onPressCancel={() => this.setState({ showConfirmPayModal: false })}
+        onPressScanCard={this.handlePayer}
+      />
+    );
+  
   }
 
   render() {
@@ -339,7 +415,7 @@ console.log('===== token: ', token);
               {(isLoggedIn && !isPaidUser) && (
                 <View style={styles.menuWrapper}>
                   <Text style={styles.menuText}>Payer</Text>
-                  <TouchableOpacity style={styles.menuBtn} onPress={this.handlePayer} elevation={2}>
+                  <TouchableOpacity style={styles.menuBtn} onPress={this.handleButton} elevation={2}>
                     {/* <LeftArrow width={15 * em} height={15 * em} color={"#928ea7"} /> */}
                     <Image source={require('../Assets/menu-payment.png')} style={{ width: 22, height: 15 }} />
                   </TouchableOpacity>

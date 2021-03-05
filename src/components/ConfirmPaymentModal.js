@@ -100,17 +100,20 @@ export default class ConfirmPaymentModal extends Component {
     );
   };
 
+  //from renderContactInfo
+  //<View style={styles.itemCenter}>
+    //      <Text style={styles.itemCenterText}>
+      //      bruno@tina.fr
+        //  </Text>
+        //</View>
+
   renderContactInfo = () => {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemLeft}>
           <Text style={styles.itemLeftText}>CONTACT</Text>
         </View>
-        <View style={styles.itemCenter}>
-          <Text style={styles.itemCenterText}>
-            bruno@tina.fr
-          </Text>
-        </View>
+      
         <TouchableOpacity style={styles.itemRight} onPress={this.onClearCard}>
           <Image
             source={ARROW_RIGHT_IMAGE}
@@ -141,7 +144,7 @@ export default class ConfirmPaymentModal extends Component {
   };
 
   renderButton = (onPressPayer) => {
-    stripe.completeApplePayRequest();
+    //stripe.completeApplePayRequest();
     return (
       <View style={styles.buttonContainer}>
         <Button

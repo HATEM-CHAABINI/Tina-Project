@@ -258,7 +258,7 @@ export async function createFAQDummyJSON(){
   let faqs = {
     "-MBL0z2CURWQKV58VvCw":{
       "displayOrder":1,
-      "title":"Question 1",
+      "title":"Qu",
       "description":"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam noumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eoset accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et doloreundefined",
       "answers":{
         "-MBPd3aLhT3Z0SxJ7NA_":{

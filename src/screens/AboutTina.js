@@ -23,10 +23,12 @@ class AboutTina extends Component {
             <View style={styles.tinaWrapper}>
               <Tina width={60*em} height={22*em} />
               <Image source={require('../Assets/tina-reussi.png')} style={styles.tinaLogo} />
-              <Text style={styles.contentTitle}>À propos</Text>
+              <Text style={styles.contentTitle}>Tina, votre assistante digitale !</Text>
               <Text style={styles.contentDesc}>
-                  Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                </Text>
+              Vous êtes en difficulté avec votre matériel informatique ?
+Vous êtes à la recherche d'une solution à un problème que vous pensez être compliqué à résoudre ?
+Laissez-vous guider par Tina. A travers quelques questions, Tina va vous apporter la solution à travers les centaines de milliers de solutions qui existent, elle trouvera celle qui convient exactement à votre problème.
+Les solutions qui vous seront proposées ont pour la plupart été validées par les utilisateurs qui se sont trouvés dans la même position que vous. Alors pourquoi pas vous ? Prêts à tenter l'aventure ?                </Text>
             </View>
 
             <Image source={require('../Assets/announcer_bottom_round.png')} style={{width:WIDTH, height:WIDTH*0.245}} resizeMode="stretch"/>

@@ -14,7 +14,8 @@ class FAQDetail extends Component {
 
   convertPropToData = () => {
     const {faq} = this.props;
-    const data = [{id:faq.id, title:faq.title, description:faq.description}];
+    console.log(faq.type);
+    const data = [{id:faq.id, title:faq.title, type:faq.type, description:faq.description}];
     const answerKeys = Object.keys(faq.answers).reverse();
     answerKeys.map(item => {
       data.push({...faq.answers[item], id:item})
@@ -30,7 +31,7 @@ class FAQDetail extends Component {
   render(){
     const DATA = this.convertPropToData();
     let content = DATA.map((item, index) => 
-      <FAQDetailItem key={item.id.toString()} id={item.id} index={index} title={item.title} description={item.description} />
+      <FAQDetailItem key={item.id.toString()} id={item.id} index={index} title={item.title} type={item.type} description={item.description} />
     );
     return (
         <View style={styles.mainContainer}>

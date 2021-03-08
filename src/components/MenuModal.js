@@ -406,7 +406,7 @@ console.log('===== token: ', token);
                 </View>) : null}
 
               <View style={styles.menuWrapper}>
-                <Text style={styles.menuText}>Devenir annonceur</Text>
+                <Text style={styles.menuText}>Nous contacter</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressBecomeAdvertiser} elevation={2}>
                   <Announceur width={25 * em} height={25 * em} />
                 </TouchableOpacity>

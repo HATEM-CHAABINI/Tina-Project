@@ -63,7 +63,7 @@ class FAQDetail extends Component {
   constructor(props){
     super(props)
     this.state = {
-      itemValue:"Logiciel",
+      itemValue:"Problème technique",
       value: null,
       text:""
         }
@@ -91,11 +91,11 @@ class FAQDetail extends Component {
     const PROP = [
       {
         key:  'Publicité',
-        text: 'Publicité                        ',
+        text: 'Publicité',
       },
       {
         key:  'Plainte',
-        text: 'Plainte                            ',
+        text: 'Plainte',
       },
       {
         key:  'Problème technique',
@@ -103,11 +103,11 @@ class FAQDetail extends Component {
       },
       {
         key:  'Partenariat',
-        text: 'Partenariat                   ',
+        text: 'Partenariat',
       },
       {
         key:  'Autres',
-        text: 'Autres                             ',
+        text: 'Autres',
       },
     ];
     
@@ -135,11 +135,11 @@ class FAQDetail extends Component {
   onValueChange={(itemValue, itemIndex) =>
     this.setState({itemValue: itemValue})
   }>
-  <Picker.Item label="Ordinateur" value="Ordinateur" />
-  <Picker.Item label="Périphérique" value="Périphérique" />
-  <Picker.Item label="Logiciel" value="Logiciel" />
-  <Picker.Item label="Internet/Réseaux" value="Internet/Réseaux" />
-  <Picker.Item label="Astuce" value="Astuce" />
+  <Picker.Item label="Publicité" value="Publicité" />
+  <Picker.Item label="Plainte" value="Plainte" />
+  <Picker.Item label="Problème technique" value="Problème technique" />
+  <Picker.Item label="Partenariat" value="Partenariat" />
+  <Picker.Item label="Autres" value="Autres" />
 
 </Picker>
 
@@ -148,8 +148,8 @@ class FAQDetail extends Component {
 {PROP.map(res => {
                 return (
                     <View key={res.key} style={styles.container}>
-                        <Text style={styles.radioText}>{res.text}</Text>
-                        <TouchableOpacity
+                        <Text style={styles.radioText }>{res.text}</Text>
+                        <TouchableOpacity style={{ }}
                             style={styles.radioCircle}
                             onPress={() => {
                                 this.setState({

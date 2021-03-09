@@ -377,6 +377,8 @@ PODS:
     - React-Core
   - RNCCheckbox (0.4.2):
     - React
+  - RNCPicker (1.9.11):
+    - React-Core
   - RNFBApp (7.3.1):
     - Firebase/CoreOnly (~> 6.25.0)
     - React
@@ -463,6 +465,7 @@ DEPENDENCIES:
   - RNAwesomeCardIO (from `../node_modules/react-native-awesome-card-io`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
@@ -575,6 +578,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCCheckbox:
     :path: "../node_modules/@react-native-community/checkbox"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -658,6 +663,7 @@ SPEC CHECKSUMS:
   RNAwesomeCardIO: 14d78f3e76abaf503068c9f4513ff6c4a516d958
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCCheckbox: 357578d3b42652c78ee9a1bb9bcfc3195af6e161
+  RNCPicker: 6780c753e9e674065db90d9c965920516402579d
   RNFBApp: cd70a6c061bc485994e28c7d58ab760538850f0e
   RNFBAuth: d3a58d07078936642c6610edf2a78c9313b569f2
   RNFBDatabase: 456d05731fd0f2a79d68d45ee7db8574f9ca9e46

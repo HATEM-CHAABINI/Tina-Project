@@ -28,6 +28,7 @@ import moment from 'moment';
 import { LoginActions } from '../actions';
 
 var {height, width} = Dimensions.get('window');
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 class MenuModal extends Component {
   state = {
@@ -478,8 +479,8 @@ const styles = {
     borderRadius: 15*em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    width:40*em,
-    height:40*em,
+    width:scale(35),
+    height:verticalScale(35),
     justifyContent: 'center',
     marginLeft: 15*em
   },

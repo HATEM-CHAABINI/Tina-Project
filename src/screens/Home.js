@@ -22,6 +22,8 @@ import {requestLocationPermission} from '../common/utils';
 import GeoLocation from '@react-native-community/geolocation';
 import admobConfig from '../common/config/admob';
 import { getAdmob, getAllAdvertisements } from '../common/firebase/database';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+
 
 const admobConf = Platform.OS === 'ios' ? admobConfig.ios : admobConfig.android;
 
@@ -187,6 +189,7 @@ class Home extends Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.mainContainer}>
+          
           <View style={styles.helloContainer}>
               <ImageBackground source={require('../Assets/home_hello_bg.png')} style={styles.helloLogo} resizeMode={'stretch'}>
                 <Text style={styles.helloText}>
@@ -194,29 +197,32 @@ class Home extends Component {
                 </Text>
               </ImageBackground>
           </View>
-          <View style={{flex:1}}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                <RectangleImage image={"B2"} size={25*em} mTop={47*em} mRight={120}/>
-              </View>
+         
+          <View style={{flex:1 , flexDirection: 'column'}}>
+            
+            <View style={{flex: 3, flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <RectangleImage image={"B2"} size={25*em} mTop={47*em} mRight={120}/>
             </View>
-
+            
+            <View style={{position:'absolute', right:32*em, bottom:150*em}}><RectangleImage image={"B3"} size={17*em}/></View>
+            
             <View style={styles.tinaLogoWrapper}>
-              <Image source={require('../Assets/tina-start.png')} style={{width: WIDTH * 0.8, height:230*em}}  />
-              <View style={{position:'absolute', right:32*em, bottom:150*em}}><RectangleImage image={"B3"} size={17*em}/></View>
-            </View>
-
-            <View style={{flexDirection: "row", justifyContent:"center", alignItems:"flex-start", marginTop: 10*em}} >
-              <View style={{position:'absolute', left:0}}><RectangleImage image={"B1"} size={33*em} mLeft={-8*em} mTop={-8*em}/></View>
+              <Image source={require('../Assets/tina-start.png') } style={{width: scale(309.8) , height:verticalScale(237.33), resizeMode:'center'}}  />
               <Text style={styles.titleText}>Votre question porte sur :</Text>
+            </View>
+          
+            <View style={{flexDirection: "row", justifyContent:"center", alignItems:"flex-start"}} >
+              <View style={{position:'absolute', left:0}}><RectangleImage image={"B1"} size={33*em} mLeft={-8*em} mTop={-8*em}/></View>
+              
             </View>
 
             <View style={{position:"absolute", right: 21*em, top: 21*em}}>
               <MenuBtn image={"burger"} onPress={()=>{this.setState({'menuVisible': true})}}/>
             </View>
+            
           </View>
 
-          <View style={{height:390*em, flex: .9 }}>
+          <View style={{flex: 1 }}>
             <ImageBackground source={require('../Assets/home_bg.png')} style={styles.menuBackgroundWrapper} resizeMode={'stretch'}>
               <View style={{flex:1, flexDirection:"column", marginRight:26*em}}>
                 <View style={{flex:1}}>
@@ -260,7 +266,7 @@ class Home extends Component {
                 <View style={{flex:1}}>
                   <TouchableOpacity style={styles.mainBtn} onPress={this.moveToQuestionnair.bind(this, Q_TYPES.I)}>
                       <View style={StyleSheet.flatten([styles.circleOverlay, {backgroundColor:"#edf3ff"}])}>
-                        <Internet width={16*em} height={16*em} />
+                        <Internet width={21*em} height={21*em} />
                       </View>
                       <Text style={styles.menuText}>Internet/Réseaux</Text>
                     </TouchableOpacity>
@@ -270,6 +276,7 @@ class Home extends Component {
               </View>
             </ImageBackground>
           </View>
+       
         </View>
 
         {this.renderMenu()}
@@ -326,8 +333,8 @@ const styles = {
   },
 
   circleOverlay: {
-    width: 40*em,
-    height: 40*em,
+    width: scale(40),
+    height: verticalScale(40),
     borderRadius: 20*em,
     alignItems: 'center',
     justifyContent: 'center'
@@ -358,7 +365,8 @@ const styles = {
 
   tinaLogoWrapper: {
     //marginTop: 20*em,
-    flexDirection: 'row',
+    //flex: 1,
+    flexDirection: 'column',
     justifyContent:'center',
     alignItems:'center'
   },

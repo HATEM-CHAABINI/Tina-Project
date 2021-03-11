@@ -26,6 +26,7 @@ import { goToWebBrowser } from '../common/utils/misc';
 import { AdMobBanner } from 'react-native-admob';
 import ReactInterval from 'react-interval';
 import moment from 'moment';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 let advIndex = 0;
 class Cat extends Component {
@@ -364,15 +365,15 @@ class Questionnaire extends Component {
 
   renderImage(){
     if (this.props.qType == Q_TYPES.L){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}  />)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}  />)
     }else if (this.props.qType == Q_TYPES.O){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: WIDTH * 0.6, height: 260* em}}  />)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'center'}}  />)
     }else if (this.props.qType == Q_TYPES.P){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: WIDTH * 0.6, height: 260* em}}/>)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'center'}}/>)
     }else if (this.props.qType == Q_TYPES.I){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}/>)
     }else if (this.props.qType == Q_TYPES.A){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: WIDTH * 0.62, height: 260* em}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}/>)
     }
   }
   render(){

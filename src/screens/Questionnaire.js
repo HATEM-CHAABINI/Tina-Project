@@ -365,15 +365,15 @@ class Questionnaire extends Component {
 
   renderImage(){
     if (this.props.qType == Q_TYPES.L){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}  />)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}  />)
     }else if (this.props.qType == Q_TYPES.O){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'center'}}  />)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'contain'}}  />)
     }else if (this.props.qType == Q_TYPES.P){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'center'}}/>)
+      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'contain'}}/>)
     }else if (this.props.qType == Q_TYPES.I){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}/>)
     }else if (this.props.qType == Q_TYPES.A){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'center'}}/>)
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}/>)
     }
   }
   render(){
@@ -422,7 +422,7 @@ class Questionnaire extends Component {
                       </View>
                     </View>
 
-                    <View style={styles.absolute, {flex:1, alignItems:"center", flexDirection:"column-reverse", padding: 40*em}}>
+                    <View style={styles.absolute, {flex:1, alignItems:"center", flexDirection:"column-reverse", padding:37*em}}>
                     {this.renderImage()}
                     </View>
                   </View>

@@ -23,6 +23,7 @@ import GeoLocation from '@react-native-community/geolocation';
 import admobConfig from '../common/config/admob';
 import { getAdmob, getAllAdvertisements } from '../common/firebase/database';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
 
 
 const admobConf = Platform.OS === 'ios' ? admobConfig.ios : admobConfig.android;
@@ -186,6 +187,8 @@ class Home extends Component {
 
   render() {
     const {isAuthenticated, credential} = this.props.auth;
+    console.log("wwwwwwwwwww "+Dimensions.get('window').width);
+    console.log("hhhhhhhhhhh "+Dimensions.get('window').height);
     return (
       <View style={{flex: 1}}>
         <View style={styles.mainContainer}>
@@ -207,7 +210,7 @@ class Home extends Component {
             <View style={{position:'absolute', right:32*em, bottom:150*em}}><RectangleImage image={"B3"} size={17*em}/></View>
             
             <View style={styles.tinaLogoWrapper}>
-              <Image source={require('../Assets/tina-start.png') } style={{width: scale(309.8) , height:verticalScale(237.33), resizeMode:'center'}}  />
+              <Image source={require('../Assets/tina-start.png') } style={{width: scale(309.8) , height:verticalScale(237.33), resizeMode:'contain'}}  />
               <Text style={styles.titleText}>Votre question porte sur :</Text>
             </View>
           

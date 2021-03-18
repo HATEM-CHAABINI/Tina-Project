@@ -9,47 +9,12 @@ import Binoculars from '../components/svgicons/Binoculars';
 import Rocket from '../components/svgicons/Rocket'
 import GameBoy from '../components/svgicons/GameBoy'
 import Ticket from '../components/svgicons/Ticket'
-import {Picker} from '@react-native-picker/picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { showRootToast,showBiggerRootToast } from '../common/utils';
+import Icon from 'react-native-vector-icons/Feather';
+import CheckSelected from '../components/svgicons/CheckSelected';
+import qs from 'qs';
 
-const DATA = [
-  {
-    id: 1,
-    title: "Devenir annonceur",
-    description: "Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-  },
-
-  {
-    id: 2,
-    title: "Devenir annonceur",
-    description: "Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-  },
-
-  {
-    id: 3,
-    title: "Devenir annonceur",
-    description: "Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-  },
-
-  {
-    id: 4,
-    title: "Devenir annonceur",
-    description: "Lorem ipsum dolor sit amet, conseteur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et eolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-  }
-]
-
-const DevenirIcon = ({color, icon}) => (
-  <View style={[styles.iconCircle, {backgroundColor:color}]}>
-    {icon}
-  </View>
-)
-
-const THUMB = [
-  <DevenirIcon color={colors.ordinateur[3]} icon={<Binoculars width={60*em} height={60*em} />} />,
-  <DevenirIcon color={colors.logiciel[3]} icon={<Rocket width={40*em} height={40*em} />} />,
-  <DevenirIcon color={colors.astuce[3]} icon={<GameBoy width={40*em} height={40*em} />} />,
-  <DevenirIcon color={colors.periferique[3]} icon={<Ticket width={40*em} height={40*em} />} />
-]
 
 const ContentItem = ({id, title, description}) => (
   <View style={styles.contentItem}>
@@ -63,9 +28,12 @@ class FAQDetail extends Component {
   constructor(props){
     super(props)
     this.state = {
-      itemValue:"Problème technique",
+      itemValue:"",
       value: null,
-      text:""
+      text:"", 
+      showButton: false,
+      selected: false,
+      
         }
     
   }
@@ -80,14 +48,27 @@ class FAQDetail extends Component {
       showRootToast("Veuillez Saisir un message.")
       return;
     }
-    body = "Sujet : "+itemValue+" \nA propos de : "+value+" \nMessage: "+text
-    Linking.openURL(`mailto:contact@absolutemicro.fr?subject=Nous contacter&body=${body}`)
+    
+
+    let url = `mailto:${'contact@absolutemicro.fr'}`;
+
+    // Create email link query
+    const query = qs.stringify({
+        subject: itemValue,
+        body: text,
+    });
+
+    if (query.length) {
+        url += `?${query}`;
+    }
+
+    Linking.openURL(url)
 
    
   }
 
   render(){
-    const { value } = this.state;
+    const { showButton, selected } = this.state;
     const PROP = [
       {
         key:  'Publicité',
@@ -111,88 +92,116 @@ class FAQDetail extends Component {
       },
     ];
     
-    let content = DATA.map((item) => 
-      <ContentItem key={item.id.toString()} id={item.id} title={item.title} description={item.description}/>
-    );
     return (
+
+      
+
         <View style={styles.mainContainer}>
           <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
-          <ScrollView style={styles.scrollStyle}>
-            <Image source={require('../Assets/announcer_header_round.png')} style={styles.headerBg} resizeMode="stretch"/>
+          <View style={styles.menuWrapper}>
+            <MenuBtn image={"close"} onPress={() => Actions.pop()}/>
+          </View>
 
-            <View style={styles.tinaWrapper}>
-              <Tina width={60*em} height={22*em} />
-              <Image source={require('../Assets/tina-reussi.png')} style={styles.tinaLogo} />
-            
+          <View style={styles.contentContainer}>
+            <Text style={styles.titleText}>Nous Contacter</Text>
+    
+            <Text style={styles.contentText}>
+              Nous sommes à votre écoute
+           </Text>
 
-<Text style ={{ fontSize:22*em,
-    fontFamily:"Merriweather-Black",
-    color:"#251b4d", paddingTop:em*10}}>Sujet</Text>
+           {selected ?(<Text style={styles.subtitleText}>Votre Sujet</Text>):null}
 
-              <Picker style={{height: 250, width: 300}}
-  selectedValue={this.state.itemValue}
-  onValueChange={(itemValue, itemIndex) =>
-    this.setState({itemValue: itemValue})
-  }>
-  <Picker.Item label="Publicité" value="Publicité" />
-  <Picker.Item label="Plainte" value="Plainte" />
-  <Picker.Item label="Problème technique" value="Problème technique" />
-  <Picker.Item label="Partenariat" value="Partenariat" />
-  <Picker.Item label="Autres" value="Autres" />
+            <DropDownPicker
+              items={[
+                {label: 'Publicité', value: 'Publicité'},
+                {label: 'Plainte', value: 'Plainte' },
+                {label: 'Problème technique', value: 'Problème technique'},
+                {label: 'Partenariat', value: 'Partenariat'},
+                {label: 'Autres', value: 'Autres'},
+              ]}
+              placeholder="Votre sujet"
+              defaultNull
+              containerStyle={{height: 50, width: "100%"}}
+              style={{
+                backgroundColor: '#f6f5fa',
+                borderWidth: 0,
+                marginLeft: 10*em
+                
+              }}
+              dropDownStyle={{
+                height: 1000*em,
+                width: '90%',
+                marginLeft: 20*em,
+                borderLeftWidth: 0,
+                borderRightWidth: 0,
+                borderTopWidth: 2,
+                borderTopColor: '#28C7ED',
+                backgroundColor: '#f6f5fa', 
+              }}
+              dropDownMaxHeight={1000*em} 
+              itemStyle={{
+                justifyContent: 'flex-start',
+              }}
+              arrowStyle={{marginRight: 10}}
+              arrowSize={30}
+              arrowColor={'#928DA6'}
+              customArrowUp={(size, color) => <Icon name="chevron-up" size={size} color={'#28C7ED'} />} 
+              placeholderStyle={{
+                fontFamily:"OpenSans-Regular",
+                fontWeight: 'normal',
+                fontSize: 20,
+                color: '#928DA6'
+              }}
+              labelStyle={{
+                fontFamily:"OpenSans-Regular",
+                fontWeight: 'bold',
+                marginBottom: 10 *em,
+                fontSize: 15,
+                textAlign: 'left',
+                color: '#251B4D'
+              }}
+              selectedLabelStyle={{
+                fontFamily:"OpenSans-Regular",
+                fontWeight: 'normal',
+                fontSize: 20,
+                color: '#251B4D'
+            }}
+              
+              activeItemStyle={{ }}
+              onChangeItem={
+                item => this.setState({
+                  itemValue: item.value,
+                  value: item.value,
+                  selected: true,
+                  showButton: false
+                })
+              }
+          />
 
-</Picker>
-
-
-
-{PROP.map(res => {
-                return (
-                    <View key={res.key} style={styles.container}>
-                        <Text style={styles.radioText }>{res.text}</Text>
-                        <TouchableOpacity style={{ }}
-                            style={styles.radioCircle}
-                            onPress={() => {
-                                this.setState({
-                                    value: res.key,
-                                });
-                            }}>
-                              {value === res.key && <View style={styles.selectedRb} />}
-                        </TouchableOpacity>
-                    </View>
-                );
-            })}
            
-
-
          <TextInput
             style={styles.TextInputStyleClass}
             underlineColorAndroid="transparent"
-            placeholder={"Votre message"}
-            placeholderTextColor={"#9E9E9E"}
+            placeholder={"Écrivez votre message ici"}
+            placeholderTextColor={"#BCB8CC"}
             numberOfLines={10}
             multiline={true}
+            onFocus={()=>this.setState({showButton: true})}
+            onEndEditing={()=>this.setState({showButton: false})}
+            //onSelectionChange={()=>this.setState({showButton: false})}
             onChangeText={text => this.setState({
               text: text,
           })}
-      value={this.state.text}
+          value={this.state.text}
           />
+            {(showButton && selected) ?
+            (<TouchableOpacity style={[styles.ActionButton, {marginBottom:8*em}]} onPress={this.handleSendForm} >
+              <Text style={styles.ActionText}>Continuer</Text>
+            </TouchableOpacity>):null }
 
-        {/* <Text> Selected: {this.state.value} </Text>
-            <Text> Selected: {this.state.itemValue} </Text>
-            <Text> message: {this.state.text} </Text> */}
-
+          <Image source={require('../Assets/announcer_bottom_round.png')} style={{width:WIDTH, height:WIDTH*0.245}} resizeMode="stretch"/>
             
-</View>
-      
-<TouchableOpacity style={[styles.ActionButton, {marginTop:25*em, marginBottom:8*em}]} onPress={this.handleSendForm}>
-                  <Text style={styles.ActionText}>Continuer</Text>
-              </TouchableOpacity>
-
-            <Image source={require('../Assets/announcer_bottom_round.png')} style={{width:WIDTH, height:WIDTH*0.245}} resizeMode="stretch"/>
-          </ScrollView>
-          
-          <View style={styles.menuWrapper}>
-            <MenuBtn image={"back"} onPress={() => Actions.pop()}/>                  
           </View>
         </View>
     )
@@ -200,73 +209,70 @@ class FAQDetail extends Component {
 }
 
 const styles = { 
-  ActionButton: {
-    overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em,
-    alignItems: 'center',
-    backgroundColor: '#9E9E9E',
-    justifyContent: 'center',
-    marginTop: 18*em
-  },
-  MainContainers :{
  
-  flex:1,
-  paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
-  justifyContent: 'center',
-  margin:20
-    
-  },
+  mainContainer :{
  
-  TextInputStyleClass:{
-
-    textAlign: 'center',
-    width:em*300,
-    height: 50,
-    borderWidth: 2,
-    borderColor: '#9E9E9E',
-    borderRadius: 20 ,
-    backgroundColor : "#FFFFFF",
-    height: 150
-     
-    },
-  mainContainer: {
     flex: 1,
     backgroundColor: '#f6f5fa',
     flexDirection: 'column',
-  },  
-
+    
+  },
   menuWrapper:{
-    position:"absolute", 
-    left:20*em,
-    top:20*em
+    position:"absolute",
+      right: 20*em,
+      top: 20*em
+  },
+  contentContainer: {
+    flexDirection: "column",
+    marginTop: 80*em,
+    marginBottom: 50*em,
+    alignItems:"center",
+    zIndex:-1
   },
   
-  headerBg:{
-    width:WIDTH, 
-    height:WIDTH*0.70,
-    marginTop:-100*em
+  titleText:{
+    
+    fontSize: 25*em,
+    color:"#251b4d",
+    fontFamily:"Merriweather-Black"
   },
 
-  tinaWrapper:{
-    justifyContent:"center", 
-    alignItems:"center", 
-    flexDirection:"column", 
-    paddingLeft:20*em, 
-    paddingRight: 20*em,
-    marginTop:-140*em
+  contentText:{
+    fontSize: 14*em,
+    marginTop: 8*em,
+    marginBottom: 50*em,
+    color:"#251b4d",
+    fontFamily:"OpenSans-Regular"
   },
 
-  tinaLogo:{
-    width:80*em, 
-    height:80*em, 
-    marginTop: 10*em
+  subtitleText:{
+    fontSize: 13*em,
+    marginLeft: 20*em,
+    alignSelf: "flex-start",
+    color:"#928DA6",
+    fontFamily:"OpenSans-Regular"
   },
+ 
+  TextInputStyleClass:{
+    marginTop: 0,
+    paddingTop: 20*em,
+    paddingBottom: 10*em,
+    textAlign: 'left',
+    textAlignVertical: 'top',
+    width:'90%',
+    height: 45*em,
+    borderWidth: 2,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: '#EBEAF1',
+    
+    backgroundColor : "#F6F5FA",
+    height: 150,
 
-  scrollStyle:{
-    flex:1, 
-    backgroundColor:"#fff"
-  },
+    fontFamily: "OpenSans-Regular",
+    fontSize: 20,
+     
+    },
 
   contentItem:{
     paddingTop:25*em, 
@@ -299,40 +305,20 @@ const styles = {
     borderRadius:45*em, 
   },
 
+ActionText:{
+  color:"#fff",
+  fontSize: 14*em,
+  fontFamily: "OpenSans-SemiBold"
+},
 
-
-  container: {
-    marginBottom: 35,
-    alignItems: 'center',
-    flexDirection: 'row',
-justifyContent: 'space-between',
-},
-radioText: {
-    marginRight: 35,
-    fontSize: 20,
-    color: '#000',
-    fontWeight: '700'
-},
-radioCircle: {
-height: 30,
-width: 30,
-borderRadius: 100,
-borderWidth: 2,
-borderColor: '#3740ff',
-alignItems: 'center',
-justifyContent: 'center',
-},
-selectedRb: {
-width: 15,
-height: 15,
-borderRadius: 50,
-backgroundColor: '#3740ff',
-},
-result: {
-    marginTop: 20,
-    color: 'white',
-    fontWeight: '600',
-    backgroundColor: '#F3FBFE',
+ActionButton: {
+  overflow: 'hidden',
+  width: "90%",
+  borderRadius: 18*em,
+  height: 50*em,
+  alignItems: 'center',
+  backgroundColor: '#918da6',
+  justifyContent: 'center',
 },
 }
 

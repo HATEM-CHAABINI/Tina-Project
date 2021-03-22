@@ -122,17 +122,17 @@ class FAQDetail extends Component {
               ]}
               placeholder="Votre sujet"
               defaultNull
-              containerStyle={{height: 50, width: "100%"}}
+              containerStyle={{height: em*60, width: "100%"}}
               style={{
                 backgroundColor: '#f6f5fa',
                 borderWidth: 0,
-                marginLeft: 10*em
-                
+                marginLeft: 10*em,
               }}
               dropDownStyle={{
                 height: 1000*em,
                 width: '90%',
                 marginLeft: 20*em,
+                
                 borderLeftWidth: 0,
                 borderRightWidth: 0,
                 borderTopWidth: 2,
@@ -174,7 +174,7 @@ class FAQDetail extends Component {
                   itemValue: item.value,
                   value: item.value,
                   selected: true,
-                  showButton: false
+             //     showButton: false
                 })
               }
           />

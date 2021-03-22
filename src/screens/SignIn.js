@@ -177,7 +177,7 @@ const styles = {
     borderRadius: 18*em,
     height: 50*em,
     alignItems: 'center',
-    backgroundColor: '#918da6',
+    backgroundColor: 'black',
     justifyContent: 'center',
     marginTop: 18*em
   },

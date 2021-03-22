@@ -185,7 +185,7 @@ class FAQDetail extends Component {
             underlineColorAndroid="transparent"
             placeholder={"Écrivez votre message ici"}
             placeholderTextColor={"#BCB8CC"}
-            numberOfLines={10}
+            numberOfLines={3}
             multiline={true}
             onFocus={()=>this.setState({showButton: true})}
             onEndEditing={()=>this.setState({showButton: false})}
@@ -256,18 +256,18 @@ const styles = {
   TextInputStyleClass:{
     marginTop: 0,
     paddingTop: 20*em,
-    paddingBottom: 10*em,
+    paddingBottom: 20*em,
     textAlign: 'left',
     textAlignVertical: 'top',
     width:'90%',
-    height: 45*em,
+    height: 60*em,
     borderWidth: 2,
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderColor: '#EBEAF1',
     
     backgroundColor : "#F6F5FA",
-    height: 150,
+
 
     fontFamily: "OpenSans-Regular",
     fontSize: 20,

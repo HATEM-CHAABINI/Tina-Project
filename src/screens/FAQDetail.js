@@ -24,8 +24,7 @@ class FAQDetail extends Component {
   }
 
   handleContactUs = () => {
-    const {url} = this.props;
-    goToWebBrowser(url);
+    Linking.openURL(`mailto:bflorin@absolutemicro.fr`)
   }
 
   render(){

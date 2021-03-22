@@ -56,7 +56,7 @@ class RegName extends Component {
               <Text style={styles.descText}>Nom</Text>
               <MyTextInput style={styles.TextInput} autoFocus={true} value={this.state.username} handleChange={(text)=>this.setState({username:text})} />
 
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleContinue.bind(this)}>
+              <TouchableOpacity disabled ={!this.state.username } style={!this.state.username ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleContinue.bind(this)}>
                   <Text style={styles.ActionText}>Continuer</Text>
               </TouchableOpacity>
             </View>
@@ -122,8 +122,17 @@ const styles = {
     color:"#928da6",
     fontFamily:"OpenSans-Regular"
   },
-
   ActionButton: {
+    overflow: 'hidden',
+    borderRadius: 18*em,
+    height: 50*em,
+    alignItems: 'center',
+    backgroundColor: '#28C7ED',
+    justifyContent: 'center',
+    marginTop: 18*em
+  },
+  ActionButtondis: {
+    
     overflow: 'hidden',
     borderRadius: 18*em,
     height: 50*em,
@@ -132,7 +141,6 @@ const styles = {
     justifyContent: 'center',
     marginTop: 18*em
   },
-
   TextInput:{
     height: 45*em,
     fontSize: 13*em,

@@ -128,7 +128,7 @@ class RegPostcode extends Component {
                     <Text style={styles.contentBlueText}>Position actuelle: {address}</Text>
                   </View>
                 }
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleContinue.bind(this)}>
+              <TouchableOpacity disabled ={!this.state.zipcode } style={!this.state.zipcode ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleContinue.bind(this)}>
                   <Text style={styles.ActionText}>Continuer</Text>
               </TouchableOpacity>
             </View>
@@ -217,11 +217,20 @@ const styles = {
     borderRadius: 18*em,
     height: 50*em,
     alignItems: 'center',
+    backgroundColor: '#28C7ED',
+    justifyContent: 'center',
+    marginTop: 18*em
+  },
+  ActionButtondis: {
+    
+    overflow: 'hidden',
+    borderRadius: 18*em,
+    height: 50*em,
+    alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
     marginTop: 18*em
   },
-
   TextInput:{
     height: 45*em,
     fontSize: 13*em,

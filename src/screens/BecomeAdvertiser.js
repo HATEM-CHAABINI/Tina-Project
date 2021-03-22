@@ -256,11 +256,11 @@ const styles = {
   TextInputStyleClass:{
     marginTop: 0,
     paddingTop: 20*em,
-    paddingBottom: 20*em,
+    paddingBottom: 10*em,
     textAlign: 'left',
     textAlignVertical: 'top',
     width:'90%',
-    height: 60*em,
+    height: 70*em,
     borderWidth: 2,
     borderLeftWidth: 0,
     borderRightWidth: 0,

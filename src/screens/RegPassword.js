@@ -99,7 +99,7 @@ class RegPassword extends Component {
 
                 </View>
 
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleLoginDone.bind(this)} disabled={signingUp}>
+              <TouchableOpacity disabled={!this.state.password || !this.state.isTermChecked} style={!this.state.password || !this.state.isTermChecked ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleLoginDone.bind(this)} >
                   <Text style={styles.ActionText}>Continuer</Text>
               </TouchableOpacity>
             </View>
@@ -160,6 +160,16 @@ const styles = {
   },
 
   ActionButton: {
+    overflow: 'hidden',
+    borderRadius: 18*em,
+    height: 50*em,
+    alignItems: 'center',
+    backgroundColor: '#28C7ED',
+    justifyContent: 'center',
+    marginTop: 18*em
+  },
+  ActionButtondis: {
+    
     overflow: 'hidden',
     borderRadius: 18*em,
     height: 50*em,

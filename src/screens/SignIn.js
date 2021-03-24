@@ -18,7 +18,8 @@ class SignIn extends Component {
 
     this.state = {
       email:"",
-      password:""
+      password:"",
+      disable:true
     }
   }
 
@@ -99,7 +100,7 @@ class SignIn extends Component {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={[styles.ActionButton, {marginTop:25*em, marginBottom:8*em}]} onPress={this.handleLoginDone}>
+              <TouchableOpacity disabled ={!this.state.email || !this.state.password} style={!this.state.email || !this.state.password ?  [styles.ActionButtondis, {marginTop:25*em, marginBottom:8*em}] : [styles.ActionButton, {marginTop:25*em, marginBottom:8*em}]}  onPress={this.handleLoginDone}>
                   <Text style={styles.ActionText}>Continuer</Text>
               </TouchableOpacity>
 
@@ -173,6 +174,16 @@ const styles = {
   },
 
   ActionButton: {
+    overflow: 'hidden',
+    borderRadius: 18*em,
+    height: 50*em,
+    alignItems: 'center',
+    backgroundColor: '#28C7ED',
+    justifyContent: 'center',
+    marginTop: 18*em
+  },
+  ActionButtondis: {
+    
     overflow: 'hidden',
     borderRadius: 18*em,
     height: 50*em,

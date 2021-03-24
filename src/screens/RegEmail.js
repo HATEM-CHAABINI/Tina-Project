@@ -65,7 +65,7 @@ class RegEmail extends Component {
                 <Text style={styles.linkText} onPress={this.handleGoLogin}> Se connecter ici</Text>
               </Text>
 
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleContinue.bind(this)}>
+              <TouchableOpacity disabled ={!this.state.email } style={!this.state.email ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleContinue.bind(this)}>
                   <Text style={styles.ActionText}>Continuer</Text>
               </TouchableOpacity>
 
@@ -138,7 +138,18 @@ const styles = {
     fontFamily:"OpenSans-SemiBold"
   },
 
+
   ActionButton: {
+    overflow: 'hidden',
+    borderRadius: 18*em,
+    height: 50*em,
+    alignItems: 'center',
+    backgroundColor: '#28C7ED',
+    justifyContent: 'center',
+    marginTop: 18*em
+  },
+  ActionButtondis: {
+    
     overflow: 'hidden',
     borderRadius: 18*em,
     height: 50*em,
@@ -147,7 +158,6 @@ const styles = {
     justifyContent: 'center',
     marginTop: 18*em
   },
-
   TextInput:{
     height: 45*em,
     fontSize: 13*em,

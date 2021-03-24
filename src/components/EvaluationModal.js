@@ -37,7 +37,7 @@ export default ElevationModal = ({isModalVisible, onPressSend, onPressSkip, rate
             style={{flex:1, justifyContent:'flex-end', alignItems:'center'}}>
 
             <View style={styles.modalWrapper}>
-              <Image source={require('../Assets/tina-reussi.png')} style={styles.tinaLogo} resizeMode={"center"}/>
+              <Image source={require('../Assets/tina-reussi.png')} style={styles.tinaLogo} resizeMode={"contain"}/>
 
               <View style={{backgroundColor:"#fff", borderRadius:20*em, padding:38*em, marginTop:-30*em, zIndex:-1}}>
                 <Text style={styles.infoTextTitle}>Je suis ravie de vous avoir dépanné(e)!</Text>

@@ -90,29 +90,17 @@ if (idy !=undefined && res.find(data => data.qid ==idy)){
 
 
   render(props) {
-    
-
     return (
-      
       <View style={styles.progressWrapper}>
-                 
-
+              
       <LinearGradient
         start={{x: 0, y: 0}} end={{x:1, y: 0}}
         colors={colors[this.props.qType]}
         
         style={{width: this.state.idyy* WIDTH, height: 20*em}}>
-                          
-
+                      
       </LinearGradient>
     </View> 
-      // <View>
-      //   <Progress.Bar progress={this.state.idyy} width={200} />
-
-      //   <Text>
-      //   I am {this.state.idyy}
-      //           </Text>
-      // </View>
     );
   }
 }
@@ -141,6 +129,7 @@ class Questionnaire extends Component {
   // }
   
   componentDidMount() {
+    console.log('======= questionnaire ======== ');
     this.setAdvertisements();
   }
 

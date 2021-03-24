@@ -50,7 +50,7 @@ class MenuModal extends Component {
       'Mode de Paiement.',
       'Choisissez votre mode de paiement.',
       [{
-        text: 'Cancel',
+        text: 'Annuler',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel'
       },{
@@ -58,7 +58,7 @@ class MenuModal extends Component {
         onPress: () => this.handlePayer()
       },
       {
-        text: 'Card Pay',
+        text: 'Carte B',
         onPress: () => this.handlePayerCard()
       },
        

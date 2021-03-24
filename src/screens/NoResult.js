@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addTinaHistory } from '../common/firebase/database';
 import { showRootToast } from '../common/utils';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 class NoResult extends Component {
   constructor(props){
@@ -26,17 +27,7 @@ class NoResult extends Component {
   }
 
   renderIcons(){
-    if (this.props.qType == Q_TYPES.L){
-      return (<Logiciel width={30*em} height={30*em} />)
-    }else if (this.props.qType == Q_TYPES.O){
-      return (<Ordinateur width={30*em} height={30*em} />)
-    }else if (this.props.qType == Q_TYPES.P){
-      return (<Periferique width={30*em} height={30*em} />)
-    }else if (this.props.qType == Q_TYPES.I){
-      return (<Internet width={25*em} height={25*em} />)
-    }else if (this.props.qType == Q_TYPES.A){
-      return (<Astuce width={20*em} height={20*em} />)
-    }
+    return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(60), height: verticalScale(60), resizeMode:'contain'}}  />)
   }
 
   handleContinueClick = () => {

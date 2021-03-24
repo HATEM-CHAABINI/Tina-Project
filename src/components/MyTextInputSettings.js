@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { View } from 'react-native'
 import { TextInput } from 'react-native'
 import {em} from '../common/constants'
-import AnswerNotFound from './svgicons/AnswerNotFound'
+import AnswerNotFound from './svgicons/Delete'
 
 export default class MyTextInputSettings extends React.Component{
   constructor(props){

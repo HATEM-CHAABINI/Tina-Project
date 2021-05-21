@@ -42,10 +42,16 @@ export default ElevationModal = ({isModalVisible, onPressSend, onPressSkip, rate
               <View style={{backgroundColor:"#fff", borderRadius:20*em, padding:38*em, marginTop:-30*em, zIndex:-1}}>
                 <Text style={styles.infoTextTitle}>Je suis ravie de vous avoir dépanné(e)!</Text>
 
-                <Text style={styles.infoTextContent}>Notre réponse a été :</Text>
-
+                <Text style={styles.infoTextContent}>Évaluez notre dépannage :</Text>
+<View style={{  
+   
+    
+    paddingLeft:50*em, 
+    paddingRight:50*em, 
+   
+    }}> 
                 <RatingStars rating={0} />
-
+</View>
               </View>
 
               <View style={styles.ActionWrapper}>
@@ -97,9 +103,9 @@ const styles = {
   infoTextContent: {
     color:"#928da6", 
     textAlign: "center", 
-    fontSize: 12*em, 
-    paddingLeft:50*em, 
-    paddingRight:50*em, 
+    fontSize: 15*em, 
+    paddingLeft:40*em, 
+    paddingRight:40*em, 
     marginTop: 20*em,
     fontFamily: "OpenSans-Regular"
   },

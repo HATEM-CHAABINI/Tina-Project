@@ -35,7 +35,7 @@ class Settings extends Component {
     return (
         <View style={styles.mainContainer}>
           <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
-          
+        
           <View style={styles.menuWrapper}>
             <MenuBtn image={"back"} onPress={() => Actions.pop()}/>                  
           </View>

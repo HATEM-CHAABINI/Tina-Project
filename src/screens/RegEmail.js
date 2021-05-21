@@ -103,7 +103,8 @@ const styles = {
   tinaLogo:{
     width: WIDTH * 0.3,
     height:90*em,
-    marginBottom: 15*em
+    marginBottom: 15*em,
+    resizeMode:'contain'
   },
 
   contentWrapper:{

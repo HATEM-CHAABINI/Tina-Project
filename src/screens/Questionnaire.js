@@ -113,14 +113,14 @@ class Questionnaire extends Component {
   qType = "";
   solution = "";
   isFromHistory = false;
-
   constructor(props) {
     super(props)
     this.state = {
       infoVisible: false,
       evaluationVisible: false,
       selectedAds: null,
-      stopTimer: true
+      stopTimer: true,
+      BackBtn:false,
     }
   }
 
@@ -204,6 +204,7 @@ class Questionnaire extends Component {
       qid = qinfo.did;
       answerText = "Je ne sais pas";
     }
+    this.setState({BackBtn:true})
 
     questionActions.addQuestion({
       "qid":qinfo['qid'],
@@ -422,9 +423,12 @@ class Questionnaire extends Component {
           <View style={styles.contentContainer}>
             <Image source={require('../Assets/questionair_split.png')} style={{width: WIDTH, height: WIDTH*0.4}} resizeMode={'stretch'} />
 
+
+{/* back button */}
+{this.state.BackBtn == true?
             <TouchableOpacity style={styles.ButtonWrapper} elevation={20} onPress={this.handleGoBack}>
               <Back width={15*em} height={15*em}/>
-            </TouchableOpacity>
+            </TouchableOpacity>:<></>}
 
             <View style={styles.contentWrapper}>
 

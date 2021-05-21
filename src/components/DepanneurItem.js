@@ -3,7 +3,7 @@ import {TouchableOpacity, View, Text, Image} from 'react-native';
 import Location from '../components/svgicons/Location';
 import Phone from '../components/svgicons/Phone';
 import Email from '../components/svgicons/Email';
-import {em} from '../common/constants'
+import {em, hm} from '../common/constants'
 import { SvgCssUri } from 'react-native-svg';
 
 export default DepanneurItem = ({image, title, location, phone, email, onPress}) => (
@@ -13,7 +13,7 @@ export default DepanneurItem = ({image, title, location, phone, email, onPress})
          <SvgCssUri
          style={styles.ItemImage} 
     uri={image.uri}
-  /> :         <Image style={styles.ItemImage} source={{uri: image.uri}} resizeMode= {'stretch'}></Image>
+  /> :         <Image style={styles.ItemImage} source={{uri: image.uri}} resizeMode= {'contain'}></Image>
 }
                    <View style={styles.ContentWrapper}>
                 <Text style={styles.TitleText}>{title}</Text>
@@ -66,8 +66,9 @@ const styles = {
     },
 
     ItemImage:{
-        width: 48*em, 
-        height: 48*em, 
+        marginTop:10*hm,
+        width: 50*em, 
+        height: 50*hm, 
         borderRadius: 24*em
     },
     

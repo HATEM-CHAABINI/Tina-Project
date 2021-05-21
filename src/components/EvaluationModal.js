@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, StyleSheet } from 'rea
 import Modal from 'react-native-modal'
 import { BlurView } from "@react-native-community/blur";
 import RatingStars from './RatingStars';
-import {WIDTH, em} from '../common/constants';
+import {WIDTH, em, hm} from '../common/constants';
 import { EventEmitter } from 'react-native';
 
 var {height, width} = Dimensions.get('window');
@@ -44,7 +44,7 @@ export default ElevationModal = ({isModalVisible, onPressSend, onPressSkip, rate
 
                 <Text style={styles.infoTextContent}>Notre réponse a été :</Text>
 
-                <RatingStars rating={rate} />
+                <RatingStars rating={0} />
 
               </View>
 
@@ -83,7 +83,7 @@ const styles = {
   tinaLogo:{
     width: 230*em,
     height: 230*em,
-    marginBottom: 0*em
+    marginBottom:-1*hm
 
   },
 

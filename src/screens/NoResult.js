@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors, WIDTH, Q_TYPES, em} from '../common/constants';
+import {colors, WIDTH, Q_TYPES, em, hm} from '../common/constants';
 import Ordinateur from '../components/svgicons/Ordinateur';
 import Periferique from '../components/svgicons/Periferique';
 import Astuce from '../components/svgicons/Astuce';
@@ -69,7 +69,7 @@ class NoResult extends Component {
           <StatusBar barstyle="light-content" backgroundColor={colors[this.props.qType][0]} />
           <View style={styles.headerContainer}>
             <LinearGradient
-              start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+              start={{x: 0, y: 0}} end={{x: 0, y: 2}}
               colors={colors[this.props.qType]}
               style={{flex:0.9}}>
 
@@ -104,7 +104,8 @@ class NoResult extends Component {
               </Text>
 
               <View style={styles.ChoiceWrapper}>
-                  <TouchableOpacity style={styles.ActionButton} onPress={() => {this.setState({solutionIndex: 0})}}>
+                {this.state.solutionIndex == 0 ?
+                  <TouchableOpacity style={styles.ActionButtons} onPress={() => {this.setState({solutionIndex: 0})}}>
                     <View style={styles.CheckWrapper}>
                         <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#fef8d9"}])}>
                             <Alert width={16*em} height={16*em} />
@@ -116,9 +117,26 @@ class NoResult extends Component {
 
                         <CheckBox checked={this.state.solutionIndex == 0} />
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity>:
+                  <TouchableOpacity style={styles.ActionButton} onPress={() => {this.setState({solutionIndex: 0})}}>
+                  <View style={styles.CheckWrapper}>
+                      <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#fef8d9"}])}>
+                          <Alert width={16*em} height={16*em} />
+                      </View>
 
-                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButton, {marginTop:18*em}])} onPress={() => {this.setState({solutionIndex: 1})}}>
+                      <Text style={styles.CheckContent}>
+                      Être averti dès que Tina aura trouvé une solution à votre panne.
+                      </Text>
+
+                      <CheckBox checked={this.state.solutionIndex == 0} />
+                  </View>
+                </TouchableOpacity>}
+
+
+
+                {this.state.solutionIndex == 1 ?
+                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtons, {marginTop:18*em}])} onPress={() => {this.setState({solutionIndex: 1})}}>
+                    
                     <View style={styles.CheckWrapper}>
                         <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#f1eeff"}])}>
                             <Tool width={16*em} height={16*em} />
@@ -130,7 +148,23 @@ class NoResult extends Component {
 
                         <CheckBox checked={this.state.solutionIndex == 1} />
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity>:
+                  
+                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButton, {marginTop:18*em}])} onPress={() => {this.setState({solutionIndex: 1})}}>
+                    
+                  <View style={styles.CheckWrapper}>
+                      <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#f1eeff"}])}>
+                          <Tool width={16*em} height={16*em} />
+                      </View>
+
+                      <Text style={styles.CheckContent}>
+                        Être mis en contact avec un dépanneur le plus proche
+                      </Text>
+
+                      <CheckBox checked={this.state.solutionIndex == 1} />
+                  </View>
+                </TouchableOpacity>
+                  }
               </View>
 
               <View style={{flex:1, justifyContent:"flex-end"}}>
@@ -272,6 +306,26 @@ const styles = {
     shadowColor: '#000',
     shadowOpacity: 0.1,
     elevation: 2,
+  },
+   ActionButtons: {
+    // overflow: 'hidden',
+    borderRadius: 18*em,
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    paddingLeft:20*em,
+    paddingRight:20*em,
+    paddingTop:15*em,
+    paddingBottom:15*em,
+    justifyContent: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    
+    elevation: 9,
   },
 
   solutionText:{

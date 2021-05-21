@@ -24,6 +24,8 @@ import ForgotPassword from '../screens/ForgotPassword';
 import AboutTina from '../screens/AboutTina';
 import Cgu from '../screens/Cgu';
 import Rgpd from '../screens/Rgpd';
+import RechercheR from '../screens/RechercheR';
+import RechercheFoundResult from '../screens/RechercheFoundResult';
 
 class Routes extends Component {
 	render() {
@@ -54,6 +56,9 @@ class Routes extends Component {
 				  <Scene key="abouttina" hideNavBar component={AboutTina} />
 				  <Scene key="cgu" hideNavBar component={Cgu} />
 				  <Scene key="rgpd" hideNavBar component={Rgpd} />
+				  <Scene key="recherche" hideNavBar component={RechercheR} />
+				  <Scene key="recherchefoundresult" hideNavBar component={RechercheFoundResult} />
+
         		</Scene>
 			</Router>
 		)

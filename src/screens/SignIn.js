@@ -81,7 +81,7 @@ class SignIn extends Component {
           </View>
 
           <View style={styles.contentContainer}>
-            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} resizeMode={'stretch'} />
+            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} resizeMode={'contain'} />
 
             <Text style={styles.titleText}>Connectez-vous</Text>
 
@@ -95,9 +95,12 @@ class SignIn extends Component {
 
               <View>
                 <MyTextInput style={[styles.TextInput, {marginTop:25*em}]} secureTextEntry={true} textContentType={"password"} placeholder={"Mot de passe"} value={password} handleChange={(text)=>this.setState({password:text})}/>
-                <TouchableOpacity style={{position:"absolute", right:0, top: 45*em}} onPress={this.handleGoForgotPassword}>
+                { this.state.password =="" ?
+                <TouchableOpacity style={{position:"absolute", right:10*em, marginTop: 40*em}} onPress={this.handleGoForgotPassword}>
                   <Text style={styles.linkText}>Oublié?</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>:
+                <></>
+              }
               </View>
 
               <TouchableOpacity disabled ={!this.state.email || !this.state.password} style={!this.state.email || !this.state.password ?  [styles.ActionButtondis, {marginTop:25*em, marginBottom:8*em}] : [styles.ActionButton, {marginTop:25*em, marginBottom:8*em}]}  onPress={this.handleLoginDone}>

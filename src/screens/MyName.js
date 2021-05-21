@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 import MyTextInputSettings from '../components/MyTextInputSettings';
-import {em} from '../common/constants'
+import {em,hm} from '../common/constants'
 import { LoginActions } from '../actions'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,8 +14,8 @@ class MyName extends Component {
   constructor(props){
     super(props)
     this.state = {
-      firstname: "",
-      lastname: ""
+      firstname: null,
+      lastname: null
     }
   }
 
@@ -23,8 +23,15 @@ class MyName extends Component {
     const {_user} = this.props.auth.credential;
     this.setState({
       firstname: _user.firstname,
-      lastname: _user.lastname
+      lastname: _user.lastname,
     })
+   if (_user.lastname=="" || _user.lastname==" "){
+     this.setState({
+       lastname: null
+     })
+   }
+
+
   }
 
   handleOnClickSave = () => {
@@ -63,12 +70,13 @@ class MyName extends Component {
               
               
               
-              <MyTextInputSettings style={styles.TextInput} autoFocus={true} value={this.state.firstname} handleChange={(text)=>this.setState({firstname:text} )}/>
+              <MyTextInputSettings style={styles.TextInput} placeholder={"Nom"} autoFocus={true} value={this.state.firstname} handleChange={(text)=>this.setState({firstname:text} )}/>
   
               
 
               <Text style={[styles.descText, {marginTop:20}]}>Prénom</Text>
-              <MyTextInputSettings style={styles.TextInput} autoFocus={false} value={this.state.lastname} handleChange={(text)=>this.setState({lastname:text})}/>
+
+              <MyTextInputSettings style={styles.TextInput} placeholder={"Prénom"} autoFocus={false} value={this.state.lastname} handleChange={(text)=>this.setState({lastname:text})}/>
 
               <TouchableOpacity style={styles.ActionButton} onPress={this.handleOnClickSave.bind(this)}>
                   <Text style={styles.ActionText}>Valider</Text>
@@ -129,7 +137,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28c7ee',
     justifyContent: 'center',
-    marginTop: 100*em
+    marginTop: 50*hm
   },
 
   TextInput:{

@@ -129,7 +129,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: -20*em
   },
   ActionButtondis: {
     
@@ -139,7 +139,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: -20*em
   },
   TextInput:{
     height: 45*em,

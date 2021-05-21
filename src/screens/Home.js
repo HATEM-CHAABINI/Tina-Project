@@ -7,6 +7,7 @@ import Periferique from '../components/svgicons/Periferique';
 import Astuce from '../components/svgicons/Astuce';
 import Logiciel from '../components/svgicons/Logiciel';
 import Internet from '../components/svgicons/Internet';
+import Recherche from '../components/svgicons/Recherche'; 
 import MenuModal from '../components/MenuModal';
 import ConfirmPaymentModal from '../components/ConfirmPaymentModal';
 import { Actions } from 'react-native-router-flux';
@@ -204,10 +205,10 @@ class Home extends Component {
           <View style={{flex:1 , flexDirection: 'column'}}>
             
             <View style={{flex: 3, flexDirection: 'row', justifyContent: 'flex-end'}}>
-              <RectangleImage image={"B2"} size={25*em} mTop={47*em} mRight={120}/>
             </View>
             
-            <View style={{position:'absolute', right:32*em, bottom:150*em}}><RectangleImage image={"B3"} size={17*em}/></View>
+            <View style={{position:'absolute', right:32*em, bottom:150*em}}>
+              </View>
             
             <View style={styles.tinaLogoWrapper}>
               <Image source={require('../Assets/tina-start.png') } style={{width: scale(309.8) , height:verticalScale(237.33), resizeMode:'contain'}}  />
@@ -215,7 +216,8 @@ class Home extends Component {
             </View>
           
             <View style={{flexDirection: "row", justifyContent:"center", alignItems:"flex-start"}} >
-              <View style={{position:'absolute', left:0}}><RectangleImage image={"B1"} size={33*em} mLeft={-8*em} mTop={-8*em}/></View>
+              <View style={{position:'absolute', left:0}}>
+                </View>
               
             </View>
 
@@ -227,7 +229,7 @@ class Home extends Component {
 
           <View style={{flex: 1 }}>
             <ImageBackground source={require('../Assets/home_bg.png')} style={styles.menuBackgroundWrapper} resizeMode={'stretch'}>
-              <View style={{flex:1, flexDirection:"column", marginRight:26*em}}>
+              <View style={{flex:1, flexDirection:"column", marginRight:15*em}}>
                 <View style={{flex:1}}>
                   <TouchableOpacity style={styles.mainBtn} onPress={this.moveToQuestionnair.bind(this, Q_TYPES.O)}>
                     <View style={StyleSheet.flatten([styles.circleOverlay, {backgroundColor:"#d4f4fc"}])}>
@@ -256,7 +258,6 @@ class Home extends Component {
                 </View>
               </View>
               <View style={{flex:1, flexDirection: "column"}}>
-                <View style={{flex:0.5}}></View>
 
                 <View style={{flex:1}}>
                   <TouchableOpacity style={styles.mainBtn} onPress={this.moveToQuestionnair.bind(this, Q_TYPES.L)}>
@@ -266,6 +267,10 @@ class Home extends Component {
                       <Text style={styles.menuText}>Logiciel</Text>
                     </TouchableOpacity>
                 </View>
+
+
+
+           
                 <View style={{flex:1}}>
                   <TouchableOpacity style={styles.mainBtn} onPress={this.moveToQuestionnair.bind(this, Q_TYPES.I)}>
                       <View style={StyleSheet.flatten([styles.circleOverlay, {backgroundColor:"#edf3ff"}])}>
@@ -274,8 +279,15 @@ class Home extends Component {
                       <Text style={styles.menuText}>Internet/Réseaux</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={{flex:1}}>
+              <TouchableOpacity style={styles.mainBtn} onPress={Actions.recherche}>
+                      <View style={StyleSheet.flatten([styles.circleOverlay, {backgroundColor:"#EBEAF1"}])}>
+                        <Recherche width={21*em} height={21*em} />
+                      </View>
+                      <Text style={styles.menuText}>Recherche rapide</Text>
+                    </TouchableOpacity>
+                </View>
 
-                <View style={{flex:0.5}}></View>
               </View>
             </ImageBackground>
           </View>

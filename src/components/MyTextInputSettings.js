@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { View } from 'react-native'
 import { TextInput } from 'react-native'
 import {em} from '../common/constants'
-import AnswerNotFound from './svgicons/Delete'
+// import AnswerNotFound from './svgicons/Delete'
 
 export default class MyTextInputSettings extends React.Component{
   constructor(props){
@@ -42,7 +42,7 @@ export default class MyTextInputSettings extends React.Component{
       <TouchableOpacity
       style={styles.closeButtonParent}
       onPress={() => value ="",this.props.handleChange}>
-      <AnswerNotFound width={18*em} height={18*em} />
+      {/* <AnswerNotFound width={18*em} height={18*em} /> */}
     </TouchableOpacity> ):null}
     </View>
       )

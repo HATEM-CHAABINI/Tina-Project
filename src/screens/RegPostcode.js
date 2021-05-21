@@ -219,7 +219,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: -20*em
   },
   ActionButtondis: {
     

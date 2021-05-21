@@ -19,6 +19,7 @@
 		23B103D2C6014C9ABCB2A11C /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72AF54E9F4634F7B86512840 /* OpenSans-ExtraBold.ttf */; };
 		2DE4A11C9E4E4AF791488859 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A739D4EE348A4A39A3D7F3B2 /* OpenSans-BoldItalic.ttf */; };
 		3241DD92F7D44028AD54F2B7 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7EF643B008B4D8AA287C830 /* OpenSans-SemiBoldItalic.ttf */; };
+		4AEBF2C42657C1C2000B60FF /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5153120BA24143A48EE92A1D /* OpenSans-SemiBold.ttf */; };
 		4AEFA562264917430047B35A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		74378C504102E4DBE0F8B279 /* libPods-Tina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE4C3437A1D307FE2322F7B /* libPods-Tina.a */; };
 		7BC6825F2E404CE2A536D7A0 /* Merriweather-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5BD21A5C78D45B685D41B0B /* Merriweather-Light.ttf */; };
@@ -610,6 +611,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AEFA562264917430047B35A /* main.jsbundle in Resources */,
+				4AEBF2C42657C1C2000B60FF /* OpenSans-SemiBold.ttf in Resources */,
 				FA076B6424BC07CF0045F4EA /* 85.json in Resources */,
 				FA076B5524BC07CF0045F4EA /* 77.json in Resources */,
 				FA076B2324BC07CE0045F4EA /* 70.json in Resources */,

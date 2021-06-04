@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { View } from 'react-native'
 import { TextInput } from 'react-native'
 import { em } from '../common/constants'
-import AnswerNotFound from './svgicons/Delete'
+import AnswerNotFound from './svgicons/DeleteNew'
 
 export default class MyTextInputSettings extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class MyTextInputSettings extends React.Component {
     this.state = {
       isFocused: props.isFocused
     }
-  } s
+  }
 
   handleFocus = () => {
     this.setState({ isFocused: true })

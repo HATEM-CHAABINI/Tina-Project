@@ -1,5 +1,5 @@
 import colors from './colors'
-import { WIDTH, HEIGHT, em, Q_TYPES, Q_TYPE_STRINGS } from './consts'
+import { WIDTH, HEIGHT, em, Q_TYPES, Q_TYPE_STRINGS,hm } from './consts'
 
 export {
   colors,
@@ -7,5 +7,6 @@ export {
   HEIGHT,
   em,
   Q_TYPES,
-  Q_TYPE_STRINGS
+  Q_TYPE_STRINGS,
+  hm
 };

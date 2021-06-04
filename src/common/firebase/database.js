@@ -453,6 +453,28 @@ export async function addTinaHistory({type, questions, solution}){
   }
   return null;
 }
+export async function getAllTheHistoryList(){
+  return await new Promise((resolve, reject) => {
+    // const timerId = setTimeout(() => { reject(new Error('DB: Timeout')); }, 5000);
+    var items = [];
+   
+      firebase.database()
+        .ref(`${HISTORY_TABLE_NAME}`)
+        .on('value', (snap) => {
+          items = [];
+          snap.forEach((child) => {
+            // We only get the history that solution found ones.
+            if (child.val().solution != ""){
+              items.push({...child.val(), id:child.key});
+            }
+          });
+          // clearTimeout(timerId);
+          resolve(items);
+        })
+    
+  });
+}
+
 
 export async function getAllHistoryList(){
   return await new Promise((resolve, reject) => {

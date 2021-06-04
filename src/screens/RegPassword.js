@@ -1,9 +1,9 @@
-import React, { Component} from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
 import CheckBox from '@react-native-community/checkbox'
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
-import {WIDTH, em} from '../common/constants';
+import { WIDTH, em } from '../common/constants';
 import TermsNormal from '../components/svgicons/TermsNormal';
 import MyTextInput from '../components/MyTextInput';
 import { showRootToast, showBiggerRootToast } from '../common/utils';
@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 import { AppActions, SignupActions } from '../actions'
 
 class RegPassword extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -21,28 +21,28 @@ class RegPassword extends Component {
     }
   }
 
-  handleLoginDone(){
-    const {password, isTermChecked} = this.state;
-    const {email, firstname, lastname, zipcode, lat, lng, signupActions, appActions} = this.props;
-    const {isFetching} = this.props.signup;
+  handleLoginDone() {
+    const { password, isTermChecked } = this.state;
+    const { email, firstname, lastname, zipcode, lat, lng, signupActions, appActions } = this.props;
+    const { isFetching } = this.props.signup;
 
-    if (password == "" || password.length <6 ){
+    if (password == "" || password.length < 6) {
       showBiggerRootToast('Le mot de passe doit contenir au moins six caractères');
       return;
     }
 
-    if (!isTermChecked){
+    if (!isTermChecked) {
       showBiggerRootToast("Vous devez accepter les conditions génerales d'utilisation");
       return;
     }
 
     const timerId = setTimeout(() => {
-       if (isFetching){
-         signupActions.signUpFailed("DB: Timeout")
-         appActions.setGlobalNotification({
+      if (isFetching) {
+        signupActions.signUpFailed("DB: Timeout")
+        appActions.setGlobalNotification({
           message: "Check the device network connection",
         })
-       }
+      }
     }, 5000);
     signupActions.trySignup({
       email,
@@ -56,55 +56,55 @@ class RegPassword extends Component {
     })
   }
 
-  render(){
-    const {signup} = this.props;
+  render() {
+    const { signup } = this.props;
     const signingUp = false;  // signup.isFetching
     console.log("isFetching", signingUp)
-    const {app, appActions} = this.props;
+    const { app, appActions } = this.props;
 
     if (app.globalNotification && app.globalNotification.message) {
       const { message, type, duration } = app.globalNotification;
       showRootToast(message);
-      appActions.setGlobalNotification({"message":""});
+      appActions.setGlobalNotification({ "message": "" });
     }
 
     return (
-        <View style={styles.mainContainer}>
-          <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
+      <View style={styles.mainContainer}>
+        <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
-          <View style={styles.menuWrapper}>
-            <MenuBtn image={"back"} onPress={() => Actions.pop()}/>
-          </View>
+        <View style={styles.menuWrapper}>
+          <MenuBtn image={"back"} onPress={() => Actions.pop()} />
+        </View>
 
-          <View style={styles.contentContainer}>
-            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo}/>
+        <View style={styles.contentContainer}>
+          <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} />
 
-            <Text style={styles.titleText}>Pour finir</Text>
+          <Text style={styles.titleText}>Pour finir</Text>
 
-            <Text style={styles.contentText}>Créez un mot de passe</Text>
+          <Text style={styles.contentText}>Créez un mot de passe</Text>
 
-            <View style={styles.contentWrapper}>
-              <MyTextInput style={styles.TextInput} secureTextEntry={true} textContentType={"password"} autoFocus={true} placeholder={"Mot de passe"} value={this.state.password} handleChange={(text)=>this.setState({password:text})}/>
+          <View style={styles.contentWrapper}>
+            <MyTextInput style={styles.TextInput} secureTextEntry={true} textContentType={"password"} autoFocus={true} placeholder={"Mot de passe"} value={this.state.password} handleChange={(text) => this.setState({ password: text })} />
 
-                <View style={{flexDirection:"row", marginTop:80*em, marginBottom: 20*em}}>
+            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginTop: 80 * em, marginBottom: 20 * em, marginRight: 20 * em }}>
 
-                  <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({isTermChecked:isSelected})} />
-                  <Text style={styles.TermsText}>
-                    En cochant cette case j'accepte les
-                    <Text style={styles.linkText} onPress={()=>{ Actions.cgu();}}> Conditions d'utilisation </Text>
+              <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} />
+              <Text style={styles.TermsText}>
+                En cochant cette case j'accepte les
+                    <Text style={styles.linkText} onPress={() => { Actions.cgu(); }}> Conditions d'utilisation </Text>
                     et la
-                    <Text style={styles.linkText} onPress={()=>{ Actions.rgpd();}}> Politique de confidentiallte</Text>
+                    <Text style={styles.linkText} onPress={() => { Actions.rgpd(); }}> Politique de confidentiallte</Text>
                     de Tina.
                   </Text>
 
-                </View>
-
-              <TouchableOpacity disabled={!this.state.password || !this.state.isTermChecked} style={!this.state.password || !this.state.isTermChecked ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleLoginDone.bind(this)} >
-                  <Text style={styles.ActionText}>Continuer</Text>
-              </TouchableOpacity>
             </View>
+
+            <TouchableOpacity disabled={!this.state.password || !this.state.isTermChecked} style={!this.state.password || !this.state.isTermChecked ? styles.ActionButtondis : styles.ActionButton} onPress={this.handleLoginDone.bind(this)} >
+              <Text style={styles.ActionText}>Continuer</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     )
   }
 }
@@ -120,97 +120,99 @@ const styles = {
     flex: 1
   },
 
-  menuWrapper:{
-    position:"absolute",
-    left:20*em,
-    top:20*em
+  menuWrapper: {
+    position: "absolute",
+    left: 20 * em,
+    top: 20 * em
   },
 
   contentContainer: {
     flexDirection: "column",
-    marginTop: 45*em,
-    alignItems:"center",
-    zIndex:-1
+    marginTop: 45 * em,
+    alignItems: "center",
+    zIndex: -1
   },
 
-  tinaLogo:{
+  tinaLogo: {
     width: WIDTH * 0.3,
-    height:90*em,
-    marginBottom: 15*em
+    height: 90 * em,
+    marginBottom: 15 * em
   },
 
-  contentWrapper:{
-    width:WIDTH,
-    paddingLeft: 20*em,
-    paddingRight: 20*em,
-    paddingTop: 15*em
+  contentWrapper: {
+    width: WIDTH,
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    paddingTop: 15 * em
   },
 
-  titleText:{
-    fontSize: 25*em,
-    color:"#251b4d",
-    fontFamily:"Merriweather-Black"
+  titleText: {
+    fontSize: 25 * em,
+    color: "#251b4d",
+    fontFamily: "Merriweather-Black"
   },
 
-  contentText:{
-    fontSize: 15*em,
-    marginTop: 8*em,
-    color:"#251b4d",
-    fontFamily:"OpenSans-Regular"
+  contentText: {
+    fontSize: 15 * em,
+    marginTop: 8 * em,
+    color: "#251b4d",
+    fontFamily: "OpenSans-Regular"
   },
 
   ActionButton: {
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em,
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: 18 * em
   },
   ActionButtondis: {
-    
+
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em,
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: 18 * em
   },
 
-  TextInput:{
-    height: 45*em,
-    fontSize: 13*em,
-    color:"#28c7ee",
-    borderBottomWidth:1*em,
-    borderBottomColor:"#28c7ee",
-    fontFamily:"OpenSans-Regular"
+  TextInput: {
+    height: 45 * em,
+    fontSize: 13 * em,
+    color: "#28c7ee",
+    borderBottomWidth: 1 * em,
+    borderBottomColor: "#28c7ee",
+    fontFamily: "OpenSans-Regular"
   },
 
-  ActionText:{
-    color:"#fff",
-    fontSize: 14*em,
+  ActionText: {
+    color: "#fff",
+    fontSize: 14 * em,
     fontFamily: "OpenSans-SemiBold"
   },
 
-  TermsText:{
-    paddingLeft:15*em,
-    paddingRight:15*em,
-    fontSize: 11*em,
-    marginTop:-2*em,
-    color:"#928da6",
-    lineHeight: 18*em,
-    fontFamily:"OpenSans-Regular"
+  TermsText: {
+    paddingLeft: 15 * em,
+    paddingRight: 15 * em,
+    fontSize: 10 * em,
+    //marginTop: 0 * em,
+    color: "#928da6",
+    lineHeight: 18 * em,
+    fontFamily: "OpenSans-Regular"
   },
 
-  linkText:{
-    color:"#28c7ee",
-    fontFamily:"OpenSans-Regular"
+  linkText: {
+    color: "#28c7ee",
+    fontFamily: "OpenSans-Bold"
   },
 
   checkBox: {
-    alignSelf: "center"
+    //justifyContent: "flex-start",
+    // alignItems: "flex-start"
+    alignSelf: "flex-start"
   }
 }
 

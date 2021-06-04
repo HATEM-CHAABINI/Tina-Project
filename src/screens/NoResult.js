@@ -1,12 +1,12 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors, WIDTH, Q_TYPES, em} from '../common/constants';
+import { colors, WIDTH, Q_TYPES, em, hm } from '../common/constants';
 import Ordinateur from '../components/svgicons/Ordinateur';
 import Periferique from '../components/svgicons/Periferique';
 import Astuce from '../components/svgicons/Astuce';
 import Logiciel from '../components/svgicons/Logiciel';
-import AnswerNotFound from '../components/svgicons/AnswerNotFound';
+import AnswerNotFound from '../components/svgicons/AnswerNot';
 import Internet from '../components/svgicons/Internet';
 import BottomArrow from '../components/svgicons/BottomArrow';
 import Alert from '../components/svgicons/Alert';
@@ -21,32 +21,32 @@ import { showRootToast } from '../common/utils';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 class NoResult extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = {solutionIndex: 1}
+    this.state = { solutionIndex: 1 }
   }
 
-  renderIcons(){
-    return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(60), height: verticalScale(60), resizeMode:'contain'}}  />)
+  renderIcons() {
+    return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(60), height: verticalScale(60), resizeMode: 'contain' }} />)
   }
 
   handleContinueClick = () => {
-    const {solutionIndex} = this.state;
-    const {questions} = this.props.question;
-    const {qType} = this.props;
-    if (solutionIndex == 1){
+    const { solutionIndex } = this.state;
+    const { questions } = this.props.question;
+    const { qType } = this.props;
+    if (solutionIndex == 1) {
       Actions.depanneurs()
-    }else{
-      const {isAuthenticated} = this.props.auth;
-      if (isAuthenticated){
+    } else {
+      const { isAuthenticated } = this.props.auth;
+      if (isAuthenticated) {
         // notify this answer when it's solved... just add it to history
         const solution = "";
-        addTinaHistory({type:qType, questions, solution})
+        addTinaHistory({ type: qType, questions, solution })
         showRootToast("Les questions ont été enregistrées");
 
         this.props.questionActions.clearQuestions();
         Actions.reset('home');
-      }else{
+      } else {
         Actions.signin();
       }
     }
@@ -57,100 +57,134 @@ class NoResult extends Component {
     Actions.reset('home');
   }
 
-  componentWillUnmount(){
-    if (this.props.question.questions.length > 0){
+  componentWillUnmount() {
+    if (this.props.question.questions.length > 0) {
       this.props.questionActions.removeLastQuestion()
     }
   }
 
-  render(){
+  render() {
     return (
-        <View style={styles.mainContainer}>
-          <StatusBar barstyle="light-content" backgroundColor={colors[this.props.qType][0]} />
-          <View style={styles.headerContainer}>
-            <LinearGradient
-              start={{x: 0, y: 0}} end={{x: 0, y: 1}}
-              colors={colors[this.props.qType]}
-              style={{flex:0.9}}>
+      <View style={styles.mainContainer}>
+        <StatusBar barstyle="light-content" backgroundColor={colors[this.props.qType][0]} />
+        <View style={styles.headerContainer}>
+          <LinearGradient
+            start={{ x: 0, y: 0 }} end={{ x: 0, y: 2 }}
+            colors={colors[this.props.qType]}
+            style={{ flex: 0.9 }}>
 
-                <View style={styles.headerContentContainer}>
-                  <View style={styles.circleOverlay}>
+            <View style={styles.headerContentContainer}>
+              <View style={styles.circleOverlay}>
 
-                    {this.renderIcons()}
+                {this.renderIcons()}
 
-                    <View style={styles.AnswerNotFoundWrapper}>
-                        <AnswerNotFound width={25*em} height={25*em} />
-                    </View>
-                  </View>
-
-                  <Text style={styles.titleText}>Je suis désolée</Text>
-                  <Text style={styles.descText}>Je n'ai pas trouvé de solution</Text>
+                <View style={styles.AnswerNotFoundWrapper}>
+                  <AnswerNotFound width={25 * em} height={25 * em} />
                 </View>
-            </LinearGradient>
+              </View>
+
+              <Text style={styles.titleText}>Je suis désolée</Text>
+              <Text style={styles.descText}>Je n'ai pas trouvé de solution</Text>
+            </View>
+          </LinearGradient>
+        </View>
+
+        <View style={styles.contentContainer}>
+
+          <Image source={require('../Assets/result_split.png')} style={styles.SplitImage} resizeMode={'stretch'} />
+
+          <View style={styles.ArrowWrapper}>
+            <BottomArrow width={45 * em} height={45 * em} />
           </View>
 
-          <View style={styles.contentContainer}>
+          <View style={styles.contentWrapper}>
 
-            <Image source={require('../Assets/result_split.png')} style={styles.SplitImage} resizeMode={'stretch'} />
-
-            <View style={styles.ArrowWrapper}>
-                <BottomArrow width={45*em} height={45*em} />
-            </View>
-
-            <View style={styles.contentWrapper}>
-
-              <Text style={styles.solutionText}>
+            <Text style={styles.solutionText}>
               Voici d’autres solutions :
               </Text>
 
-              <View style={styles.ChoiceWrapper}>
-                  <TouchableOpacity style={styles.ActionButton} onPress={() => {this.setState({solutionIndex: 0})}}>
-                    <View style={styles.CheckWrapper}>
-                        <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#fef8d9"}])}>
-                            <Alert width={16*em} height={16*em} />
-                        </View>
+            <View style={styles.ChoiceWrapper}>
+              {this.state.solutionIndex == 0 ?
+                <TouchableOpacity style={styles.ActionButtons} onPress={() => { this.setState({ solutionIndex: 0 }) }}>
+                  <View style={styles.CheckWrapper}>
+                    <View style={StyleSheet.flatten([styles.circleIconOverlay, { backgroundColor: "#fef8d9" }])}>
+                      <Alert width={16 * em} height={16 * em} />
+                    </View>
 
-                        <Text style={styles.CheckContent}>
-                        Être averti dès que Tina aura trouvé une solution à votre panne.
+                    <Text style={styles.CheckContent}>
+                      Être averti dès que Tina aura trouvé une solution à votre panne.
                         </Text>
 
-                        <CheckBox checked={this.state.solutionIndex == 0} />
+                    <CheckBox checked={this.state.solutionIndex == 0} />
+                  </View>
+                </TouchableOpacity> :
+                <TouchableOpacity style={styles.ActionButton} onPress={() => { this.setState({ solutionIndex: 0 }) }}>
+                  <View style={styles.CheckWrapper}>
+                    <View style={StyleSheet.flatten([styles.circleIconOverlay, { backgroundColor: "#fef8d9" }])}>
+                      <Alert width={16 * em} height={16 * em} />
                     </View>
-                  </TouchableOpacity>
 
-                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButton, {marginTop:18*em}])} onPress={() => {this.setState({solutionIndex: 1})}}>
-                    <View style={styles.CheckWrapper}>
-                        <View style={StyleSheet.flatten([styles.circleIconOverlay, {backgroundColor:"#f1eeff"}])}>
-                            <Tool width={16*em} height={16*em} />
-                        </View>
+                    <Text style={styles.CheckContent}>
+                      Être averti dès que Tina aura trouvé une solution à votre panne.
+                      </Text>
 
-                        <Text style={styles.CheckContent}>
-                          Être mis en contact avec un dépanneur le plus proche
+                    <CheckBox checked={this.state.solutionIndex == 0} />
+                  </View>
+                </TouchableOpacity>}
+
+
+
+              {this.state.solutionIndex == 1 ?
+                <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtons, { marginTop: 18 * em }])} onPress={() => { this.setState({ solutionIndex: 1 }) }}>
+
+                  <View style={styles.CheckWrapper}>
+                    <View style={StyleSheet.flatten([styles.circleIconOverlay, { backgroundColor: "#f1eeff" }])}>
+                      <Tool width={16 * em} height={16 * em} />
+                    </View>
+
+                    <Text style={styles.CheckContent}>
+                      Être mis en contact avec un dépanneur le plus proche
                         </Text>
 
-                        <CheckBox checked={this.state.solutionIndex == 1} />
+                    <CheckBox checked={this.state.solutionIndex == 1} />
+                  </View>
+                </TouchableOpacity> :
+
+                <TouchableOpacity style={StyleSheet.flatten([styles.ActionButton, { marginTop: 18 * em }])} onPress={() => { this.setState({ solutionIndex: 1 }) }}>
+
+                  <View style={styles.CheckWrapper}>
+                    <View style={StyleSheet.flatten([styles.circleIconOverlay, { backgroundColor: "#f1eeff" }])}>
+                      <Tool width={16 * em} height={16 * em} />
                     </View>
-                  </TouchableOpacity>
+
+                    <Text style={styles.CheckContent}>
+                      Être mis en contact avec un dépanneur le plus proche
+                      </Text>
+
+                    <CheckBox checked={this.state.solutionIndex == 1} />
+                  </View>
+                </TouchableOpacity>
+              }
+            </View>
+
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+              <View style={styles.ActionWrapper}>
+
+                <TouchableOpacity style={styles.ActionButtonBlue} onPress={this.handleContinueClick}>
+                  <Text style={styles.ActionBlueText}>Continuer</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.ActionButtonNoBg} onPress={this.handleBackToHome}>
+                  <Text style={styles.ActionNoBgText}>Fermer</Text>
+                </TouchableOpacity>
               </View>
-
-              <View style={{flex:1, justifyContent:"flex-end"}}>
-                <View style={styles.ActionWrapper}>
-
-                  <TouchableOpacity style={styles.ActionButtonBlue} onPress={this.handleContinueClick}>
-                    <Text style={styles.ActionBlueText}>Continuer</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.ActionButtonNoBg} onPress={this.handleBackToHome}>
-                    <Text style={styles.ActionNoBgText}>Fermer</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
             </View>
 
           </View>
 
         </View>
+
+      </View>
     )
   }
 }
@@ -167,15 +201,15 @@ const styles = {
   },
 
   contentContainer: {
-    flex:1,
-    marginTop: -150*em,
+    flex: 1,
+    marginTop: -150 * em,
     flexDirection: "column"
   },
 
-  contentWrapper:{
+  contentWrapper: {
     flex: 1,
-    flexDirection:"column",
-    marginTop:-100*em
+    flexDirection: "column",
+    marginTop: -100 * em
   },
 
   absolute: {
@@ -186,29 +220,29 @@ const styles = {
     right: 0,
   },
 
-  headerContentContainer:{
+  headerContentContainer: {
     flex: 1,
     flexDirection: "column",
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 80*em
+    paddingBottom: 80 * em
   },
 
-  titleText:{
-    color:"#fff",
-    fontSize: 18*em,
-    marginTop: 20*em,
-    fontFamily:"Merriweather-Black"
+  titleText: {
+    color: "#fff",
+    fontSize: 18 * em,
+    marginTop: 20 * em,
+    fontFamily: "Merriweather-Black"
   },
 
-  descText:{
-    color:"#fff",
-    fontSize: 14*em,
-    marginTop: 8*em,
-    fontFamily:"OpenSans-Regular"
+  descText: {
+    color: "#fff",
+    fontSize: 14 * em,
+    marginTop: 8 * em,
+    fontFamily: "OpenSans-Regular"
   },
 
-  AnswerNotFoundWrapper:{
+  AnswerNotFoundWrapper: {
     position: "absolute",
     right: 0,
     top: 0,
@@ -216,53 +250,53 @@ const styles = {
 
   SplitImage: {
     width: WIDTH,
-    height: WIDTH*0.4
+    height: WIDTH * 0.4
   },
 
   ArrowWrapper: {
-    position:'absolute',
-    left:0,
+    position: 'absolute',
+    left: 0,
     right: 0,
-    alignItems:'center',
-    marginTop: 15*em
+    alignItems: 'center',
+    marginTop: 15 * em
   },
 
-  ChoiceWrapper:{
+  ChoiceWrapper: {
     flex: 1,
     flexDirection: "column",
-    paddingLeft: 20*em,
-    paddingRight: 20*em,
-    marginTop: 18*em
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    marginTop: 18 * em
   },
 
-  CheckWrapper:{
+  CheckWrapper: {
     flex: 1,
-    flexDirection:"row",
-    justifyContent:"center",
-    alignItems:"center",
-    paddingTop:18*em,
-    paddingBottom:18*em
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 18 * em,
+    paddingBottom: 18 * em
   },
 
-  CheckContent:{
-    flex:1,
-    color:"#251b4d",
-    fontSize: 12*em,
-    paddingLeft: 18*em,
-    paddingRight: 13*em,
-    fontFamily:"OpenSans-Regular",
-    height:34*em,
+  CheckContent: {
+    flex: 1,
+    color: "#251b4d",
+    fontSize: 12 * em,
+    paddingLeft: 18 * em,
+    paddingRight: 13 * em,
+    fontFamily: "OpenSans-Regular",
+    height: 34 * em,
   },
 
   ActionButton: {
     overflow: 'hidden',
-    borderRadius: 18*em,
+    borderRadius: 18 * em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    paddingLeft:20*em,
-    paddingRight:20*em,
-    paddingTop:15*em,
-    paddingBottom:15*em,
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    paddingTop: 15 * em,
+    paddingBottom: 15 * em,
     justifyContent: 'center',
     shadowOffset: {
       width: 0,
@@ -273,71 +307,91 @@ const styles = {
     shadowOpacity: 0.1,
     elevation: 2,
   },
+  ActionButtons: {
+    // overflow: 'hidden',
+    borderRadius: 18 * em,
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    paddingTop: 15 * em,
+    paddingBottom: 15 * em,
+    justifyContent: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
 
-  solutionText:{
-    paddingLeft: 60*em,
-    paddingRight: 60*em,
-    marginTop: 18*em,
-    fontSize: 16*em,
-    color:"#251b4d",
+    elevation: 9,
+  },
+
+  solutionText: {
+    paddingLeft: 60 * em,
+    paddingRight: 60 * em,
+    marginTop: 18 * em,
+    fontSize: 16 * em,
+    color: "#251b4d",
     textAlign: "center",
     fontFamily: "Merriweather-Black"
   },
 
   circleOverlay: {
-    width: 80*em,
-    height: 80*em,
-    borderRadius: 40*em,
+    width: 80 * em,
+    height: 80 * em,
+    borderRadius: 40 * em,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:"#fff",
+    backgroundColor: "#fff",
     elevation: 20
   },
 
   circleIconOverlay: {
-    width: 34*em,
-    height: 34*em,
-    borderRadius: 17*em,
+    width: 34 * em,
+    height: 34 * em,
+    borderRadius: 17 * em,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   ActionButtonBlue: {
     overflow: 'hidden',
-    borderRadius: 18*em,
+    borderRadius: 18 * em,
     alignItems: 'center',
     backgroundColor: '#28c7ee',
-    height: 50*em,
+    height: 50 * em,
     justifyContent: 'center',
-    marginLeft:20*em,
-    marginRight:20*em,
+    marginLeft: 20 * em,
+    marginRight: 20 * em,
   },
 
-  ActionWrapper:{
-    backgroundColor:"#fff",
-    borderTopLeftRadius:20*em,
-    borderTopRightRadius: 20*em,
-    width:WIDTH,
-    paddingTop: 13*em,
-    paddingBottom: 13*em,
-    justifyContent:"center"
+  ActionWrapper: {
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20 * em,
+    borderTopRightRadius: 20 * em,
+    width: WIDTH,
+    paddingTop: 13 * em,
+    paddingBottom: 13 * em,
+    justifyContent: "center"
   },
 
   ActionButtonNoBg: {
-    justifyContent:"center", alignSelf:"center"
+    justifyContent: "center", alignSelf: "center"
   },
 
-  ActionBlueText:{
-    color:"#fff",
-    fontSize: 14*em,
-    fontFamily:"OpenSans-SemiBold"
+  ActionBlueText: {
+    color: "#fff",
+    fontSize: 14 * em,
+    fontFamily: "OpenSans-SemiBold"
   },
 
-  ActionNoBgText:{
-    color:"#a099b0",
-    fontSize: 14*em,
-    padding: 15*em,
-    fontFamily:"OpenSans-SemiBold"
+  ActionNoBgText: {
+    color: "#a099b0",
+    fontSize: 14 * em,
+    padding: 15 * em,
+    fontFamily: "OpenSans-SemiBold"
   }
 }
 
@@ -353,5 +407,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(NoResult);
+  mapStateToProps,
+  mapDispatchToProps)(NoResult);

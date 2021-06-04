@@ -3,7 +3,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, StyleSheet } from 'rea
 import Modal from 'react-native-modal'
 import { BlurView } from "@react-native-community/blur";
 import RatingStars from './RatingStars';
-import {WIDTH, em} from '../common/constants';
+import {WIDTH, em, hm} from '../common/constants';
 import { EventEmitter } from 'react-native';
 
 var {height, width} = Dimensions.get('window');
@@ -42,10 +42,16 @@ export default ElevationModal = ({isModalVisible, onPressSend, onPressSkip, rate
               <View style={{backgroundColor:"#fff", borderRadius:20*em, padding:38*em, marginTop:-30*em, zIndex:-1}}>
                 <Text style={styles.infoTextTitle}>Je suis ravie de vous avoir dépanné(e)!</Text>
 
-                <Text style={styles.infoTextContent}>Notre réponse a été :</Text>
-
-                <RatingStars rating={rate} />
-
+                <Text style={styles.infoTextContent}>Évaluez notre dépannage :</Text>
+<View style={{  
+   
+    
+    paddingLeft:50*em, 
+    paddingRight:50*em, 
+   
+    }}> 
+                <RatingStars rating={0} />
+</View>
               </View>
 
               <View style={styles.ActionWrapper}>
@@ -83,7 +89,7 @@ const styles = {
   tinaLogo:{
     width: 230*em,
     height: 230*em,
-    marginBottom: 0*em
+    marginBottom:-1*hm
 
   },
 
@@ -97,9 +103,9 @@ const styles = {
   infoTextContent: {
     color:"#928da6", 
     textAlign: "center", 
-    fontSize: 12*em, 
-    paddingLeft:50*em, 
-    paddingRight:50*em, 
+    fontSize: 15*em, 
+    paddingLeft:40*em, 
+    paddingRight:40*em, 
     marginTop: 20*em,
     fontFamily: "OpenSans-Regular"
   },

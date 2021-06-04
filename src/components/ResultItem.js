@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native';
 import Dash from 'react-native-dash';
-import { em } from '../common/constants';
+import { em, hm } from '../common/constants';
 
 export default ResultItem = ({id, title, answer}) => {
     var itemStyle = styles.ResultItem;
@@ -11,7 +11,9 @@ export default ResultItem = ({id, title, answer}) => {
     return(
         <View style={itemStyle}>
             <View style={styles.TitleContainer}>
-                <Text style={styles.numberCircle}>{id}</Text>
+                <View style={styles.numberCircle}>
+                <Text style={styles.numberCircles}>{id}</Text>
+                </View>
                 <Text style={styles.titleText}>{title}</Text>
             </View>
 
@@ -41,15 +43,25 @@ const styles = {
 
     numberCircle:{
         backgroundColor:"#fff", 
-        elevation:20, 
+        // elevation:20, 
         width:20*em, 
-        height:20*em, 
+        height:20*hm, 
         borderRadius:10*em, 
+      
+        
+        // paddingTop:3*hm
+    },
+    numberCircles:{
+      
+        // elevation:20, 
+        width:20*em, 
+        height:20*hm, 
+        
         color:"#251b4d", 
         fontSize: 11*em, 
         fontFamily:"OpenSans-Bold", 
         textAlign:"center", 
-        paddingTop:3
+        paddingTop:3*hm
     },
 
     titleText:{

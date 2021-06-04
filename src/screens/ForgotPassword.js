@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
         </View>
     
         <View style={styles.contentContainer}>
-          <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} resizeMode={'stretch'} />
+          <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} resizeMode={'contain'} />
           
           <Text style={styles.titleText}>Mot de passe oublié ?</Text>
     
@@ -69,7 +69,7 @@ class ForgotPassword extends Component {
           </Text>
     
           <View style={styles.contentWrapper}>
-            <MyTextInput style={styles.TextInput}  textContentType={"emailAddress"} autoFocus={true} placeholder={"Email"} value={email} handleChange={(text)=>this.setState({email:text})}/>
+            <MyTextInput style={styles.TextInput}  textContentType={"emailAddress"} autoFocus={true} placeholder={"Renseignez votre email"} value={email} handleChange={(text)=>this.setState({email:text})}/>
     
             <TouchableOpacity style={[styles.ActionButton, {marginTop:25*em, marginBottom:8*em}]} onPress={this.handlePasswordReset.bind(this)} >
               <Text style={styles.ActionText}>Réinitialiser</Text>

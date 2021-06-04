@@ -95,7 +95,9 @@ class FAQDetail extends Component {
     return (
 
       
+      <ScrollView  style={styles.mainContainer}>
 
+   
         <View style={styles.mainContainer}>
           <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
@@ -185,8 +187,9 @@ class FAQDetail extends Component {
             underlineColorAndroid="transparent"
             placeholder={"Écrivez votre message ici"}
             placeholderTextColor={"#BCB8CC"}
-            numberOfLines={3}
-            multiline={true}
+            multiline
+            numberOfLines={4}
+            maxLength={400}
             onFocus={()=>this.setState({showButton: true})}
             onEndEditing={()=>this.setState({showButton: false})}
             //onSelectionChange={()=>this.setState({showButton: false})}
@@ -196,7 +199,7 @@ class FAQDetail extends Component {
           value={this.state.text}
           />
             {(showButton && selected) ?
-            (<TouchableOpacity style={[styles.ActionButton, {marginBottom:8*em}]} onPress={this.handleSendForm} >
+            (<TouchableOpacity style={[styles.ActionButton]} onPress={this.handleSendForm} >
               <Text style={styles.ActionText}>Continuer</Text>
             </TouchableOpacity>):null }
 
@@ -204,6 +207,7 @@ class FAQDetail extends Component {
             
           </View>
         </View>
+        </ScrollView>
     )
   }
 }
@@ -260,7 +264,6 @@ const styles = {
     textAlign: 'left',
     textAlignVertical: 'top',
     width:'90%',
-    height: 70*em,
     borderWidth: 2,
     borderLeftWidth: 0,
     borderRightWidth: 0,

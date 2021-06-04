@@ -2,9 +2,9 @@ import React, { Component, useState } from 'react';
 import {
   View,
   Text,
-  Image, 
+  Image,
   TouchableOpacity,
-  StyleSheet, 
+  StyleSheet,
   StatusBar,
 } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Info from '../components/svgicons/Info';
 import { Actions } from 'react-native-router-flux';
 import InfoModal from '../components/InfoModal';
-import {colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS, HEIGHT} from '../common/constants';
+import { colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS, HEIGHT } from '../common/constants';
 import EvaluationModal from '../components/EvaluationModal';
 import { getQuestionByCategoryAndId } from '../common/firebase/database';
 import { getQuestionByCategory } from '../common/firebase/database';
@@ -30,77 +30,78 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 let advIndex = 0;
 class Cat extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       idyy: 0,
-    }}
-
-
- componentDidMount(){
-  ny=0;
-  nn=0;
-  nd=0;
-  idy=0;
-  idn=0;
-  by=true;
-  bn=true;
-  bd=true;
-  bo = true
-  i=0;
-    getQuestionByCategory(this.props.qType).then(res => { 
-      idy =res.find(data => data.qid ==this.props.ques).yid
-      idn =res.find(data => data.qid ==this.props.ques).nid
-     while (by){
-
-if (idy !=undefined && res.find(data => data.qid ==idy)){
-    ny++
-  idy =res.find(data => data.qid ==idy).yid
-
-}else{
-  by=false
-}
-   }
-
-   while (bn){
-
-    if (idn !=undefined && res.find(data => data.qid ==idn)){
-        nn++
-      idn =res.find(data => data.qid ==idn).nid
-    
-    }else{
-      bn=false
     }
-       }
+  }
 
 
-       i = (this.state.idyy+(1/((ny+nn)+1)))  
-    
-      if (i =="Infinity"){
-        i=1;
+  componentDidMount() {
+    ny = 0;
+    nn = 0;
+    nd = 0;
+    idy = 0;
+    idn = 0;
+    by = true;
+    bn = true;
+    bd = true;
+    bo = true
+    i = 0;
+    getQuestionByCategory(this.props.qType).then(res => {
+      idy = res.find(data => data.qid == this.props.ques).yid
+      idn = res.find(data => data.qid == this.props.ques).nid
+      while (by) {
+
+        if (idy != undefined && res.find(data => data.qid == idy)) {
+          ny++
+          idy = res.find(data => data.qid == idy).yid
+
+        } else {
+          by = false
+        }
       }
-       this.setState({
-        idyy:i,
+
+      while (bn) {
+
+        if (idn != undefined && res.find(data => data.qid == idn)) {
+          nn++
+          idn = res.find(data => data.qid == idn).nid
+
+        } else {
+          bn = false
+        }
+      }
+
+
+      i = (this.state.idyy + (1 / ((ny + nn) + 1)))
+
+      if (i == "Infinity") {
+        i = 1;
+      }
+      this.setState({
+        idyy: i,
       })
-   
-  })
- 
-  
-}
+
+    })
+
+
+  }
 
 
   render(props) {
     return (
       <View style={styles.progressWrapper}>
-              
-      <LinearGradient
-        start={{x: 0, y: 0}} end={{x:1, y: 0}}
-        colors={colors[this.props.qType]}
-        
-        style={{width: this.state.idyy* WIDTH, height: 20*em}}>
-                      
-      </LinearGradient>
-    </View> 
+
+        <LinearGradient
+          start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+          colors={colors[this.props.qType]}
+
+          style={{ width: this.state.idyy * WIDTH, height: 20 * em }}>
+
+        </LinearGradient>
+      </View>
     );
   }
 }
@@ -113,114 +114,116 @@ class Questionnaire extends Component {
   qType = "";
   solution = "";
   isFromHistory = false;
-
   constructor(props) {
     super(props)
     this.state = {
       infoVisible: false,
       evaluationVisible: false,
       selectedAds: null,
-      stopTimer: true
+      stopTimer: true,
+      backBtn: false,
     }
   }
 
   // UNSAFE_componentWillMount() {
   //   this.setAdvertisements();
   // }
-  
+
   componentDidMount() {
     console.log('======= questionnaire ======== ');
     this.setAdvertisements();
   }
 
-  shouldComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState) {
     console.log('===== nextState: ', nextState);
     if (this.state.infoVisible == nextState.infoVisible &&
-        this.state.evaluationVisible == nextState.evaluationVisible){
+      this.state.evaluationVisible == nextState.evaluationVisible) {
       if (this.state.selectedAds !== nextState.selectedAds)
-          return true;
+        return true;
       return false;
     }
     return true;
   }
 
-  componentWillUnmount(){
-    if (this.props.question.questions.length > 0){
+  componentWillUnmount() {
+    if (this.props.question.questions.length > 0) {
       this.props.questionActions.removeLastQuestion()
     }
   }
 
-  renderInfoModal(){
-    const {info} = this.props.qinfo;
+  renderInfoModal() {
+    const { info } = this.props.qinfo;
     if (!info) return null;
 
-    const {title, content, image} = info;
+    const { title, content, image } = info;
 
-    if (this.state.infoVisible){
+    if (this.state.infoVisible) {
       return (
-          <InfoModal title={title} content={content} image={{uri:image}} isModalVisible={true} onPress={()=>{this.setState({infoVisible:false})}}/>
+        <InfoModal title={title} content={content} image={{ uri: image }} isModalVisible={true} onPress={() => { this.setState({ infoVisible: false }) }} />
       )
-    }else{
+    } else {
       return null;
     }
   }
 
-  handleEvaluationSendClick(){
-    this.setState({evaluationVisible:false})
-    this.props.appActions.setEvaluated({evaluated:true});
+  handleEvaluationSendClick() {
+    this.setState({ evaluationVisible: false })
+    this.props.appActions.setEvaluated({ evaluated: true });
 
-    Actions.foundresult({qType:this.qType, solution:this.solution, isFromHistory:this.isFromHistory})
+    Actions.foundresult({ qType: this.qType, solution: this.solution, isFromHistory: this.isFromHistory })
   }
 
-  handleEvaluationSkipClick(){
-    this.setState({evaluationVisible:false})
+  handleEvaluationSkipClick() {
+    this.setState({ evaluationVisible: false })
 
-    Actions.foundresult({qType:this.qType, solution:this.solution, isFromHistory:this.isFromHistory})
+    Actions.foundresult({ qType: this.qType, solution: this.solution, isFromHistory: this.isFromHistory })
   }
 
-  processFoundAnswer(qType, solution, isFromHistory){
-    const {app} = this.props;
+  processFoundAnswer(qType, solution, isFromHistory) {
+    const { app } = this.props;
     //if (!app.evaluated){
-      this.qType = qType;
-      this.solution = solution;
-      this.isFromHistory = isFromHistory;
-      this.setState({evaluationVisible:true});
+    this.qType = qType;
+    this.solution = solution;
+    this.isFromHistory = isFromHistory;
+    this.setState({ evaluationVisible: true });
     //}else{
     //  Actions.foundresult({qType, solution, isFromHistory})
     //}
   }
 
-  handleAnswerClick(type){
+  handleAnswerClick(type) {
     const { qinfo, qType, questionActions } = this.props;
     let qid = "";
     let answerText = "";
-    if (type == this.ANSWER_TYPE_YES){
+    if (type == this.ANSWER_TYPE_YES) {
       qid = qinfo.yid;
       answerText = "Oui";
-    }else if (type == this.ANSWER_TYPE_NO){
+    } else if (type == this.ANSWER_TYPE_NO) {
       qid = qinfo.nid;
       answerText = "Non";
-    }else if (type == this.ANSWER_TYPE_DUNNO){
+    } else if (type == this.ANSWER_TYPE_DUNNO) {
       qid = qinfo.did;
       answerText = "Je ne sais pas";
     }
+    this.setState({ backBtn: true })
 
     questionActions.addQuestion({
-      "qid":qinfo['qid'],
-      "title":qinfo['title'],
-      "answerId":qid,
-      "answerText":answerText
+      "qid": qinfo['qid'],
+      "title": qinfo['title'],
+      "answerId": qid,
+      "answerText": answerText
     })
 
-    if (qid != ""){
+    if (qid != "") {
       // Get the corresponding question
       const _this = this;
       getQuestionByCategoryAndId(qType, qid).then(res => {
         if (!res) {
           Actions.noresult(this.props)
-        } else if ((res['qid'] != undefined)){
-          Actions.questionnaire({qType:qType, qinfo:res})
-        } else if ((res['solution'] != undefined) && (res['solution'] != "")){
+        } else if ((res['qid'] != undefined)) {
+          this.setState({ backBtn: true });
+          Actions.questionnaire({ qType: qType, qinfo: res, b: true })
+        } else if ((res['solution'] != undefined) && (res['solution'] != "")) {
           if (_this.props) {
             const app = _this.props.app;
             const auth = _this.props.auth;
@@ -231,18 +234,18 @@ class Questionnaire extends Component {
           }
 
           this.processFoundAnswer(qType, res['solution'], false)
-        }else if ((res['solution'] != undefined) && (res['solution'] == "")){
+        } else if ((res['solution'] != undefined) && (res['solution'] == "")) {
           Actions.noresult(this.props)
         }
       });
     }
   }
 
-  handleGoBack(){
+  handleGoBack() {
     Actions.pop();
   }
 
-  handleClose(event){
+  handleClose(event) {
     this.props.questionActions.clearQuestions();
     Actions.popTo('home');
   }
@@ -264,7 +267,7 @@ class Questionnaire extends Component {
   }
 
   handleGoInfoWindow = () => {
-    this.setState({infoVisible:true})
+    this.setState({ infoVisible: true })
   }
 
   changeImageUrl2Https = (imageUrl) => {
@@ -273,16 +276,16 @@ class Questionnaire extends Component {
     return imageUrl;
   }
 
-  renderEvaluationModal(){
-    if (this.state.evaluationVisible){
+  renderEvaluationModal() {
+    if (this.state.evaluationVisible) {
       return (
         <EvaluationModal
-          rate = {4}
+          rate={4}
           isModalVisible={true}
           onPressSend={this.handleEvaluationSendClick.bind(this)}
-          onPressSkip={this.handleEvaluationSkipClick.bind(this)}/>
+          onPressSkip={this.handleEvaluationSkipClick.bind(this)} />
       )
-    }else{
+    } else {
       return null;
     }
   }
@@ -296,7 +299,7 @@ class Questionnaire extends Component {
         testDevices={[AdMobBanner.simulatorId]}
         onAdFailedToLoad={error => this.handleAdFailedToLoad(error)}
       /> :
-      null
+        null
     );
   };
 
@@ -304,7 +307,7 @@ class Questionnaire extends Component {
     const { advertisements } = this.props.app;
     //console.log('===== advertisements: ', advertisements);
     const res = [];
-    if (advertisements){
+    if (advertisements) {
       // Filtering due date
       const adsKeys = Object.keys(advertisements).reverse();
       //console.log('====== adsKeys: ', adsKeys)
@@ -352,22 +355,38 @@ class Questionnaire extends Component {
     ) : null;
   }
 
-  renderImage(){
-    if (this.props.qType == Q_TYPES.L){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}  />)
-    }else if (this.props.qType == Q_TYPES.O){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'contain'}}  />)
-    }else if (this.props.qType == Q_TYPES.P){
-      return (<Image source={require('../Assets/tina-question.png')} style={{width: scale(500), height: verticalScale(220), resizeMode:'contain'}}/>)
-    }else if (this.props.qType == Q_TYPES.I){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}/>)
-    }else if (this.props.qType == Q_TYPES.A){
-      return (<Image source={require('../Assets/tina-question-2.png')} style={{width: scale(550), height: verticalScale(230), resizeMode:'contain'}}/>)
+  renderImage() {
+    if (this.props.qType == Q_TYPES.L) {
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(550), height: verticalScale(230), resizeMode: 'contain' }} />)
+    } else if (this.props.qType == Q_TYPES.O) {
+      return (<Image source={require('../Assets/tina-question.png')} style={{ width: scale(500), height: verticalScale(220), resizeMode: 'contain' }} />)
+    } else if (this.props.qType == Q_TYPES.P) {
+      return (<Image source={require('../Assets/tina-question.png')} style={{ width: scale(500), height: verticalScale(220), resizeMode: 'contain' }} />)
+    } else if (this.props.qType == Q_TYPES.I) {
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(550), height: verticalScale(230), resizeMode: 'contain' }} />)
+    } else if (this.props.qType == Q_TYPES.A) {
+      return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(550), height: verticalScale(230), resizeMode: 'contain' }} />)
     }
   }
-  render(){
-    const {qinfo, auth} = this.props;
-    const {info} = qinfo;
+
+  handleBackk = (type, info) => {
+    console.log("###############################################");
+    const id = this.state.idyy;
+    console.log("########## idyy ############");
+    console.log(this.props.question.questions);
+    console.log("########## le graaal ############");
+    console.log(info);
+
+    const { qinfo, qType, questionActions } = this.props;
+    console.log("########## le diamand ############");
+    console.log(this.props.question.questions[this.props.question.questions.length - 1]);
+    Actions.questionnaire({ qType: qType, qinfo: this.props.question.questions[this.props.question.questions.length - 1] })
+
+
+  }
+  render() {
+    const { qinfo, auth } = this.props;
+    const { info } = qinfo;
     const { selectedAds } = this.state;
     const credential = (auth && auth.credential) || null;
     const _user = (credential && auth.credential._user) || null;
@@ -376,55 +395,86 @@ class Questionnaire extends Component {
     console.log('===== selectedAds: ', selectedAds);
     console.log("QUESTIONNAIR!", qinfo['title']);
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
 
         <View style={styles.mainContainer}>
           <StatusBar barstyle="light-content" backgroundColor={colors[this.props.qType][0]} />
           <View style={styles.headerContainer}>
             <LinearGradient
-              start={{x: 0, y: 0}} end={{x: 0, y: 1}}
+              start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }}
               colors={colors[this.props.qType]}
-              style={{flex:0.9}}>
+              style={{ flex: 0.9 }}>
 
-                <View style={{flex: 1, flexDirection: "column"}}>
+              <View style={{ flex: 1, flexDirection: "column" }}>
 
-                  <View style={{flexDirection:'row',
-                                padding: 20*em,
-                                justifyContent:'flex-end',
-                                alignItems:'center'}}>
-                    <View style={{flex:1, paddingLeft:50*em, alignItems:'center'}}><Image source={require("../Assets/tina_header.png")} style={{height: 30*em, width: 71*em}} resizeMode={"cover"}/></View>
-                    <MenuBtn image={"close"} onPress={this.handleClose.bind(this)}/>
+                <View style={{
+                  flexDirection: 'row',
+                  padding: 20 * em,
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
+                }}>
+                  <View style={{ flex: 1, paddingLeft: 50 * em, alignItems: 'center' }}>
+                    <Image source={require("../Assets/tina_header.png")} style={{ height: 30 * em, width: 71 * em }} resizeMode={"cover"} />
+                  </View>
+                  <MenuBtn image={"close"} onPress={this.handleClose.bind(this)} />
+                  {this.props.b == true ?
+                    <TouchableOpacity style={{ position: 'absolute', left: 20 * em, top: 325 * em, zIndex: 7 }}
+                      onPress={() => this.handleBackk(this.props.qtype, qinfo)}>
+                      <View style={{
+                        backgroundColor: "#FFF",
+                        width: 39 * em, height: 39 * em,
+                        borderRadius: 14 * em,
+                        elevation: 5,
+                        shadowColor: '#254D56',
+                        shadowOffset: {
+                          width: 0,
+                          height: 12 * em,
+                        },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 25 * em,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }} >
+                        <Back width={15 * em} height={13 * em} />
+                        {/* <View style={{ position: 'absolute', left: 10 * em, top: 12 * em, zIndex: 7 }}><Back width={15 * em} height={13 * em} /></View> */}
+
+                      </View>
+
+                    </TouchableOpacity> : <></>}
+                </View>
+
+                <View style={{ flex: 1 }}>
+                  <View style={styles.absolute}>
+                    <View style={{ position: 'absolute', right: 30 * em, bottom: 100 * em }}>
+                      <RectangleImage image={"T1"} size={33 * em} />
+                    </View>
+
+                    <View style={{ position: 'absolute', left: 30 * em, bottom: 150 * em }}>
+                      <RectangleImage image={"T2"} size={25 * em} />
+                    </View>
+
+                    <View style={{ position: 'absolute', right: 80 * em, top: 60 * em }}>
+                      <RectangleImage image={"T3"} size={17 * em} />
+                    </View>
                   </View>
 
-                  <View style={{flex:1}}>
-                    <View style={styles.absolute}>
-                      <View style={{position: 'absolute', right: 30*em, bottom: 100*em}}>
-                        <RectangleImage image={"T1"} size={33*em} />
-                      </View>
-
-                      <View style={{position: 'absolute', left: 30*em, bottom: 150*em}}>
-                      <RectangleImage image={"T2"} size={25*em} />
-                      </View>
-
-                      <View style={{position: 'absolute', right: 80*em, top: 60*em}}>
-                        <RectangleImage image={"T3"} size={17*em} />
-                      </View>
-                    </View>
-
-                    <View style={styles.absolute, {flex:1, alignItems:"center", flexDirection:"column-reverse", padding:37*em}}>
+                  <View style={styles.absolute, { flex: 1, alignItems: "center", flexDirection: "column-reverse", padding: 37 * em }}>
                     {this.renderImage()}
-                    </View>
                   </View>
                 </View>
+              </View>
             </LinearGradient>
           </View>
 
           <View style={styles.contentContainer}>
-            <Image source={require('../Assets/questionair_split.png')} style={{width: WIDTH, height: WIDTH*0.4}} resizeMode={'stretch'} />
+            <Image source={require('../Assets/questionair_split.png')} style={{ width: WIDTH, height: WIDTH * 0.4 }} resizeMode={'stretch'} />
 
-            <TouchableOpacity style={styles.ButtonWrapper} elevation={20} onPress={this.handleGoBack}>
-              <Back width={15*em} height={15*em}/>
-            </TouchableOpacity>
+
+            {/* back button
+            {this.state.BackBtn == true ?
+              <TouchableOpacity style={styles.ButtonWrapper} elevation={20} onPress={this.handleGoBack}>
+                <Back width={15 * em} height={15 * em} />
+              </TouchableOpacity> : <></>} */}
 
             <View style={styles.contentWrapper}>
 
@@ -432,8 +482,8 @@ class Questionnaire extends Component {
                 {this.props.qinfo.title}
               </Text>
 
-              <View style={{flex: 1, flexDirection:"column-reverse"}}>
-              <Cat  qType={this.props.qType} ques={qinfo['qid']}/>
+              <View style={{ flex: 1, flexDirection: "column-reverse" }}>
+                <Cat qType={this.props.qType} ques={qinfo['qid']} />
 
                 {/* <View style={styles.progressWrapper}>
 
@@ -446,27 +496,27 @@ class Questionnaire extends Component {
                 </View> */}
 
                 <View style={styles.answerWrapper}>
-                    <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtion, {flex:1}])} onPress={this.handleAnswerClick.bind(this, this.ANSWER_TYPE_YES)}>
-                      <Text style={StyleSheet.flatten([styles.answerText, {color:colors[this.props.qType][0]}])}>Oui</Text>
-                    </TouchableOpacity>
+                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtion, { flex: 1 }])} onPress={this.handleAnswerClick.bind(this, this.ANSWER_TYPE_YES)}>
+                    <Text style={StyleSheet.flatten([styles.answerText, { color: colors[this.props.qType][0] }])}>Oui</Text>
+                  </TouchableOpacity>
 
-                    <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtion, {flex:1, marginLeft: 15*em}])} onPress={this.handleAnswerClick.bind(this, this.ANSWER_TYPE_NO)}>
-                      <Text style={StyleSheet.flatten([styles.answerText, {color:colors[this.props.qType][0]}])}>Non</Text>
-                    </TouchableOpacity>
+                  <TouchableOpacity style={StyleSheet.flatten([styles.ActionButtion, { flex: 1, marginLeft: 15 * em }])} onPress={this.handleAnswerClick.bind(this, this.ANSWER_TYPE_NO)}>
+                    <Text style={StyleSheet.flatten([styles.answerText, { color: colors[this.props.qType][0] }])}>Non</Text>
+                  </TouchableOpacity>
                 </View>
 
-                <View styles={{backgroundColor:"#fff"}}>
+                <View styles={{ backgroundColor: "#fff" }}>
                   <TouchableOpacity style={styles.ActionButtionNoShadow} onPress={this.handleAnswerClick.bind(this, this.ANSWER_TYPE_DUNNO)}>
                     <Text style={styles.dunnoText}>Je ne sais pas</Text>
                   </TouchableOpacity>
 
                 </View>
 
-                { info &&
-                <TouchableOpacity style={styles.infoWrapper} onPress={this.handleGoInfoWindow.bind(this)}>
-                  <Info width={12*em} height={12*em} color={colors[this.props.qType][0]}/>
-                  <Text style={StyleSheet.flatten([styles.infoText, {color:colors[this.props.qType][0]}])}> +info</Text>
-                </TouchableOpacity>
+                {info &&
+                  <TouchableOpacity style={styles.infoWrapper} onPress={this.handleGoInfoWindow.bind(this)}>
+                    <Info width={12 * em} height={12 * em} color={colors[this.props.qType][0]} />
+                    <Text style={StyleSheet.flatten([styles.infoText, { color: colors[this.props.qType][0] }])}> +info</Text>
+                  </TouchableOpacity>
                 }
               </View>
 
@@ -499,15 +549,15 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    flex:1,
-    marginTop: -125*em,
+    flex: 1,
+    marginTop: -125 * em,
     flexDirection: "column"
   },
 
-  contentWrapper:{
+  contentWrapper: {
     flex: 1,
-    flexDirection:"column",
-    marginTop:-80*em
+    flexDirection: "column",
+    marginTop: -80 * em
   },
 
   absolute: {
@@ -520,11 +570,11 @@ const styles = StyleSheet.create({
 
   ButtonWrapper: {
     overflow: 'hidden',
-    borderRadius: 15*em,
+    borderRadius: 15 * em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    width:40*em,
-    height: 40*em,
+    width: 40 * em,
+    height: 40 * em,
     justifyContent: 'center',
     shadowOffset: {
       width: 10,
@@ -534,95 +584,95 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     elevation: 15,
-    position:"absolute",
+    position: "absolute",
     left: WIDTH * 48 / 750,
     top: WIDTH * 0.4 * 50 / 300
   },
 
   ActionButtion: {
     overflow: 'hidden',
-    borderRadius: 15*em,
+    borderRadius: 15 * em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    height: 50*em,
+    height: 50 * em,
     justifyContent: 'center',
     ...Platform.select({
-        ios: {
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowRadius: 20,
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
+      ios: {
+        shadowOffset: {
+          width: 0,
+          height: 0,
         },
-        android: {
-          elevation: 5,
-        }
+        shadowRadius: 20,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+      },
+      android: {
+        elevation: 5,
+      }
     }),
-    
+
   },
-  
+
 
   ActionButtionNoShadow: {
     overflow: 'hidden',
-    borderRadius: 15*em,
+    borderRadius: 15 * em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    height: 50*em,
+    height: 50 * em,
     justifyContent: 'center',
-    
-    marginLeft:20*em,
-    marginRight:20*em,
-    zIndex:-1
+
+    marginLeft: 20 * em,
+    marginRight: 20 * em,
+    zIndex: -1
   },
 
-  infoWrapper:{
-    flexDirection:"row",
-    justifyContent:'center',
-    alignItems:'center',
-    marginBottom: 12*em
+  infoWrapper: {
+    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12 * em
   },
 
-  infoText:{
-    fontSize: 12*em,
+  infoText: {
+    fontSize: 12 * em,
     fontFamily: "OpenSans-Regular",
   },
 
-  dunnoText:{
-    color:"#908ea6",
-    fontSize: 14*em,
+  dunnoText: {
+    color: "#908ea6",
+    fontSize: 14 * em,
     fontFamily: "OpenSans-SemiBold"
   },
 
-  answerWrapper:{
-    paddingLeft: 20*em,
-    paddingRight:20*em,
-    paddingBottom: 20*em,
-    paddingTop: 15*em,
-    flexDirection:"row",
-    zIndex:-1
+  answerWrapper: {
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    paddingBottom: 20 * em,
+    paddingTop: 15 * em,
+    flexDirection: "row",
+    zIndex: -1
   },
 
-  answerText:{
-    fontSize: 14*em,
-    fontFamily:"OpenSans-SemiBold"
+  answerText: {
+    fontSize: 14 * em,
+    fontFamily: "OpenSans-SemiBold"
   },
 
-  progressWrapper:{
+  progressWrapper: {
     width: WIDTH,
-    height: 20*em,
-    backgroundColor:"#e1e0e5"
+    height: 20 * em,
+    backgroundColor: "#e1e0e5"
   },
 
-  questionText:{
-    paddingLeft: 50*em,
-    paddingRight: 50*em,
-    fontSize: 18*em,
-    color:"#251b4d",
+  questionText: {
+    paddingLeft: 50 * em,
+    paddingRight: 50 * em,
+    fontSize: 18 * em,
+    color: "#251b4d",
     textAlign: "center",
     fontFamily: "Merriweather-Black",
-    paddingTop:20*em
+    paddingTop: 20 * em
   },
   advertisementImge: {
     width: '100%', //370,
@@ -642,6 +692,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Questionnaire);

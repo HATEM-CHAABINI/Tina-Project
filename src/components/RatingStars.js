@@ -48,7 +48,7 @@ const styles = {
   ratingWrapper: {
     flexDirection:"row", 
     justifyContent:"center", 
-    marginTop: 20*em, 
+    marginTop: 10*em, 
     marginBottom: 20*em
   },
 
@@ -67,6 +67,7 @@ const styles = {
   },
 
   ratingStar:{
-    marginRight: 15*em
+    marginRight: 7.5*em,
+    marginLeft: 7.5*em
   }
 }

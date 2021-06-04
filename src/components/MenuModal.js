@@ -394,7 +394,7 @@ console.log('===== token: ', token);
               <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>À Propos</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressAbout} elevation={2}>
-                  <Image source={require('../Assets/tina-question.png')} style={{ width: 30, height: 30 }} />
+                  <Image source={require('../Assets/tina-question.png')} style={{ width: 30*em, height: 30*em,resizeMode:"contain" }} />
                 </TouchableOpacity>
               </View>
 
@@ -464,6 +464,7 @@ const styles = {
   menuWrapper: {
     flexDirection: "row",
     marginTop: 16*em,
+ 
     alignItems:"center",
     justifyContent:"flex-end"
   },
@@ -479,8 +480,8 @@ const styles = {
     borderRadius: 15*em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    width:scale(35),
-    height:verticalScale(35),
+    width:scale(39),
+    height:verticalScale(39),
     justifyContent: 'center',
     marginLeft: 15*em
   },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, Image, 
+  View, Text, TouchableOpacity, Image,
   Dimensions, Platform, Alert
 } from 'react-native'
 import NonVersion from './svgicons/NonVersion'
@@ -8,7 +8,7 @@ import Arrow from './svgicons/Arrow'
 import User from './svgicons/User'
 import Help from './svgicons/Help'
 import History from './svgicons/History'
-import Announceur from './svgicons/Announceur'
+import PhoneMenu from './svgicons/PhoneMenu'
 import Setting from './svgicons/Setting'
 import RectangleImage from './RectangleImage'
 import Modal from 'react-native-modal'
@@ -27,7 +27,7 @@ import { updateUserInfo } from '../common/firebase/database';
 import moment from 'moment';
 import { LoginActions } from '../actions';
 
-var {height, width} = Dimensions.get('window');
+var { height, width } = Dimensions.get('window');
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 class MenuModal extends Component {
@@ -39,11 +39,11 @@ class MenuModal extends Component {
     doingPayment: false
   }
 
-  handleButton = () =>{
+  handleButton = () => {
 
     Platform.select({
-      ios:{},
-      android:{}
+      ios: {},
+      android: {}
     });
 
     Alert.alert(
@@ -53,16 +53,16 @@ class MenuModal extends Component {
         text: 'Annuler',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel'
-      },{
-        text: Platform.OS === 'ios' ?'Apple Pay':'Google Pay',
+      }, {
+        text: Platform.OS === 'ios' ? 'Apple Pay' : 'Google Pay',
         onPress: () => this.handlePayer()
       },
       {
         text: 'Carte B',
         onPress: () => this.handlePayerCard()
       },
-       
-    ],
+
+      ],
       { cancelable: false },
     );
   }
@@ -90,7 +90,7 @@ class MenuModal extends Component {
     );
   }
 
-  handlePayerCard = async () =>{
+  handlePayerCard = async () => {
 
     console.log('===== handlePayer');
     const { auth } = this.props;
@@ -99,32 +99,32 @@ class MenuModal extends Component {
     if (!userInfo) return;
     // this.setState({ loadingCard: false, showConfirmPayModal: true })
     const stripeMode = await initStripe();
-    
+
     if (!stripeMode) {
       console.log('===== initStripe: ', stripeMode)
       this.handleAlert();
       return;
     }
-    
-    // Or cancel if an error occurred
-// stripe.cancelApplePayRequest()
 
-     this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
-       try {
-         const token = await stripe.paymentRequestWithCardForm({
-           // Only iOS support this options
-           smsAutofillDisabled: true,
-         });
-         console.log('===== token: ', token);
-         this.setState({ loadingCard: false, token, showConfirmPayModal: true })
-       } catch (error) {
-         console.log('===== token: error: ', error);
-         this.setState(
-           { loadingCard: false, showConfirmPayModal: false },
-            () => this.handleErrorAlert()
-         );
-       }
-     })
+    // Or cancel if an error occurred
+    // stripe.cancelApplePayRequest()
+
+    this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
+      try {
+        const token = await stripe.paymentRequestWithCardForm({
+          // Only iOS support this options
+          smsAutofillDisabled: true,
+        });
+        console.log('===== token: ', token);
+        this.setState({ loadingCard: false, token, showConfirmPayModal: true })
+      } catch (error) {
+        console.log('===== token: error: ', error);
+        this.setState(
+          { loadingCard: false, showConfirmPayModal: false },
+          () => this.handleErrorAlert()
+        );
+      }
+    })
   }
   handlePayer = async () => {
     console.log('===== handlePayer');
@@ -134,7 +134,7 @@ class MenuModal extends Component {
     if (!userInfo) return;
     // this.setState({ loadingCard: false, showConfirmPayModal: true })
     const stripeMode = await initStripe();
-    
+
     if (!stripeMode) {
       console.log('===== initStripe: ', stripeMode)
       this.handleAlert();
@@ -142,61 +142,61 @@ class MenuModal extends Component {
     }
 
     const items = [{
-  label: 'TOTAL',
-  amount: '19.00',
+      label: 'TOTAL',
+      amount: '19.00',
 
-}]
+    }]
 
-const shippingMethods = [{
-  id: 'fedex',
-  label: 'FedEX',
-  detail: 'Test @ 10',
-  amount: '10.00',
-}]
+    const shippingMethods = [{
+      id: 'fedex',
+      label: 'FedEX',
+      detail: 'Test @ 10',
+      amount: '10.00',
+    }]
 
-const options = Platform.select({
-  ios: {
-  currencyCode: 'EUR',
-  shippingContact: "full",
-},
-android: { 
-  total_price: '19.00',
-  currency_code: 'EUR',
-  line_items: [],
-},
-  /*shippingContact: "full",
-  total_price : '19.00',
-  currency_code: 'EUR',
-  line_items:[{
-    currency_code: 'EUR',
-    description: 'ads',
-    total_price: '19.00',
-    unit_price: '19.00',
-    quantity: '1',
-  }]*/
-})
+    const options = Platform.select({
+      ios: {
+        currencyCode: 'EUR',
+        shippingContact: "full",
+      },
+      android: {
+        total_price: '19.00',
+        currency_code: 'EUR',
+        line_items: [],
+      },
+      /*shippingContact: "full",
+      total_price : '19.00',
+      currency_code: 'EUR',
+      line_items:[{
+        currency_code: 'EUR',
+        description: 'ads',
+        total_price: '19.00',
+        unit_price: '19.00',
+        quantity: '1',
+      }]*/
+    })
 
-this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
-    try {
-const token = await stripe.paymentRequestWithNativePay( options,items)
+    this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
+      try {
+        const token = await stripe.paymentRequestWithNativePay(options, items)
 
-console.log('===== token: ', token);
-    this.setState({ loadingCard: false, token, showConfirmPayModal: true })
-    stripe.completeNativePayRequest()
-    this.doPayment();
+        console.log('===== token: ', token);
+        this.setState({ loadingCard: false, token, showConfirmPayModal: true })
+        stripe.completeNativePayRequest()
+        this.doPayment();
 
-  } catch (error) {
-      console.log('===== token: error: ', error);
-      this.setState(
-        { loadingCard: false, showConfirmPayModal: false },
-         () => this.handleErrorAlert()
-      );
-    }
-  })
+      } catch (error) {
+        console.log('===== token: error: ', error);
+        this.setState(
+          { loadingCard: false, showConfirmPayModal: false },
+          () => this.handleErrorAlert()
+        );
+      }
+    })
 
 
-// Or cancel if an error occurred
-// stripe.cancelApplePayRequest()
+    // Or cancel if an error occurred
+    // stripe.cancelApplePayRequest()
 
     // this.setState({ loadingCard: true, token: null, stripeMode }, async () => {
     //   try {
@@ -224,11 +224,11 @@ console.log('===== token: ', token);
     const credential = (auth && auth.credential) || null;
     const _user = (credential && auth.credential._user) || null;
     const userInfo = _user;
-    const description = userInfo 
+    const description = userInfo
       ? `${userInfo.firstname} ${userInfo.lastname} (${userInfo.email}) paid on Tina mobile app (${Platform.OS}).`
       : `User paid on Tina mobile app (${Platform.OS})`;
     const statementDescriptor = `Charged with card.`;
-    const functionName = (stripeMode === 'test') 
+    const functionName = (stripeMode === 'test')
       ? 'https://us-central1-tina-project-a9ad6.cloudfunctions.net/test-payWithStripe'
       : 'https://us-central1-tina-project-a9ad6.cloudfunctions.net/live-payWithStripe';
     console.log('===== functionName: ', functionName);
@@ -236,12 +236,12 @@ console.log('===== token: ', token);
     this.setState({ doingPayment: true });
 
     const body = JSON.stringify({
-        amount: 1900,
-        currency: "eur",
-        token: token,
-        description: description,
-        statement_descriptor: statementDescriptor,
-      });
+      amount: 1900,
+      currency: "eur",
+      token: token,
+      description: description,
+      statement_descriptor: statementDescriptor,
+    });
     console.log('====== body: ', body);
 
     fetch(functionName, {
@@ -272,7 +272,7 @@ console.log('===== token: ', token);
                 ..._user,
                 paid: true,
                 paid_date: moment().format('llll'),
-              } 
+              }
             });
           }
         });
@@ -299,14 +299,14 @@ console.log('===== token: ', token);
         onPressScanCard={this.handlePayer}
       />
     );
-  
+
   }
 
   render() {
     const {
-      isModalVisible, isLoggedIn, onPress, 
-      onPressNonAd, onPressHistory, onPressFAQ, 
-      onPressSignIn, onPressRegister, onPressBecomeAdvertiser, 
+      isModalVisible, isLoggedIn, onPress,
+      onPressNonAd, onPressHistory, onPressFAQ,
+      onPressSignIn, onPressRegister, onPressBecomeAdvertiser,
       onPressSettings, onPressAbout, onPressLogout,
       auth,
     } = this.props;
@@ -394,7 +394,7 @@ console.log('===== token: ', token);
               <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>À Propos</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressAbout} elevation={2}>
-                  <Image source={require('../Assets/tina-question.png')} style={{ width: 30*em, height: 30*em,resizeMode:"contain" }} />
+                  <Image source={require('../Assets/tina-27x27.png')} style={{ width: 30 * em, height: 30 * em, resizeMode: "contain" }} />
                 </TouchableOpacity>
               </View>
 
@@ -409,7 +409,7 @@ console.log('===== token: ', token);
               <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>Nous contacter</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressBecomeAdvertiser} elevation={2}>
-                  <Announceur width={25 * em} height={25 * em} />
+                  <PhoneMenu />
                 </TouchableOpacity>
               </View>
 
@@ -463,41 +463,41 @@ const styles = {
 
   menuWrapper: {
     flexDirection: "row",
-    marginTop: 16*em,
- 
-    alignItems:"center",
-    justifyContent:"flex-end"
+    marginTop: 16 * em,
+
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
 
   menuText: {
     color: "#fff",
-    fontSize: 15*em,
+    fontSize: 15 * em,
     fontFamily: "OpenSans-Regular"
   },
 
   menuBtn: {
     overflow: 'hidden',
-    borderRadius: 15*em,
+    borderRadius: 15 * em,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    width:scale(39),
-    height:verticalScale(39),
+    width: scale(39),
+    height: verticalScale(39),
     justifyContent: 'center',
-    marginLeft: 15*em
+    marginLeft: 15 * em
   },
 
-  bottomWrapper:{
-    alignItems:'center',
-    justifyContent:'flex-end',
-    flexDirection:"column"
+  bottomWrapper: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: "column"
   },
 
-  versionText:{
-    color:"#fff",
-    fontSize:12*em,
-    fontFamily:"OpenSans-Regular",
-    marginTop: 15*em,
-    marginBottom: 30*em
+  versionText: {
+    color: "#fff",
+    fontSize: 12 * em,
+    fontFamily: "OpenSans-Regular",
+    marginTop: 15 * em,
+    marginBottom: 30 * em
   }
 }
 

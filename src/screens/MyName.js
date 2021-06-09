@@ -1,9 +1,9 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 import MyTextInputSettings from '../components/MyTextInputSettings';
-import {em,hm} from '../common/constants'
+import { em, hm } from '../common/constants'
 import { LoginActions } from '../actions'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +11,7 @@ import { updateUserInfo } from '../common/firebase/database';
 import AnswerNotFound from '../components/svgicons/AnswerNotFound';
 
 class MyName extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       firstname: null,
@@ -19,71 +19,71 @@ class MyName extends Component {
     }
   }
 
-  UNSAFE_componentWillMount(){
-    const {_user} = this.props.auth.credential;
+  UNSAFE_componentWillMount() {
+    const { _user } = this.props.auth.credential;
     this.setState({
       firstname: _user.firstname,
       lastname: _user.lastname,
     })
-   if (_user.lastname=="" || _user.lastname==" "){
-     this.setState({
-       lastname: null
-     })
-   }
+    if (_user.lastname == "" || _user.lastname == " ") {
+      this.setState({
+        lastname: null
+      })
+    }
 
 
   }
 
   handleOnClickSave = () => {
-    const {firstname, lastname} = this.state;
-    const {loginActions} = this.props;
-    const {credential} = this.props.auth;
-    const {_user} = credential;
+    const { firstname, lastname } = this.state;
+    const { loginActions } = this.props;
+    const { credential } = this.props.auth;
+    const { _user } = credential;
 
-    if (firstname == ""){
+    if (firstname == "") {
       showRootToast("Entrez votre prénom s'il vous plait")
-    }else{
-      updateUserInfo({firstname, lastname}).then(res => {
-        if (res){
+    } else {
+      updateUserInfo({ firstname, lastname }).then(res => {
+        if (res) {
           // Update user info with new credential, changed the zipcode, lat, lng
-          loginActions.loginUpdateInfo({...credential, _user:{..._user, firstname, lastname}})
+          loginActions.loginUpdateInfo({ ...credential, _user: { ..._user, firstname, lastname } })
           Actions.pop();
         }
       });
     }
   }
 
-  render(){
+  render() {
     return (
-        <View style={styles.mainContainer}>
-          <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
-          
-          <View style={styles.menuWrapper}>
-            <MenuBtn image={"close"} onPress={() => Actions.pop()}/>                  
-          </View>
+      <View style={styles.mainContainer}>
+        <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
-          <View style={styles.contentContainer}>
-            <Text style={styles.titleText}>Nom / Prénom</Text>
+        <View style={styles.menuWrapper}>
+          <MenuBtn image={"close"} onPress={() => Actions.pop()} />
+        </View>
 
-            <View style={styles.contentWrapper}>
-              <Text style={styles.descText}>Nom</Text>
-              
-              
-              
-              <MyTextInputSettings style={styles.TextInput} placeholder={"Nom"} autoFocus={true} value={this.state.firstname} handleChange={(text)=>this.setState({firstname:text} )}/>
-  
-              
+        <View style={styles.contentContainer}>
+          <Text style={styles.titleText}>Nom / Prénom</Text>
 
-              <Text style={[styles.descText, {marginTop:20}]}>Prénom</Text>
+          <View style={styles.contentWrapper}>
+            <Text style={styles.descText}>Nom</Text>
 
-              <MyTextInputSettings style={styles.TextInput} placeholder={"Prénom"} autoFocus={false} value={this.state.lastname} handleChange={(text)=>this.setState({lastname:text})}/>
 
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleOnClickSave.bind(this)}>
-                  <Text style={styles.ActionText}>Valider</Text>
-              </TouchableOpacity>
-            </View>
+
+            <MyTextInputSettings style={styles.TextInput} placeholder={"Nom"} autoFocus={true} value={this.state.lastname} handleChange={(text) => this.setState({ lastname: text })} />
+
+
+
+            <Text style={[styles.descText, { marginTop: 20 }]}>Prénom</Text>
+
+            <MyTextInputSettings style={styles.TextInput} placeholder={"Prénom"} autoFocus={false} value={this.state.firstname} handleChange={(text) => this.setState({ firstname: text })} />
+
+            <TouchableOpacity style={styles.ActionButton} onPress={this.handleOnClickSave.bind(this)}>
+              <Text style={styles.ActionText}>Valider</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     )
   }
 }
@@ -99,63 +99,63 @@ const styles = {
     flex: 1
   },
 
-  menuWrapper:{
-    position:"absolute", 
-    left:20*em,
-    top:20*em
+  menuWrapper: {
+    position: "absolute",
+    left: 20 * em,
+    top: 20 * em
   },
 
   contentContainer: {
-    flexDirection: "column", 
-    marginTop: 90*em, 
-    paddingLeft:20*em, 
-    paddingRight: 20*em
+    flexDirection: "column",
+    marginTop: 90 * em,
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em
   },
 
-  contentWrapper:{
-    flexDirection:"column",
-    paddingTop: 18*em,
+  contentWrapper: {
+    flexDirection: "column",
+    paddingTop: 18 * em,
   },
 
-  titleText:{
-    fontSize: 24*em,  
-    color:"#251b4d", 
-    fontFamily:"Merriweather-Black"
+  titleText: {
+    fontSize: 24 * em,
+    color: "#251b4d",
+    fontFamily: "Merriweather-Black"
   },
 
-  descText:{
-    fontSize: 13*em, 
-    marginTop: 11*em, 
-    color:"#928da6", 
-    fontFamily:"OpenSans-Regular"
+  descText: {
+    fontSize: 13 * em,
+    marginTop: 11 * em,
+    color: "#928da6",
+    fontFamily: "OpenSans-Regular"
   },
-  
+
   ActionButton: {
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em, 
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#28c7ee',
     justifyContent: 'center',
-    marginTop: 50*hm
+    marginTop: 50 * hm
   },
 
-  TextInput:{
+  TextInput: {
     width: '98%',
-    height: 40*em, 
-    fontSize: 15*em, 
-    color:"#28c7ee", 
-    borderBottomWidth:1*em, 
-    borderBottomColor:"#28c7ee", 
-    fontFamily:"OpenSans-Regular",
-    
-    
-    
+    height: 40 * em,
+    fontSize: 15 * em,
+    color: "#28c7ee",
+    borderBottomWidth: 1 * em,
+    borderBottomColor: "#28c7ee",
+    fontFamily: "OpenSans-Regular",
+
+
+
   },
 
-  ActionText:{
-    color:"#fff", 
-    fontSize: 14*em, 
+  ActionText: {
+    color: "#fff",
+    fontSize: 14 * em,
     fontFamily: "OpenSans-SemiBold"
   },
   closeButton: {
@@ -166,17 +166,17 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 5,
-    
-    
-     
-    
+
+
+
+
   },
-  clear:{
+  clear: {
     flexDirection: 'row',
-    
-    
-    
-     
+
+
+
+
   }
 }
 
@@ -189,5 +189,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    mapStateToProps, 
-    mapDispatchToProps)(MyName);
+  mapStateToProps,
+  mapDispatchToProps)(MyName);

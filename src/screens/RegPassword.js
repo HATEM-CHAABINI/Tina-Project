@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
-import CheckBox from '@react-native-community/checkbox'
+import CheckBox from '@react-native-community/checkbox';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 import { WIDTH, em } from '../common/constants';
 import TermsNormal from '../components/svgicons/TermsNormal';
+import CheckPsw from '../components/svgicons/CheckPsw';
+import CheckPswDone from '../components/svgicons/CheckPswDone';
+
 import MyTextInput from '../components/MyTextInput';
 import { showRootToast, showBiggerRootToast } from '../common/utils';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppActions, SignupActions } from '../actions'
+import RoundedCheckbox from "react-native-rounded-checkbox";
 
+//const checkShapeSize = { width: 26 * hm, height: 26 * hm };
 class RegPassword extends Component {
   constructor(props) {
     super(props)
@@ -88,7 +93,26 @@ class RegPassword extends Component {
 
             <View style={{ flexDirection: "row", justifyContent: "flex-start", marginTop: 80 * em, marginBottom: 20 * em, marginRight: 20 * em }}>
 
-              <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} />
+              {/* <TouchableOpacity onPress={this.state.isTermChecked ? this.setState({ isTermChecked: false }) : this.setState({ isTermChecked: true })} >
+                {this.state.isTermChecked ?
+                  <CheckPswDone width={20 * em} height={20 * em} /> :
+                  <CheckPsw width={20 * em} height={20 * em} />
+                }
+              </TouchableOpacity> */}
+
+
+              {/* {this.state.isTermChecked ?
+                <TouchableOpacity style={styles.checkBox} onPress={() => this.setState({ isTermChecked: false })}>
+                  <CheckPswDone width={20 * em} height={20 * em} />
+                </TouchableOpacity>
+                : <TouchableOpacity style={styles.checkBox} onPress={() => this.setState({ isTermChecked: true })}>
+                  <CheckPsw width={20 * em} height={20 * em} />
+                </TouchableOpacity>
+
+              } */}
+
+              <RoundedCheckbox style={styles.checkBox} component={<CheckPsw width={20 * em} height={20 * em} />} outerBorderColor={"#928DA6"} checkedColor={"#F6F5FA"} outerSize={20 * em} uncheckedColor={"#F6F5FA"} onPress={(checked) => this.setState({ isTermChecked: checked })} />
+              {/* <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} /> */}
               <Text style={styles.TermsText}>
                 En cochant cette case j'accepte les
                     <Text style={styles.linkText} onPress={() => { Actions.cgu(); }}> Conditions d'utilisation </Text>
@@ -212,7 +236,8 @@ const styles = {
   checkBox: {
     //justifyContent: "flex-start",
     // alignItems: "flex-start"
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
+    borderColor: "#928DA6"
   }
 }
 

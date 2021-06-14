@@ -27,7 +27,7 @@ class NoResult extends Component {
   }
 
   renderIcons() {
-    return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(60), height: verticalScale(60), resizeMode: 'contain' }} />)
+    return (<Logiciel width={30 * em} height={29 * em} />)
   }
 
   handleContinueClick = () => {

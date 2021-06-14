@@ -213,7 +213,7 @@ class Home extends Component {
 
             <View style={styles.tinaLogoWrapper}>
               <Image source={require('../Assets/tina-start.png')} style={{ width: scale(309.8), height: verticalScale(237.33), resizeMode: 'contain' }} />
-              <Text style={styles.titleText}>Votre question porte sur :</Text>
+              <Text style={styles.titleText}>Votre question se porte sur :</Text>
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "flex-start" }} >

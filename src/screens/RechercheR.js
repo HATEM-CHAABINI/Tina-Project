@@ -62,6 +62,7 @@ class RechercheR extends Component {
           histories.push({ ...item, dateString, title })
         })
         this.setState({ histories })
+        console.log(this.state.histories);
       }
     },
       reject => {
@@ -78,6 +79,7 @@ class RechercheR extends Component {
           backgroundColor: '#CED0CE',
           marginLeft: '14%',
         }}
+      // key={item1.id}
       />
     );
   };
@@ -218,7 +220,7 @@ class RechercheR extends Component {
             renderItem={({ item }) => (
               <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
             )}
-            keyExtractor={item => item.email}
+            keyExtractor={item => item.id}
             ItemSeparatorComponent={this.renderSeparator}
             //ListHeaderComponent={this.renderHeader}
             renderScrollComponent={props => (
@@ -226,7 +228,7 @@ class RechercheR extends Component {
               <ParallaxScrollView
                 onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
                 headerBackgroundColor="#FFF"
-                stickyHeaderHeight={this.state.scrollPosition <= 0 ? 0 : STICKY_HEADER_HEIGHT}
+                stickyHeaderHeight={this.state.scrollPosition <= 0 ? 5 : STICKY_HEADER_HEIGHT}
                 parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 
                 backgroundSpeed={10}
@@ -534,7 +536,8 @@ const styles = {
     paddingTop: 30 * em,
     paddingLeft: 20 * em,
     // paddingRight: -60 * em,
-    backgroundColor: "#FFF"
+    backgroundColor: "#FFF",
+    zIndex: 5
   },
 
   closeButton: {

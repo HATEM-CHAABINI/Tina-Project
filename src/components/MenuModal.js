@@ -352,12 +352,22 @@ class MenuModal extends Component {
                   </TouchableOpacity>
                 </View>) : null}
 
-              <View style={styles.menuWrapper}>
+              {/* <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>Version sans publicité</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressNonAd} elevation={2}>
                   <NonVersion width={15 * em} height={15 * em} />
                 </TouchableOpacity>
-              </View>
+              </View> */}
+
+              {(isLoggedIn && !isPaidUser) && (
+                <View style={styles.menuWrapper}>
+                  <Text style={styles.menuText}>Version sans publicité</Text>
+                  <TouchableOpacity style={styles.menuBtn} onPress={this.handleButton} elevation={2}>
+                    {/* <LeftArrow width={15 * em} height={15 * em} color={"#928ea7"} /> */}
+                    <NonVersion width={15 * em} height={15 * em} />
+                  </TouchableOpacity>
+                </View>
+              )}
 
               {!isLoggedIn ?
                 (<View style={styles.menuWrapper}>
@@ -413,15 +423,7 @@ class MenuModal extends Component {
                 </TouchableOpacity>
               </View>
 
-              {(isLoggedIn && !isPaidUser) && (
-                <View style={styles.menuWrapper}>
-                  <Text style={styles.menuText}>Payer</Text>
-                  <TouchableOpacity style={styles.menuBtn} onPress={this.handleButton} elevation={2}>
-                    {/* <LeftArrow width={15 * em} height={15 * em} color={"#928ea7"} /> */}
-                    <Image source={require('../Assets/menu-payment.png')} style={{ width: 22, height: 15 }} />
-                  </TouchableOpacity>
-                </View>
-              )}
+
 
               {isLoggedIn ?
                 (<View style={styles.menuWrapper}>

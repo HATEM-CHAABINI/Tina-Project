@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, TouchableOpacity, TextInput, Linking } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { WIDTH, colors, em } from '../common/constants';
 import CheckNormal from '../components/svgicons/CheckNormal';
 import CheckSelected from '../components/svgicons/CheckSelected';
@@ -11,12 +11,33 @@ import { showRootToast, showBiggerRootToast } from '../common/utils';
 import Icon from 'react-native-vector-icons/Feather';
 import qs from 'qs';
 
-
-const ContentItem = ({ id, title, description }) => (
+const DATA = [
+  {
+    id: '1',
+    title: 'Publicité',
+  },
+  {
+    id: '2',
+    title: 'Plainte',
+  },
+  {
+    id: '3',
+    title: 'Problème technique',
+  },
+  {
+    id: '4',
+    title: 'Partenariat',
+  },
+  {
+    id: '5',
+    title: 'Autres',
+  },
+];
+const Item = ({ id, title }) => (
   <View style={styles.contentItem}>
-    {THUMB[id - 1]}
+    {/* {THUMB[id - 1]} */}
     <Text style={styles.contentTitle}>{title}</Text>
-    <Text style={styles.contentDesc}>{description}</Text>
+
   </View>
 )
 
@@ -28,11 +49,35 @@ class FAQDetail extends Component {
       value: null,
       text: "",
       showButton: false,
+      showList: false,
       selected: false,
       selectedIndex: 1,
       id: 1
     }
 
+  }
+
+  renderItem = ({ item }) => (
+
+    <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 30 * em }}
+      onPress={
+        () => this.setState({ selected: true, value: item.title })
+      }>
+      <Item title={item.title} />
+
+      {this.state.selected && item.title == this.state.value ? <View style={{ marginLeft: 0 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View>
+        : <View style={{ marginLeft: 0 * em }}><CheckNormal width={18 * em} height={18 * em} /></View>}
+    </TouchableOpacity>
+
+
+  );
+
+  renderSubject = () => {
+    if (this.state.selected) {
+      return this.state.value;
+    } else {
+      return null;
+    }
   }
 
 
@@ -46,7 +91,6 @@ class FAQDetail extends Component {
       showRootToast("Veuillez Saisir un message.")
       return;
     }
-
 
     let url = `mailto:${'contact@absolutemicro.fr'}`;
 
@@ -66,7 +110,7 @@ class FAQDetail extends Component {
   }
 
   render() {
-    const { showButton, selected, itemValue } = this.state;
+    const { showButton, selected, showList } = this.state;
     const PROP = [
       {
         key: 'Publicité',
@@ -110,11 +154,52 @@ class FAQDetail extends Component {
               Nous sommes à votre écoute
            </Text>
 
-            {selected ? (<Text style={styles.subtitleText}>Votre Sujet</Text>) : null}
 
-            <DropDownPicker
+            {!selected && !showList ? (
+              <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignSelf: "flex-start", justifyContent: 'space-between', width: "90%", marginHorizontal: 21 * em, marginBottom: 23 * em }}
+                onPress={() => this.setState({ showList: true })}>
+                <Text style={{ fontFamily: "OpenSans-Regular", fontSize: 20, color: '#928DA6' }}>Votre Sujet</Text>
+                <Icon name="chevron-down" size={30} color={'#928DA6'} />
+              </TouchableOpacity>
+            ) : null}
+
+            {selected && showList ? (<Text style={styles.subtitleText}>Votre Sujet</Text>) : null}
+            {/* {selected ? <Text style={{ width: "90%", height: 43 * em, fontFamily: "OpenSans-Regular", fontSize: 21, color: '#251B4D', borderBottomWidth: 2 * em, borderBottomColor: "#28c7ee", marginBottom: 20 * em }}>{this.state.value}</Text> : null} */}
+            {selected && showList ? (
+              <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignSelf: "flex-start", justifyContent: 'space-between', width: "90%", marginHorizontal: 21 * em, borderBottomWidth: 2 * em, borderBottomColor: "#28c7ee", height: 43 * em, marginBottom: 20 * em }}
+                onPress={() => this.setState({ showList: false })}>
+                <Text style={{ width: "90%", fontFamily: "OpenSans-Regular", fontSize: 21, color: '#251B4D' }}>{this.state.value}</Text>
+                <Icon name="chevron-up" size={30} color={'#28C7ED'} />
+              </TouchableOpacity>
+            ) : null}
+
+            {this.state.showList && !selected ?
+              <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignSelf: "flex-start", justifyContent: 'space-between', width: "90%", marginHorizontal: 21 * em, marginBottom: 24 * em }}
+                onPress={() => this.setState({ showList: false })}>
+                <Text style={{ fontFamily: "OpenSans-Regular", fontSize: 20, color: '#928DA6' }}>Votre Sujet</Text>
+                <Icon name="chevron-up" size={30} color={'#928DA6'} />
+              </TouchableOpacity> : null}
+            {selected && !showList ?
+              <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignSelf: "flex-start", justifyContent: 'space-between', width: "90%", marginHorizontal: 21 * em, marginBottom: 23 * em }}
+                onPress={() => this.setState({ showList: true })}>
+                <Text style={{ fontFamily: "OpenSans-Regular", fontSize: 20, color: '#928DA6' }}>{this.state.value}</Text>
+                <Icon name="chevron-down" size={30} color={'#928DA6'} />
+              </TouchableOpacity> : null}
+
+            {this.state.showList ?
+
+              <FlatList
+                data={DATA}
+                renderItem={this.renderItem}
+                keyExtractor={item => item.id}
+              />
+              : null}
+
+
+
+            {/* <DropDownPicker
               items={[
-                { label: 'Publicité', value: 'Publicité', icon: () => selected && itemValue == "Publicité" ? <View style={{ marginLeft: 240 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View> : <View style={{ marginLeft: 233.7 * em }}><CheckNormal width={18 * em} height={18 * em} /></View> },
+                { label: 'Publicité', value: 'Publicité', icon: () => selected && itemValue == "Publicité" ? <View style={{ marginLeft: 0 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View> : <View style={{ marginLeft: 0 * em }}><CheckNormal width={18 * em} height={18 * em} /></View> },
                 { label: 'Plainte', value: 'Plainte', icon: () => selected && itemValue == "Plainte" ? <View style={{ marginLeft: 240 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View> : <View style={{ marginLeft: 233.7 * em }}><CheckNormal width={18 * em} height={18 * em} /></View> },
                 { label: 'Problème technique', value: 'Problème technique', icon: () => selected && itemValue == "Problème technique" ? <View style={{ marginLeft: 240 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View> : <View style={{ marginLeft: 233.7 * em }}><CheckNormal width={18 * em} height={18 * em} /></View> },
                 { label: 'Partenariat', value: 'Partenariat', icon: () => selected && itemValue == "Partenariat" ? <View style={{ marginLeft: 240 * em }} ><CheckSelected width={18 * em} height={18 * em} /></View> : <View style={{ marginLeft: 233.7 * em }}><CheckNormal width={18 * em} height={18 * em} /></View> },
@@ -143,6 +228,7 @@ class FAQDetail extends Component {
               itemStyle={{
                 flexDirection: 'row-reverse',
                 justifyContent: 'flex-start',
+
               }}
               arrowStyle={{ marginRight: 10 }}
               arrowSize={30}
@@ -161,12 +247,14 @@ class FAQDetail extends Component {
                 fontSize: 15,
                 textAlign: 'left',
                 color: '#251B4D',
+
               }}
               selectedLabelStyle={{
                 fontFamily: "OpenSans-Regular",
                 fontWeight: 'normal',
                 fontSize: 20,
-                color: '#251B4D'
+                color: '#251B4D',
+
               }}
 
               activeItemStyle={{}}
@@ -178,25 +266,25 @@ class FAQDetail extends Component {
                   //     showButton: false
                 })
               }
-            />
+            /> */}
 
-
-            <TextInput
-              style={styles.TextInputStyleClass}
-              underlineColorAndroid="transparent"
-              placeholder={"Écrivez votre message ici"}
-              placeholderTextColor={"#BCB8CC"}
-              multiline
-              numberOfLines={4}
-              maxLength={400}
-              onFocus={() => this.setState({ showButton: true })}
-              onEndEditing={() => this.setState({ showButton: false })}
-              //onSelectionChange={()=>this.setState({showButton: false})}
-              onChangeText={text => this.setState({
-                text: text,
-              })}
-              value={this.state.text}
-            />
+            {!showList ?
+              <TextInput
+                style={styles.TextInputStyleClass}
+                underlineColorAndroid="transparent"
+                placeholder={"Écrivez votre message ici"}
+                placeholderTextColor={"#BCB8CC"}
+                multiline
+                numberOfLines={4}
+                maxLength={400}
+                onFocus={() => this.setState({ showButton: true })}
+                //onEndEditing={() => this.setState({ showButton: false })}
+                //onSelectionChange={()=>this.setState({showButton: false})}
+                onChangeText={text => this.setState({
+                  text: text,
+                })}
+                value={this.state.text}
+              /> : null}
             {(showButton && selected) ?
               (<TouchableOpacity style={[styles.ActionButton]} onPress={this.handleSendForm} >
                 <Text style={styles.ActionText}>Continuer</Text>
@@ -251,9 +339,11 @@ const styles = {
   subtitleText: {
     fontSize: 13 * em,
     marginLeft: 20 * em,
+    marginBottom: 4 * em,
     alignSelf: "flex-start",
     color: "#928DA6",
-    fontFamily: "OpenSans-Regular"
+    fontFamily: "OpenSans-Regular",
+
   },
 
   TextInputStyleClass: {
@@ -277,18 +367,18 @@ const styles = {
   },
 
   contentItem: {
-    paddingTop: 25 * em,
-    paddingBottom: 30 * em,
-    alignItems: "center",
-    justifyContent: "center"
+    width: "80%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start"
   },
 
   contentTitle: {
-    fontSize: 16 * em,
-    color: "#251b4d",
-    marginTop: 14 * em,
-    marginBottom: 14 * em,
-    fontFamily: "Merriweather-Black"
+    fontSize: 15 * em,
+    color: "#251B4D",
+    //marginTop: 14 * em,
+    //marginBottom: 14 * em,
+    fontFamily: "OpenSans-SemiBold",
+
   },
 
   contentDesc: {

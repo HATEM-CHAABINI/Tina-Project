@@ -418,7 +418,7 @@ class Questionnaire extends Component {
                   </View>
                   <MenuBtn image={"close"} onPress={this.handleClose.bind(this)} />
                   {this.props.b == true ?
-                    <TouchableOpacity style={{ position: 'absolute', left: 20 * em, top: 325 * em, zIndex: 7 }}
+                    <TouchableOpacity style={{ position: 'absolute', left: 21 * em, top: 310 * em, zIndex: 7 }}
                       onPress={() => this.handleBackk(this.props.qtype, qinfo)}>
                       <View style={{
                         backgroundColor: "#FFF",

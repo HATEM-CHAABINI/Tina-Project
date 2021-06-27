@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Platform,StatusBar } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
@@ -110,10 +110,14 @@ class RegPassword extends Component {
                 </TouchableOpacity>
 
               } */}
+{Platform.OS === 'ios' ?
+                     <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} />
 
-              <RoundedCheckbox style={styles.checkBox} component={<CheckPsw width={20 * em} height={20 * em} />} outerBorderColor={"#928DA6"} checkedColor={"#F6F5FA"} outerSize={20 * em} uncheckedColor={"#F6F5FA"} onPress={(checked) => this.setState({ isTermChecked: checked })} />
-              {/* <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} /> */}
-              <Text style={styles.TermsText}>
+          :   
+          <RoundedCheckbox style={styles.checkBox} component={<CheckPsw width={20 * em} height={20 * em} />} outerBorderColor={"#928DA6"} checkedColor={"#F6F5FA"} outerSize={20 * em} uncheckedColor={"#F6F5FA"} onPress={(checked) => this.setState({ isTermChecked: checked })} />
+
+                }   
+                 <Text style={styles.TermsText}>
                 En cochant cette case j'accepte les
                     <Text style={styles.linkText} onPress={() => { Actions.cgu(); }}> Conditions d'utilisation </Text>
                     et la

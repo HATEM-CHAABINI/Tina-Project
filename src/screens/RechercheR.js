@@ -129,7 +129,7 @@ class RechercheR extends Component {
             onChangeText={text => this.searchFilterFunction(text)}
             value={this.state.value}
             //editable={this.props.editable}
-            clearButtonMode="while-editing"
+            // clearButtonMode="while-editing"
             onFocus={this.handleFocus}
             //keyboardType={this.keyboardType}
             onBlur={this.handleBlur}
@@ -257,7 +257,7 @@ class RechercheR extends Component {
                         onChangeText={text => this.searchFilterFunction(text)}
                         value={this.state.value}
                         //editable={this.props.editable}
-                        clearButtonMode="while-editing"
+                        // clearButtonMode="while-editing"
                         onFocus={this.handleFocus}
                         //keyboardType={this.keyboardType}
                         onBlur={this.handleBlur}
@@ -299,7 +299,7 @@ class RechercheR extends Component {
                           onChangeText={text => this.searchFilterFunction(text)}
                           value={this.state.value}
                           //editable={this.props.editable}
-                          clearButtonMode="while-editing"
+                          // clearButtonMode="while-editing"
                           onFocus={this.handleFocus}
                           //keyboardType={this.keyboardType}
                           onBlur={this.handleBlur}
@@ -342,7 +342,7 @@ class RechercheR extends Component {
                 onChangeText={text => this.searchFilterFunction(text)}
                 value={this.state.value}
                 //editable={this.props.editable}
-                clearButtonMode="while-editing"
+                // clearButtonMode="while-editing"
                 onFocus={this.handleFocus}
                 //keyboardType={this.keyboardType}
                 onBlur={this.handleBlur}

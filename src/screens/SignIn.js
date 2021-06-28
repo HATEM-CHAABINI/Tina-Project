@@ -109,7 +109,7 @@ class SignIn extends Component {
                   onChangeText={(text) => this.setState({ password: text })}
                   value={password}
                   //editable={this.props.editable}
-                  clearButtonMode="while-editing"
+                  // clearButtonMode="while-editing"
                   onFocus={this.handleFocus}
                   //keyboardType={this.props.keyboardType}
                   onBlur={this.handleBlur}

@@ -29,7 +29,7 @@ export default class MyTextInput extends React.Component {
           onChangeText={this.props.handleChange}
           value={this.props.value}
           editable={this.props.editable}
-          clearButtonMode="while-editing"
+          // clearButtonMode="while-editing"
           onFocus={this.handleFocus}
           keyboardType={this.props.keyboardType}
           onBlur={this.handleBlur}

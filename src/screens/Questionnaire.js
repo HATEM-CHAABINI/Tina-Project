@@ -477,10 +477,19 @@ class Questionnaire extends Component {
               </TouchableOpacity> : <></>} */}
 
             <View style={styles.contentWrapper}>
+              <View>
+                <Text style={styles.questionText}>
+                  {/* .substring(0, this.props.qinfo.title.length - 1) */}
+                  {this.props.qinfo.title}
 
-              <Text style={styles.questionText}>
-                {this.props.qinfo.title}
-              </Text>
+
+                </Text>
+                <View style={{ position: 'absolute', right: 138 * em, top: 55 * em }}>
+                  <Info width={11 * em} height={11 * em} color={colors[this.props.qType][0]} />
+                </View>
+
+
+              </View>
 
               <View style={{ flex: 1, flexDirection: "column-reverse" }}>
                 <Cat qType={this.props.qType} ques={qinfo['qid']} />
@@ -672,7 +681,8 @@ const styles = StyleSheet.create({
     color: "#251b4d",
     textAlign: "center",
     fontFamily: "Merriweather-Black",
-    paddingTop: 20 * em
+    paddingTop: 20 * em,
+    lineHeight: 35 * em
   },
   advertisementImge: {
     width: '100%', //370,

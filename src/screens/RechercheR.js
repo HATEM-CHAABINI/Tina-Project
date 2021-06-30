@@ -44,7 +44,7 @@ class RechercheR extends Component {
       data: [],
       error: null,
       histories: [],
-      scrollPosition: -STICKY_HEADER_HEIGHT,
+      scrollPosition: -200,
       isFocused: false,
 
     }
@@ -212,46 +212,93 @@ class RechercheR extends Component {
     return (
       <View style={styles.mainContainer}>
         <StatusBar barstyle="light-content" />
-        {this.state.value != "" ?
-          <FlatList
-            ref="ListView"
-            style={styles.container}
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
-            )}
-            keyExtractor={item => item.id}
-            ItemSeparatorComponent={this.renderSeparator}
-            //ListHeaderComponent={this.renderHeader}
-            renderScrollComponent={props => (
 
-              <ParallaxScrollView
-                onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
-                headerBackgroundColor="#FFF"
-                stickyHeaderHeight={this.state.scrollPosition <= 0 ? 5 : STICKY_HEADER_HEIGHT}
-                parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+        <FlatList
+          ref="ListView"
+          style={styles.container}
+          data={this.state.data}
+          renderItem={({ item }) => (
+            <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
+          )}
+          keyExtractor={item => item.id}
+          ItemSeparatorComponent={this.renderSeparator}
+          //ListHeaderComponent={this.renderHeader}
+          renderScrollComponent={props => (
 
-                backgroundSpeed={10}
+            <ParallaxScrollView
+              //onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
+              headerBackgroundColor="#FFF"
+              stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+              parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 
-                renderBackground={() => (
-                  <View key="background">
-                    <View style={{
-                      position: 'absolute',
-                      top: 0,
-                      width: window.width,
-                      backgroundColor: "#FFF",
-                      height: PARALLAX_HEADER_HEIGHT
-                    }} />
-                  </View>
-                )}
-                renderForeground={() => (
-                  <View key="parallax-header" style={styles.parallaxHeader}>
+              backgroundSpeed={10}
+
+              renderBackground={() => (
+                <View key="background">
+                  <View style={{
+                    position: 'absolute',
+                    top: 0,
+                    width: window.width,
+                    backgroundColor: "#FFF",
+                    height: PARALLAX_HEADER_HEIGHT
+                  }} />
+                </View>
+              )}
+              renderForeground={() => (
+                <View key="parallax-header" style={styles.parallaxHeader}>
+                  <TouchableOpacity
+                    style={styles.menuWrapper}
+                    onPress={() => Actions.pop()}>
+                    <CloseR width={15 * em} height={15 * em} />
+                  </TouchableOpacity>
+                  <Text style={styles.titleText}>Rechercher</Text>
+                  <View style={styles.clear}>
+                    <TextInput
+                      ref={input => { this.textInput = input }}
+                      onChangeText={text => this.searchFilterFunction(text)}
+                      value={this.state.value}
+                      //editable={this.props.editable}
+                      // clearButtonMode="while-editing"
+                      onFocus={this.handleFocus}
+                      //keyboardType={this.keyboardType}
+                      onBlur={this.handleBlur}
+                      style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
+                      autoFocus={true}
+                      //secureTextEntry={this.props.secureTextEntry}
+                      textContentType={"jobTitle"}
+                      placeholder={"Rechercher par mot clés"}
+                    />
+
+                    {/* {this.state.isFocused ? ( */}
                     <TouchableOpacity
-                      style={styles.menuWrapper}
-                      onPress={() => Actions.pop()}>
-                      <CloseR width={15 * em} height={15 * em} />
+                      style={styles.closeButtonParent}
+                      onPress={() => {
+                        this.setState({
+                          value: "",
+                          data: []
+                        });
+                        //this.textInput.clear()
+                      }}>
+                      <AnswerNotFound width={18 * em} height={18 * em} />
                     </TouchableOpacity>
-                    <Text style={styles.titleText}>Rechercher</Text>
+                    {/* ): null} */}
+                  </View>
+                  {this.state.value == "" ?
+                    <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
+                    null
+                  }
+                </View>
+              )}
+
+              renderStickyHeader={() => (
+                <View key="sticky-header" style={styles.stickySection}>
+                  <TouchableOpacity
+                    style={styles.menuWrapper}
+                    onPress={() => Actions.pop()}>
+                    <CloseR width={15 * em} height={15 * em} />
+                  </TouchableOpacity>
+                  <Text style={styles.titleTextS}>Rechercher</Text>
+                  <View >
                     <View style={styles.clear}>
                       <TextInput
                         onChangeText={text => this.searchFilterFunction(text)}
@@ -268,49 +315,7 @@ class RechercheR extends Component {
                         placeholder={"Rechercher par mot clés"}
                       />
 
-                      {this.state.isFocused ? (
-                        <TouchableOpacity
-                          style={styles.closeButtonParent}
-                          onPress={() => this.setState({
-                            value: "",
-                            data: []
-                          })}>
-                          <AnswerNotFound width={18 * em} height={18 * em} />
-                        </TouchableOpacity>) : null}
-                    </View>
-                    {this.state.value == "" ?
-                      <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-                      null
-                    }
-                  </View>
-                )}
-
-                renderStickyHeader={() => (
-                  <View key="sticky-header" style={styles.stickySection}>
-                    <TouchableOpacity
-                      style={styles.menuWrapper}
-                      onPress={() => Actions.pop()}>
-                      <CloseR width={15 * em} height={15 * em} />
-                    </TouchableOpacity>
-                    <Text style={styles.titleTextS}>Rechercher</Text>
-                    <View >
-                      <View style={styles.clear}>
-                        <TextInput
-                          onChangeText={text => this.searchFilterFunction(text)}
-                          value={this.state.value}
-                          //editable={this.props.editable}
-                          // clearButtonMode="while-editing"
-                          onFocus={this.handleFocus}
-                          //keyboardType={this.keyboardType}
-                          onBlur={this.handleBlur}
-                          style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-                          autoFocus={true}
-                          //secureTextEntry={this.props.secureTextEntry}
-                          textContentType={"jobTitle"}
-                          placeholder={"Rechercher par mot clés"}
-                        />
-
-                        {this.state.isFocused ? (
+                      {/* {this.state.isFocused ? (
                           <TouchableOpacity
                             style={styles.closeButtonParent}
                             onPress={() => this.setState({
@@ -318,63 +323,69 @@ class RechercheR extends Component {
                               data: []
                             })}>
                             <AnswerNotFound width={18 * em} height={18 * em} />
-                          </TouchableOpacity>) : null}
-                      </View>
-
-                      {this.state.value == "" ?
-                        <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-                        <Text style={styles.textRecheI}>Essayez : Error, écran bleu, mise à jour windows…</Text>
-                      }
+                          </TouchableOpacity>) : null} */}
                     </View>
-                  </View>
-                )}
-              />
-            )}
-          /> : <View key="parallax-header" style={styles.parallaxHeader}>
-            <TouchableOpacity
-              style={styles.menuWrapper}
-              onPress={() => Actions.pop()}>
-              <CloseR width={15 * em} height={15 * em} />
-            </TouchableOpacity>
-            <Text style={styles.titleText}>Rechercher</Text>
-            <View style={styles.clear}>
-              <TextInput
-                onChangeText={text => this.searchFilterFunction(text)}
-                value={this.state.value}
-                //editable={this.props.editable}
-                // clearButtonMode="while-editing"
-                onFocus={this.handleFocus}
-                //keyboardType={this.keyboardType}
-                onBlur={this.handleBlur}
-                style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-                autoFocus={true}
-                //secureTextEntry={this.props.secureTextEntry}
-                textContentType={"jobTitle"}
-                placeholder={"Rechercher par mot clés"}
-              />
 
-              {this.state.isFocused ? (
-                <TouchableOpacity
-                  style={styles.closeButtonParent}
-                  onPress={() => this.setState({
-                    value: "",
-                    data: []
-                  })}>
-                  <AnswerNotFound width={18 * em} height={18 * em} />
-                </TouchableOpacity>) : null}
-            </View>
-            {this.state.value == "" ?
-              <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-              null
-            }
-          </View>}
+                    {this.state.value == "" ?
+                      <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
+                      <Text style={styles.textRecheI}>Essayez : Error, écran bleu, mise à jour windows…</Text>
+                    }
+                  </View>
+                </View>
+              )}
+            />
+          )}
+        />
+
 
       </View>
     )
   }
 }
 
+// start
+// {this.state.value != "" ?
+//
+// : <View key="parallax-header" style={styles.parallaxHeader}>
+//             <TouchableOpacity
+//               style={styles.menuWrapper}
+//               onPress={() => Actions.pop()}>
+//               <CloseR width={15 * em} height={15 * em} />
+//             </TouchableOpacity>
+//             <Text style={styles.titleText}>Rechercher</Text>
+//             <View style={styles.clear}>
+//               <TextInput
+//                 onChangeText={text => this.searchFilterFunction(text)}
+//                 value={this.state.value}
+//                 //editable={this.props.editable}
+//                 // clearButtonMode="while-editing"
+//                 onFocus={this.handleFocus}
+//                 //keyboardType={this.keyboardType}
+//                 onBlur={this.handleBlur}
+//                 style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
+//                 autoFocus={true}
+//                 //secureTextEntry={this.props.secureTextEntry}
+//                 textContentType={"jobTitle"}
+//                 placeholder={"Rechercher par mot clés"}
+//               />
 
+//               {this.state.isFocused ? (
+//                 <TouchableOpacity
+//                   style={styles.closeButtonParent}
+//                   onPress={() => this.setState({
+//                     value: "",
+//                     data: []
+//                   })}>
+//                   <AnswerNotFound width={18 * em} height={18 * em} />
+//                 </TouchableOpacity>) : null}
+//             </View>
+//             {this.state.value == "" ?
+//               <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
+//               null
+//             }
+//           </View>}
+
+// end
 
 
 {/* <View style={styles.mainContainer}>
@@ -409,7 +420,7 @@ class RechercheR extends Component {
 {/* </View> */ }
 
 const PARALLAX_HEADER_HEIGHT = 160 * em;
-const STICKY_HEADER_HEIGHT = 130 * em;
+const STICKY_HEADER_HEIGHT = 80 * em;
 const styles = {
   TextInput: {
     height: 45 * em,

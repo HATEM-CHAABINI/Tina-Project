@@ -23,7 +23,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ListView from "deprecated-react-native-listview";
 import CloseR from '../components/svgicons/CloseR';
 import AnswerNotFound from '../components/svgicons/DeleteNew'
-
+import LeftArrow from '../components/svgicons/LeftArrow';
 const ContentItem = ({ id, title, description }) => (
   <View style={styles.contentItem}>
     {THUMB[id - 1]}
@@ -44,7 +44,7 @@ class RechercheR extends Component {
       data: [],
       error: null,
       histories: [],
-      scrollPosition: -200,
+      scrollPosition: -STICKY_HEADER_HEIGHT,
       isFocused: false,
 
     }
@@ -89,19 +89,19 @@ class RechercheR extends Component {
     this.setState({
       value: text,
     });
-
-
-
     const newData = this.state.histories.filter(item => {
       const itemData = `${item.title.toUpperCase()} ${item.solution.toUpperCase()} ${item.type.toUpperCase()}`;
       const textData = text.toUpperCase();
-
       return itemData.indexOf(textData) > -1;
     });
+
     this.setState({
       data: newData,
     });
-
+    if (text.length == 0) this.setState({
+      data: [],
+    });
+    console.log(newData);
   };
 
   clearText = (text) => {
@@ -109,20 +109,23 @@ class RechercheR extends Component {
     this.setState({
       value: "",
       isFocused: false
-
     });
-
   };
+  handleFocus = () => {
+    this.setState({ isFocused: true })
+    //if (this.props.handleFocus) this.props.handleFocus()
+  }
 
+  handleBlur = () => this.setState({ isFocused: false })
   renderHeader = () => {
     return (
 
-      <View key="parallax-header" style={styles.parallaxHeader}>
-        <TouchableOpacity
-          style={styles.menuWrapper}
-          onPress={() => Actions.pop()}>
-          <CloseR width={15 * em} height={15 * em} />
-        </TouchableOpacity>
+      <View style={styles.parallaxHeader}>
+        <View style={styles.menuWrapper}>
+          <MenuBtn image={"close"} onPress={() => Actions.pop()} />
+        </View>
+
+
         <Text style={styles.titleText}>Rechercher</Text>
         <View style={styles.clear}>
           <TextInput
@@ -136,10 +139,9 @@ class RechercheR extends Component {
             style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
             autoFocus={true}
             //secureTextEntry={this.props.secureTextEntry}
-            textContentType={"jobTitle"}
+            //textContentType={"jobTitle"}
             placeholder={"Rechercher par mot clés"}
           />
-
           {this.state.isFocused ? (
             <TouchableOpacity
               style={styles.closeButtonParent}
@@ -158,45 +160,14 @@ class RechercheR extends Component {
 
     );
   };
-  renderPara = () => {
-    <ParallaxScrollView
-      backgroundColor="blue"
-      contentBackgroundColor="pink"
-      parallaxHeaderHeight={300}
-      renderForeground={() => (
-        this.renderHeader
-      )}>
-      {this.state.value != "" ?
-        <FlatList
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
-          )}
-          keyExtractor={item => item.email}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-        /> :
 
-        <FlatList
-          // data={this.state.data}
-
-          ListHeaderComponent={this.renderHeader}
-        />
-      }
-    </ParallaxScrollView>
-  };
   setScrollPosition = (e) => {
     this.setState({
       scrollPosition: e,
     });
   }
 
-  handleFocus = () => {
-    this.setState({ isFocused: true })
-    if (this.props.handleFocus) this.props.handleFocus()
-  }
 
-  handleBlur = () => this.setState({ isFocused: false })
 
   render() {
     const { histories } = this.state;
@@ -222,170 +193,97 @@ class RechercheR extends Component {
           )}
           keyExtractor={item => item.id}
           ItemSeparatorComponent={this.renderSeparator}
-          //ListHeaderComponent={this.renderHeader}
-          renderScrollComponent={props => (
+          ListHeaderComponent={this.renderHeader}
+          stickyHeaderIndices={[0]}
+        // renderScrollComponent={props => (
+        //this.state.scrollPosition <= 0 ? 5 : 
+        // <ParallaxScrollView
+        //   onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
+        //   headerBackgroundColor="#FFF"
+        //   stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+        //   parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
 
-            <ParallaxScrollView
-              //onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
-              headerBackgroundColor="#FFF"
-              stickyHeaderHeight={STICKY_HEADER_HEIGHT}
-              parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+        //   backgroundSpeed={10}
 
-              backgroundSpeed={10}
+        //   renderBackground={() => (
+        //     <View key="background">
+        //       <View style={{
+        //         position: 'absolute',
+        //         top: 0,
+        //         width: window.width,
+        //         backgroundColor: "#FFF",
+        //         height: PARALLAX_HEADER_HEIGHT
+        //       }} />
+        //     </View>
+        //   )}
+        //   renderForeground={() => (
+        //     <View key="parallax-header" style={styles.parallaxHeader}>
+        //       <TouchableOpacity
+        //         style={styles.menuWrappernew}
+        //         onPress={() => Actions.pop()}>
+        //         <LeftArrow width={20 * em} height={20 * em} color={"#251b4d"} />
+        //       </TouchableOpacity>
+        //       <Text style={styles.titleText}>Rechercher</Text>
 
-              renderBackground={() => (
-                <View key="background">
-                  <View style={{
-                    position: 'absolute',
-                    top: 0,
-                    width: window.width,
-                    backgroundColor: "#FFF",
-                    height: PARALLAX_HEADER_HEIGHT
-                  }} />
-                </View>
-              )}
-              renderForeground={() => (
-                <View key="parallax-header" style={styles.parallaxHeader}>
-                  <TouchableOpacity
-                    style={styles.menuWrapper}
-                    onPress={() => Actions.pop()}>
-                    <CloseR width={15 * em} height={15 * em} />
-                  </TouchableOpacity>
-                  <Text style={styles.titleText}>Rechercher</Text>
-                  <View style={styles.clear}>
-                    <TextInput
-                      ref={input => { this.textInput = input }}
-                      onChangeText={text => this.searchFilterFunction(text)}
-                      value={this.state.value}
-                      //editable={this.props.editable}
-                      // clearButtonMode="while-editing"
-                      onFocus={this.handleFocus}
-                      //keyboardType={this.keyboardType}
-                      onBlur={this.handleBlur}
-                      style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-                      autoFocus={true}
-                      //secureTextEntry={this.props.secureTextEntry}
-                      textContentType={"jobTitle"}
-                      placeholder={"Rechercher par mot clés"}
-                    />
+        //     </View>
+        //   )}
 
-                    {/* {this.state.isFocused ? ( */}
-                    <TouchableOpacity
-                      style={styles.closeButtonParent}
-                      onPress={() => {
-                        this.setState({
-                          value: "",
-                          data: []
-                        });
-                        //this.textInput.clear()
-                      }}>
-                      <AnswerNotFound width={18 * em} height={18 * em} />
-                    </TouchableOpacity>
-                    {/* ): null} */}
-                  </View>
-                  {this.state.value == "" ?
-                    <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-                    null
-                  }
-                </View>
-              )}
+        //   renderStickyHeader={() => (
+        //     <View key="sticky-header" style={styles.stickySection}>
+        //       <TouchableOpacity
+        //         style={styles.menuWrappernew}
+        //         onPress={() => Actions.pop()}>
+        //         <LeftArrow width={20 * em} height={20 * em} color={"#251b4d"} />
+        //       </TouchableOpacity>
+        //       <Text style={styles.titleTextS}>Rechercher</Text>
 
-              renderStickyHeader={() => (
-                <View key="sticky-header" style={styles.stickySection}>
-                  <TouchableOpacity
-                    style={styles.menuWrapper}
-                    onPress={() => Actions.pop()}>
-                    <CloseR width={15 * em} height={15 * em} />
-                  </TouchableOpacity>
-                  <Text style={styles.titleTextS}>Rechercher</Text>
-                  <View >
-                    <View style={styles.clear}>
-                      <TextInput
-                        onChangeText={text => this.searchFilterFunction(text)}
-                        value={this.state.value}
-                        //editable={this.props.editable}
-                        // clearButtonMode="while-editing"
-                        onFocus={this.handleFocus}
-                        //keyboardType={this.keyboardType}
-                        onBlur={this.handleBlur}
-                        style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-                        autoFocus={true}
-                        //secureTextEntry={this.props.secureTextEntry}
-                        textContentType={"jobTitle"}
-                        placeholder={"Rechercher par mot clés"}
-                      />
+        //     </View>
+        //   )}
+        //   renderFixedHeader={() => (
+        //     <View key="fixed-header" style={styles.fixedSection}>
+        //       <View style={styles.clear}>
+        //         <TextInput
+        //           onChangeText={text => this.searchFilterFunction(text)}
+        //           value={this.state.value}
+        //           //editable={this.props.editable}
+        //           // clearButtonMode="while-editing"
+        //           onFocus={this.handleFocus}
+        //           //keyboardType={this.keyboardType}
+        //           onBlur={this.handleBlur}
+        //           style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
+        //           autoFocus={true}
+        //           //secureTextEntry={this.props.secureTextEntry}
+        //           textContentType={"jobTitle"}
+        //           placeholder={"Rechercher par mot clés"}
+        //         />
 
-                      {/* {this.state.isFocused ? (
-                          <TouchableOpacity
-                            style={styles.closeButtonParent}
-                            onPress={() => this.setState({
-                              value: "",
-                              data: []
-                            })}>
-                            <AnswerNotFound width={18 * em} height={18 * em} />
-                          </TouchableOpacity>) : null} */}
-                    </View>
+        //         {this.state.isFocused ? (
+        //           <TouchableOpacity
+        //             style={styles.closeButt}
+        //             onPress={() => this.setState({
+        //               value: "",
+        //               data: []
+        //             })}>
+        //             <AnswerNotFound width={18 * em} height={18 * em} />
+        //           </TouchableOpacity>) : null}
+        //       </View>
+        //       {this.state.value == "" ?
+        //         <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
+        //         null
+        //       }
+        //     </View>
+        //   )}
+        // />
 
-                    {this.state.value == "" ?
-                      <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-                      <Text style={styles.textRecheI}>Essayez : Error, écran bleu, mise à jour windows…</Text>
-                    }
-                  </View>
-                </View>
-              )}
-            />
-          )}
+        // )}
         />
-
 
       </View>
     )
   }
 }
 
-// start
-// {this.state.value != "" ?
-//
-// : <View key="parallax-header" style={styles.parallaxHeader}>
-//             <TouchableOpacity
-//               style={styles.menuWrapper}
-//               onPress={() => Actions.pop()}>
-//               <CloseR width={15 * em} height={15 * em} />
-//             </TouchableOpacity>
-//             <Text style={styles.titleText}>Rechercher</Text>
-//             <View style={styles.clear}>
-//               <TextInput
-//                 onChangeText={text => this.searchFilterFunction(text)}
-//                 value={this.state.value}
-//                 //editable={this.props.editable}
-//                 // clearButtonMode="while-editing"
-//                 onFocus={this.handleFocus}
-//                 //keyboardType={this.keyboardType}
-//                 onBlur={this.handleBlur}
-//                 style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-//                 autoFocus={true}
-//                 //secureTextEntry={this.props.secureTextEntry}
-//                 textContentType={"jobTitle"}
-//                 placeholder={"Rechercher par mot clés"}
-//               />
 
-//               {this.state.isFocused ? (
-//                 <TouchableOpacity
-//                   style={styles.closeButtonParent}
-//                   onPress={() => this.setState({
-//                     value: "",
-//                     data: []
-//                   })}>
-//                   <AnswerNotFound width={18 * em} height={18 * em} />
-//                 </TouchableOpacity>) : null}
-//             </View>
-//             {this.state.value == "" ?
-//               <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-//               null
-//             }
-//           </View>}
-
-// end
 
 
 {/* <View style={styles.mainContainer}>
@@ -408,19 +306,17 @@ class RechercheR extends Component {
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
             /> :
-
             <FlatList
               
-
               ListHeaderComponent={this.renderHeader}
             />
           } */}
 {/* </View> */ }
 
 {/* </View> */ }
-
-const PARALLAX_HEADER_HEIGHT = 160 * em;
-const STICKY_HEADER_HEIGHT = 80 * em;
+//160 130
+const PARALLAX_HEADER_HEIGHT = 150 * em;
+const STICKY_HEADER_HEIGHT = 120 * em;
 const styles = {
   TextInput: {
     height: 45 * em,
@@ -431,7 +327,7 @@ const styles = {
     borderBottomColor: "#28c7ee",
     fontFamily: "OpenSans-Regular",
     backgroundColor: "#FFF",
-    // marginLeft: 20 * em,
+    //marginLeft: 20 * em,
     // marginRight: 20 * em,
 
   },
@@ -453,6 +349,8 @@ const styles = {
   },
   container: {
     backgroundColor: "#FFFFFF",
+    height: "100%",
+    //marginTop: 300 * em
   },
   mainContainer: {
     flex: 1,
@@ -461,9 +359,16 @@ const styles = {
   },
   menuWrapper: {
     position: "absolute",
-    right: 40 * em,
-    top: 30 * em,
+    right: 20 * em,
+    top: 10 * em,
     backgroundColor: "#FFF"
+  },
+  menuWrappernew: {
+    position: "absolute",
+    left: 20 * em,
+    top: 90 * em,
+    backgroundColor: "#FFF",
+
   },
   menuWrapperSti: {
     position: "absolute",
@@ -483,7 +388,7 @@ const styles = {
   },
 
   titleText: {
-    fontSize: 25 * em,
+    fontSize: 30 * em,
     color: "#251b4d",
     fontFamily: "Merriweather-Black",
     marginBottom: 10 * em
@@ -535,20 +440,24 @@ const styles = {
 
   fixedSection: {
     width: "100%",
-    alignItems: 'flex-start',
-    backgroundColor: "#FFF",
-
+    position: 'absolute',
+    //flexDirection: 'column',
+    top: 70,
+    right: 21,
+    left: 21,
+    zIndex: 5
+    // paddingRight: -60 * em,
   },
 
   parallaxHeader: {
     alignItems: 'flex-start',
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 30 * em,
+    paddingTop: 80 * em,
     paddingLeft: 20 * em,
     // paddingRight: -60 * em,
     backgroundColor: "#FFF",
-    zIndex: 5
+    // zIndex: 5
   },
 
   closeButton: {
@@ -565,6 +474,31 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  clear: {
+
+
+
+  },
+  closeButt: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 41 * em,
+    marginTop: 8,
+    position: "absolute",
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  header: {
+    width: "100%",
+    position: 'absolute',
+    //flexDirection: 'column',
+    top: 0,
+    right: 21,
+    left: 21,
+    zIndex: 5
+    // paddingRight: -60 * em,
+  }
 
 }
 

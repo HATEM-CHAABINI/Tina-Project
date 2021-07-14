@@ -132,6 +132,9 @@ class Questionnaire extends Component {
   componentDidMount() {
     console.log('======= questionnaire ======== ');
     this.setAdvertisements();
+    console.log('======= qinfo ======== ');
+    console.log(this.props.qinfo);
+
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -392,6 +395,8 @@ class Questionnaire extends Component {
     const _user = (credential && auth.credential._user) || null;
     const isPaidUser = (_user && _user.paid) || false;
 
+    const { title, content, image } = info;
+
     console.log('===== selectedAds: ', selectedAds);
     console.log("QUESTIONNAIR!", qinfo['title']);
     return (
@@ -484,9 +489,12 @@ class Questionnaire extends Component {
 
 
                 </Text>
-                <View style={{ position: 'absolute', right: 138 * em, top: 55 * em }}>
-                  <Info width={11 * em} height={11 * em} color={colors[this.props.qType][0]} />
-                </View>
+
+                {title.length != 0 &&
+                  <View style={{ position: 'absolute', right: 138 * em, top: 55 * em }}>
+                    <Info width={11 * em} height={11 * em} color={colors[this.props.qType][0]} />
+                  </View>}
+
 
 
               </View>
@@ -521,7 +529,7 @@ class Questionnaire extends Component {
 
                 </View>
 
-                {info &&
+                {title.length != 0 &&
                   <TouchableOpacity style={styles.infoWrapper} onPress={this.handleGoInfoWindow.bind(this)}>
                     <Info width={12 * em} height={12 * em} color={colors[this.props.qType][0]} />
                     <Text style={StyleSheet.flatten([styles.infoText, { color: colors[this.props.qType][0] }])}> +info</Text>

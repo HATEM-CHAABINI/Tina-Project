@@ -70,7 +70,11 @@ class MyName extends Component {
 
 
 
-            <MyTextInputSettings style={styles.TextInput} placeholder={"Nom"} autoFocus={true} value={this.state.lastname} handleChange={(text) => this.setState({ lastname: text })} />
+            <MyTextInputSettings style={styles.TextInput}
+              placeholder={"Nom"}
+              autoFocus={true}
+              value={this.state.lastname}
+              handleChange={(text) => this.setState({ lastname: text })} />
 
 
 

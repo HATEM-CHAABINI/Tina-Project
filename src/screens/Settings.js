@@ -114,7 +114,7 @@ const styles = {
   },
   
   ActionButton: {
-    overflow: 'hidden',
+    // overflow: 'hidden',
     borderRadius: 18*em,
     alignItems: 'center',
     backgroundColor: '#fff',

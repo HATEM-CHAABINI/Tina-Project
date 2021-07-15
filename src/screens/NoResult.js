@@ -274,18 +274,18 @@ const styles = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20 * em,
-    paddingBottom: 20 * em
+    paddingTop: 18 * em,
+    paddingBottom: 18 * em
   },
 
   CheckContent: {
     flex: 1,
     color: "#251b4d",
-    fontSize: 13 * em,
+    fontSize: 12 * em,
     paddingLeft: 18 * em,
     paddingRight: 13 * em,
     fontFamily: "OpenSans-Regular",
-    //height: 34 * em,
+    height: 34 * em,
   },
 
   ActionButton: {

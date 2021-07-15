@@ -91,7 +91,7 @@ class RegPassword extends Component {
           <View style={styles.contentWrapper}>
             <MyTextInput style={styles.TextInput} secureTextEntry={true} textContentType={"password"} autoFocus={true} placeholder={"Mot de passe"} value={this.state.password} handleChange={(text) => this.setState({ password: text })} />
 
-            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginTop: 80 * em, marginBottom: 20 * em, marginRight: 20 * em }}>
+            <View style={{ flexDirection: "row", justifyContent: "flex-start", marginTop: 15 * em, marginBottom: 20 * em, marginRight: 20 * em }}>
 
               {/* <TouchableOpacity onPress={this.state.isTermChecked ? this.setState({ isTermChecked: false }) : this.setState({ isTermChecked: true })} >
                 {this.state.isTermChecked ?
@@ -194,7 +194,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18 * em
+    marginTop: 0 * em
   },
   ActionButtondis: {
 
@@ -204,7 +204,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
-    marginTop: 18 * em
+    marginTop: 0 * em
   },
 
   TextInput: {

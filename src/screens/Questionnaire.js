@@ -395,7 +395,7 @@ class Questionnaire extends Component {
     const _user = (credential && auth.credential._user) || null;
     const isPaidUser = (_user && _user.paid) || false;
 
-    const { title, content, image } = info;
+
 
     console.log('===== selectedAds: ', selectedAds);
     console.log("QUESTIONNAIR!", qinfo['title']);
@@ -486,14 +486,12 @@ class Questionnaire extends Component {
                 <Text style={styles.questionText}>
                   {/* .substring(0, this.props.qinfo.title.length - 1) */}
                   {this.props.qinfo.title}
-
-
                 </Text>
 
-                {title.length != 0 &&
+                {info != null ? (
                   <View style={{ position: 'absolute', right: 138 * em, top: 55 * em }}>
                     <Info width={11 * em} height={11 * em} color={colors[this.props.qType][0]} />
-                  </View>}
+                  </View>) : null}
 
 
 
@@ -529,11 +527,11 @@ class Questionnaire extends Component {
 
                 </View>
 
-                {title.length != 0 &&
+                {info != null ? (
                   <TouchableOpacity style={styles.infoWrapper} onPress={this.handleGoInfoWindow.bind(this)}>
                     <Info width={12 * em} height={12 * em} color={colors[this.props.qType][0]} />
                     <Text style={StyleSheet.flatten([styles.infoText, { color: colors[this.props.qType][0] }])}> +info</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity>) : null
                 }
               </View>
 

@@ -3,7 +3,7 @@ import { View, Text, StatusBar, Image, TouchableOpacity, TextInput, Linking, Fla
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 import { ScrollView } from 'react-native-gesture-handler';
-import { WIDTH, colors, HEIGHT, em, Q_TYPE_STRINGS } from '../common/constants';
+import { WIDTH, colors, HEIGHT, em, Q_TYPE_STRINGS, hm } from '../common/constants';
 import Tina from '../components/svgicons/Tina';
 import Binoculars from '../components/svgicons/Binoculars';
 import Rocket from '../components/svgicons/Rocket'
@@ -23,7 +23,8 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ListView from "deprecated-react-native-listview";
 import CloseR from '../components/svgicons/CloseR';
 import AnswerNotFound from '../components/svgicons/DeleteNew'
-import LeftArrow from '../components/svgicons/LeftArrow';
+import RechercheHeader from '../components/RechercheHeader';
+import MyTextInputRecherche from '../components/MyTextInputRecherche';
 const ContentItem = ({ id, title, description }) => (
   <View style={styles.contentItem}>
     {THUMB[id - 1]}
@@ -86,9 +87,8 @@ class RechercheR extends Component {
 
   searchFilterFunction = text => {
     console.log("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-    this.setState({
-      value: text,
-    });
+
+
     const newData = this.state.histories.filter(item => {
       const itemData = `${item.title.toUpperCase()} ${item.solution.toUpperCase()} ${item.type.toUpperCase()}`;
       const textData = text.toUpperCase();
@@ -98,11 +98,19 @@ class RechercheR extends Component {
     this.setState({
       data: newData,
     });
-    if (text.length == 0) this.setState({
-      data: [],
-    });
+
     console.log(newData);
   };
+
+  handleChange = (text) => {
+    this.setState({ value: text })
+
+    if (text.length > 0) {
+      this.searchFilterFunction(text)
+    } else {
+      this.setState({ data: [] })
+    }
+  }
 
   clearText = (text) => {
     console.log("fffffffffffffffffffffffffrrrfffffffffffffffffffffffffffffffff");
@@ -120,7 +128,7 @@ class RechercheR extends Component {
   renderHeader = () => {
     return (
 
-      <View style={styles.parallaxHeader}>
+      <View style={styles.first}>
         <View style={styles.menuWrapper}>
           <MenuBtn image={"close"} onPress={() => Actions.pop()} />
         </View>
@@ -183,150 +191,48 @@ class RechercheR extends Component {
     return (
       <View style={styles.mainContainer}>
         <StatusBar barstyle="light-content" />
-
-        <FlatList
-          ref="ListView"
-          style={styles.container}
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
-          )}
-          keyExtractor={item => item.id}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          stickyHeaderIndices={[0]}
-        // renderScrollComponent={props => (
-        //this.state.scrollPosition <= 0 ? 5 : 
-        // <ParallaxScrollView
-        //   onScroll={e => this.setScrollPosition(e.nativeEvent.contentOffset.y)}
-        //   headerBackgroundColor="#FFF"
-        //   stickyHeaderHeight={STICKY_HEADER_HEIGHT}
-        //   parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
-
-        //   backgroundSpeed={10}
-
-        //   renderBackground={() => (
-        //     <View key="background">
-        //       <View style={{
-        //         position: 'absolute',
-        //         top: 0,
-        //         width: window.width,
-        //         backgroundColor: "#FFF",
-        //         height: PARALLAX_HEADER_HEIGHT
-        //       }} />
-        //     </View>
-        //   )}
-        //   renderForeground={() => (
-        //     <View key="parallax-header" style={styles.parallaxHeader}>
-        //       <TouchableOpacity
-        //         style={styles.menuWrappernew}
-        //         onPress={() => Actions.pop()}>
-        //         <LeftArrow width={20 * em} height={20 * em} color={"#251b4d"} />
-        //       </TouchableOpacity>
-        //       <Text style={styles.titleText}>Rechercher</Text>
-
-        //     </View>
-        //   )}
-
-        //   renderStickyHeader={() => (
-        //     <View key="sticky-header" style={styles.stickySection}>
-        //       <TouchableOpacity
-        //         style={styles.menuWrappernew}
-        //         onPress={() => Actions.pop()}>
-        //         <LeftArrow width={20 * em} height={20 * em} color={"#251b4d"} />
-        //       </TouchableOpacity>
-        //       <Text style={styles.titleTextS}>Rechercher</Text>
-
-        //     </View>
-        //   )}
-        //   renderFixedHeader={() => (
-        //     <View key="fixed-header" style={styles.fixedSection}>
-        //       <View style={styles.clear}>
-        //         <TextInput
-        //           onChangeText={text => this.searchFilterFunction(text)}
-        //           value={this.state.value}
-        //           //editable={this.props.editable}
-        //           // clearButtonMode="while-editing"
-        //           onFocus={this.handleFocus}
-        //           //keyboardType={this.keyboardType}
-        //           onBlur={this.handleBlur}
-        //           style={[styles.TextInput, { color: "#251b4d", fontSize: 16 * em, borderBottomColor: this.state.isFocused ? "#28c7ee" : '#928da6' }]}
-        //           autoFocus={true}
-        //           //secureTextEntry={this.props.secureTextEntry}
-        //           textContentType={"jobTitle"}
-        //           placeholder={"Rechercher par mot clés"}
-        //         />
-
-        //         {this.state.isFocused ? (
-        //           <TouchableOpacity
-        //             style={styles.closeButt}
-        //             onPress={() => this.setState({
-        //               value: "",
-        //               data: []
-        //             })}>
-        //             <AnswerNotFound width={18 * em} height={18 * em} />
-        //           </TouchableOpacity>) : null}
-        //       </View>
-        //       {this.state.value == "" ?
-        //         <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
-        //         null
-        //       }
-        //     </View>
-        //   )}
-        // />
-
-        // )}
-        />
-
+        <RechercheHeader />
+        <View style={{ paddingLeft: 20 * em, paddingRight: 20 * em, marginTop: 0 * em, zIndex: -1 }}>
+          <MyTextInputRecherche handleChange={text => this.handleChange(text)} style={styles.TextInput} autoFocus={true} placeholder={"Rechercher par mot clés"} value={this.state.value} />
+          {this.state.value == "" ?
+            <Text style={styles.textReche}>Essayez : Error, écran bleu, mise à jour windows…</Text> :
+            null
+          }
+          <FlatList
+            ref="ListView"
+            style={styles.container}
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
+            )}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={this.renderSeparator}
+          />
+        </View>
       </View>
     )
   }
 }
 
-
-
-
-{/* <View style={styles.mainContainer}>
-        <StatusBar barstyle="light-content" /> */}
-
-{/* <View style={styles.menuWrapper}>
-          <MenuBtn image={"close"} onPress={() => Actions.pop()} />
-        </View> */}
-
-{/* <View style={styles.contentContainer}> */ }
-{/* <Text style={styles.titleText}>Rechercher</Text> */ }
-
-{/* {this.state.value != "" ?
-            <FlatList
-              data={this.state.data}
-              renderItem={({ item }) => (
-                <RechercheItem id={item.id} type={item.type} title={item.title} date={item.dateString} solution={item.solution} questions={item.questions} />
-              )}
-              keyExtractor={item => item.email}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
-            /> :
-            <FlatList
-              
-              ListHeaderComponent={this.renderHeader}
-            />
-          } */}
-{/* </View> */ }
-
-{/* </View> */ }
 //160 130
 const PARALLAX_HEADER_HEIGHT = 150 * em;
 const STICKY_HEADER_HEIGHT = 120 * em;
 const styles = {
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    flexDirection: 'column',
+    paddingBottom: 159 * hm
+  },
+
   TextInput: {
     height: 45 * em,
-    width: WIDTH - 40,
-    fontSize: 13 * em,
+    fontSize: 21 * em,
     color: "#28c7ee",
     borderBottomWidth: 1 * em,
     borderBottomColor: "#28c7ee",
     fontFamily: "OpenSans-Regular",
-    backgroundColor: "#FFF",
+    //backgroundColor: "#FFF",
     //marginLeft: 20 * em,
     // marginRight: 20 * em,
 
@@ -349,14 +255,9 @@ const styles = {
   },
   container: {
     backgroundColor: "#FFFFFF",
-    height: "100%",
     //marginTop: 300 * em
   },
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    flexDirection: 'column',
-  },
+
   menuWrapper: {
     position: "absolute",
     right: 20 * em,
@@ -450,9 +351,9 @@ const styles = {
   },
 
   parallaxHeader: {
-    alignItems: 'flex-start',
-    flex: 1,
-    flexDirection: 'column',
+    //alignItems: 'flex-start',
+    //flex: 1,
+    //flexDirection: 'column',
     paddingTop: 80 * em,
     paddingLeft: 20 * em,
     // paddingRight: -60 * em,

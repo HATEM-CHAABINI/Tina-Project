@@ -96,7 +96,7 @@ class SignIn extends Component {
 
           <Text style={styles.contentText}>
             Pas de compte?
-              <Text style={styles.linkText} onPress={this.handleGoSignup}> Créer ici </Text>
+            <Text style={styles.linkText} onPress={this.handleGoSignup}> Créer ici </Text>
           </Text>
 
           <View style={styles.contentWrapper}>
@@ -137,7 +137,7 @@ class SignIn extends Component {
               } */}
             </View>
 
-            <TouchableOpacity disabled={!this.state.email || !this.state.password} style={!this.state.email || !this.state.password ? [styles.ActionButtondis, { marginTop: 25 * em, marginBottom: 8 * em }] : [styles.ActionButton, { marginTop: 25 * em, marginBottom: 8 * em }]} onPress={this.handleLoginDone}>
+            <TouchableOpacity disabled={!this.state.email || !this.state.password} style={!this.state.email || !this.state.password ? [styles.ActionButtondis, { marginTop: 10 * em, marginBottom: 8 * em }] : [styles.ActionButton, { marginTop: 10 * em, marginBottom: 8 * em }]} onPress={this.handleLoginDone}>
               <Text style={styles.ActionText}>Continuer</Text>
             </TouchableOpacity>
 
@@ -217,7 +217,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18 * em
+    marginTop: 0 * em
   },
   ActionButtondis: {
 
@@ -227,7 +227,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
-    marginTop: 18 * em
+    marginTop: 0 * em
   },
 
   TextInput: {

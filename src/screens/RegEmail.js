@@ -1,8 +1,8 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
-import {WIDTH, em} from '../common/constants';
+import { WIDTH, em } from '../common/constants';
 import MyTextInput from '../components/MyTextInput';
 import { AppActions } from '../actions'
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ import { validateEmail, showRootToast } from '../common/utils';
 import { checkUserEmail } from '../common/firebase/database';
 
 class RegEmail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -25,53 +25,53 @@ class RegEmail extends Component {
   }
 
   handleContinue = () => {
-    const {email} = this.state;
+    const { email } = this.state;
 
-    if (!validateEmail(email)){
+    if (!validateEmail(email)) {
       showRootToast("S'il vous plaît, mettez une adresse email valide.")
-    }else{
+    } else {
       checkUserEmail(email).then(res => {
-        if (res){
+        if (res) {
           showRootToast("L'adresse e-mail existe déjà")
-        }else{
-          Actions.regname({email});
+        } else {
+          Actions.regname({ email });
         }
       });
     }
   }
 
-  render(){
+  render() {
     return (
-        <View style={styles.mainContainer}>
-          <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
+      <View style={styles.mainContainer}>
+        <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
-          <View style={styles.menuWrapper}>
-            <MenuBtn image={"close"} onPress={() => Actions.pop()}/>
-          </View>
+        <View style={styles.menuWrapper}>
+          <MenuBtn image={"close"} onPress={() => Actions.pop()} />
+        </View>
 
-          <View style={styles.contentContainer}>
-            <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo}  />
+        <View style={styles.contentContainer}>
+          <Image source={require('../Assets/tina-start.png')} style={styles.tinaLogo} />
 
-            <Text style={styles.titleText}>Bienvenue !</Text>
+          <Text style={styles.titleText}>Bienvenue !</Text>
 
-            <Text style={styles.contentText}>Quel est votre email ?</Text>
+          <Text style={styles.contentText}>Quel est votre email ?</Text>
 
-            <View style={styles.contentWrapper}>
-              <Text style={styles.descText}>Adresse email</Text>
-              <MyTextInput style={styles.TextInput} textContentType={"emailAddress"} autoFocus={true} value={this.state.email} handleChange={(text)=>this.setState({email:text})} />
+          <View style={styles.contentWrapper}>
+            <Text style={styles.descText}>Adresse email</Text>
+            <MyTextInput style={styles.TextInput} textContentType={"emailAddress"} autoFocus={true} value={this.state.email} handleChange={(text) => this.setState({ email: text })} />
 
-              <Text style={StyleSheet.flatten([styles.descText, {alignSelf:"center", fontSize: 14*em}])}>
+            {/* <Text style={StyleSheet.flatten([styles.descText, {alignSelf:"center", fontSize: 14*em}])}>
                 Déjà un compte?
                 <Text style={styles.linkText} onPress={this.handleGoLogin}> Se connecter ici</Text>
-              </Text>
+              </Text> */}
 
-              <TouchableOpacity disabled ={!this.state.email } style={!this.state.email ? styles.ActionButtondis: styles.ActionButton} onPress={this.handleContinue.bind(this)}>
-                  <Text style={styles.ActionText}>Continuer</Text>
-              </TouchableOpacity>
+            <TouchableOpacity disabled={!this.state.email} style={!this.state.email ? styles.ActionButtondis : styles.ActionButton} onPress={this.handleContinue.bind(this)}>
+              <Text style={styles.ActionText}>Continuer</Text>
+            </TouchableOpacity>
 
-            </View>
           </View>
         </View>
+      </View>
     )
   }
 }
@@ -87,91 +87,91 @@ const styles = {
     flex: 1
   },
 
-  menuWrapper:{
-    position:"absolute",
-    right:20*em,
-    top:20*em
+  menuWrapper: {
+    position: "absolute",
+    right: 20 * em,
+    top: 20 * em
   },
 
   contentContainer: {
     flexDirection: "column",
-    marginTop: 45*em,
-    alignItems:"center",
-    zIndex:-1
+    marginTop: 45 * em,
+    alignItems: "center",
+    zIndex: -1
   },
 
-  tinaLogo:{
+  tinaLogo: {
     width: WIDTH * 0.3,
-    height:90*em,
-    marginBottom: 15*em,
-    resizeMode:'contain'
+    height: 90 * em,
+    marginBottom: 15 * em,
+    resizeMode: 'contain'
   },
 
-  contentWrapper:{
-    width:WIDTH,
-    paddingLeft: 20*em,
-    paddingRight: 20*em,
-    paddingTop: 15*em
+  contentWrapper: {
+    width: WIDTH,
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em,
+    paddingTop: 15 * em
   },
 
-  titleText:{
-    fontSize: 25*em,
-    color:"#251b4d",
-    fontFamily:"Merriweather-Black"
+  titleText: {
+    fontSize: 25 * em,
+    color: "#251b4d",
+    fontFamily: "Merriweather-Black"
   },
 
-  contentText:{
-    fontSize: 15*em,
-    marginTop: 8*em,
-    color:"#251b4d",
-    fontFamily:"OpenSans-Regular"
+  contentText: {
+    fontSize: 15 * em,
+    marginTop: 8 * em,
+    color: "#251b4d",
+    fontFamily: "OpenSans-Regular"
   },
 
-  descText:{
-    fontSize: 12*em,
-    marginTop: 10*em,
-    color:"#928da6",
-    fontFamily:"OpenSans-Regular"
+  descText: {
+    fontSize: 12 * em,
+    marginTop: 10 * em,
+    color: "#928da6",
+    fontFamily: "OpenSans-Regular"
   },
 
-  linkText:{
-    color:"#28c7ee",
-    fontFamily:"OpenSans-SemiBold"
+  linkText: {
+    color: "#28c7ee",
+    fontFamily: "OpenSans-SemiBold"
   },
 
 
   ActionButton: {
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em,
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#28C7ED',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: -20 * em
   },
   ActionButtondis: {
-    
+
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em,
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#918da6',
     justifyContent: 'center',
-    marginTop: 18*em
+    marginTop: -20 * em
   },
-  TextInput:{
-    height: 45*em,
-    fontSize: 13*em,
-    color:"#28c7ee",
-    borderBottomWidth:1*em,
-    borderBottomColor:"#28c7ee",
-    marginBottom: 60*em,
-    fontFamily:"OpenSans-Regular"
+  TextInput: {
+    height: 45 * em,
+    fontSize: 13 * em,
+    color: "#28c7ee",
+    borderBottomWidth: 1 * em,
+    borderBottomColor: "#28c7ee",
+    marginBottom: 60 * em,
+    fontFamily: "OpenSans-Regular"
   },
 
-  ActionText:{
-    color:"#fff",
-    fontSize: 14*em,
+  ActionText: {
+    color: "#fff",
+    fontSize: 14 * em,
     fontFamily: "OpenSans-SemiBold"
   }
 }
@@ -185,5 +185,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(RegEmail);
+  mapStateToProps,
+  mapDispatchToProps)(RegEmail);

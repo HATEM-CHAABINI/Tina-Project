@@ -139,7 +139,6 @@ class FAQDetail extends Component {
 
       <ScrollView style={styles.mainContainer}>
 
-
         <View style={styles.mainContainer}>
           <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
@@ -152,7 +151,7 @@ class FAQDetail extends Component {
 
             <Text style={styles.contentText}>
               Nous sommes à votre écoute
-           </Text>
+            </Text>
 
 
             {!selected && !showList ? (
@@ -163,7 +162,7 @@ class FAQDetail extends Component {
               </TouchableOpacity>
             ) : null}
 
-            {selected && showList ? (<Text style={styles.subtitleText}>Votre Sujet</Text>) : null}
+            {selected ? (<Text style={styles.subtitleText}>Votre Sujet</Text>) : null}
             {/* {selected ? <Text style={{ width: "90%", height: 43 * em, fontFamily: "OpenSans-Regular", fontSize: 21, color: '#251B4D', borderBottomWidth: 2 * em, borderBottomColor: "#28c7ee", marginBottom: 20 * em }}>{this.state.value}</Text> : null} */}
             {selected && showList ? (
               <TouchableOpacity style={{ flex: 1, flexDirection: "row", alignSelf: "flex-start", justifyContent: 'space-between', width: "90%", marginHorizontal: 21 * em, borderBottomWidth: 2 * em, borderBottomColor: "#28c7ee", height: 43 * em, marginBottom: 20 * em }}

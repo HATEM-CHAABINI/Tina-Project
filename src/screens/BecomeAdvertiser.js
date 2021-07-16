@@ -3,7 +3,7 @@ import { View, Text, StatusBar, Image, TouchableOpacity, TextInput, Linking } fr
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { WIDTH, colors, em } from '../common/constants';
+import { WIDTH, colors, em, hm } from '../common/constants';
 import CheckNormal from '../components/svgicons/CheckNormal';
 import CheckSelected from '../components/svgicons/CheckSelected';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -273,7 +273,7 @@ class FAQDetail extends Component {
                 underlineColorAndroid="transparent"
                 placeholder={"Écrivez votre message ici"}
                 placeholderTextColor={"#BCB8CC"}
-                multiline
+                multiline={true}
                 numberOfLines={4}
                 maxLength={400}
                 onFocus={() => this.setState({ showButton: true })}
@@ -349,6 +349,7 @@ const styles = {
     marginTop: 0,
     paddingTop: 20 * em,
     paddingBottom: 10 * em,
+    height:150*hm,
     textAlign: 'left',
     textAlignVertical: 'top',
     width: '90%',

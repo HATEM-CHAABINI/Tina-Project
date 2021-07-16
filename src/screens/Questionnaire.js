@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Info from '../components/svgicons/Info';
 import { Actions } from 'react-native-router-flux';
 import InfoModal from '../components/InfoModal';
-import { colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS, HEIGHT } from '../common/constants';
+import { colors, WIDTH, em, Q_TYPES, Q_TYPE_STRINGS, HEIGHT, hm } from '../common/constants';
 import EvaluationModal from '../components/EvaluationModal';
 import { getQuestionByCategoryAndId } from '../common/firebase/database';
 import { getQuestionByCategory } from '../common/firebase/database';
@@ -373,19 +373,18 @@ class Questionnaire extends Component {
   }
 
   handleBackk = (type, info) => {
-    console.log("###############################################");
-    const id = this.state.idyy;
-    console.log("########## idyy ############");
-    console.log(this.props.question.questions);
-    console.log("########## le graaal ############");
-    console.log(info);
+    // console.log("###############################################");
+    // const id = this.state.idyy;
+    // console.log("########## idyy ############");
+    // console.log(this.props.question.questions);
+    // console.log("########## le graaal ############");
+    // console.log(info);
+    // const { qinfo, qType, questionActions } = this.props;
+    // console.log("########## le diamand ############");
+    // console.log(this.props.question.questions[this.props.question.questions.length - 1]);
+    // Actions.questionnaire({ qType: qType, qinfo: this.props.question.questions[this.props.question.questions.length - 1] })
 
-    const { qinfo, qType, questionActions } = this.props;
-    console.log("########## le diamand ############");
-    console.log(this.props.question.questions[this.props.question.questions.length - 1]);
-    Actions.questionnaire({ qType: qType, qinfo: this.props.question.questions[this.props.question.questions.length - 1] })
-
-
+    Actions.pop()
   }
   render() {
     const { qinfo, auth } = this.props;
@@ -422,30 +421,7 @@ class Questionnaire extends Component {
                     <Image source={require("../Assets/tina_header.png")} style={{ height: 30 * em, width: 71 * em }} resizeMode={"cover"} />
                   </View>
                   <MenuBtn image={"close"} onPress={this.handleClose.bind(this)} />
-                  {this.props.b == true ?
-                    <TouchableOpacity style={{ position: 'absolute', left: 21 * em, top: 310 * em, zIndex: 7 }}
-                      onPress={() => Actions.pop()}>
-                      <View style={{
-                        backgroundColor: "#FFF",
-                        width: 39 * em, height: 39 * em,
-                        borderRadius: 14 * em,
-                        elevation: 5,
-                        shadowColor: '#254D56',
-                        shadowOffset: {
-                          width: 0,
-                          height: 12 * em,
-                        },
-                        shadowOpacity: 0.2,
-                        shadowRadius: 25 * em,
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }} >
-                        <Back width={15 * em} height={13 * em} />
-                        {/* <View style={{ position: 'absolute', left: 10 * em, top: 12 * em, zIndex: 7 }}><Back width={15 * em} height={13 * em} /></View> */}
 
-                      </View>
-
-                    </TouchableOpacity> : <></>}
                 </View>
 
                 <View style={{ flex: 1 }}>
@@ -482,6 +458,30 @@ class Questionnaire extends Component {
               </TouchableOpacity> : <></>} */}
 
             <View style={styles.contentWrapper}>
+              {this.props.b == true ?
+                <TouchableOpacity style={{ left: 24 * em, bottom: 40 * hm, zIndex: 7 }}
+                  onPress={() => this.handleBackk(this.props.qtype, qinfo)}>
+                  <View style={{
+                    backgroundColor: "#FFF",
+                    width: 39 * em, height: 39 * em,
+                    borderRadius: 14 * em,
+                    elevation: 5,
+                    shadowColor: '#254D56',
+                    shadowOffset: {
+                      width: 0,
+                      height: 12 * em,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 25 * em,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }} >
+                    <Back width={15 * em} height={13 * em} />
+                    {/* <View style={{ position: 'absolute', left: 10 * em, top: 12 * em, zIndex: 7 }}><Back width={15 * em} height={13 * em} /></View> */}
+
+                  </View>
+
+                </TouchableOpacity> : <></>}
               <View>
                 <Text style={styles.questionText}>
                   {/* .substring(0, this.props.qinfo.title.length - 1) */}

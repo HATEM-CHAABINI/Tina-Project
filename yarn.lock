@@ -5854,6 +5854,11 @@
   dependencies:
     "react-native-vector-icons" "^7.0.0"
 
+"react-native-dynamic-vector-icons@^1.1.6":
+  "integrity" "sha512-tz098Wv/4TI70BRWfshSyVzWsoV4PRdp6fMMA7GRmxsaERfYshEy3Rs3bvD9tVjD+zKUcmM4Ce7bmAoJkGSNdg=="
+  "resolved" "https://registry.npmjs.org/react-native-dynamic-vector-icons/-/react-native-dynamic-vector-icons-1.1.6.tgz"
+  "version" "1.1.6"
+
 "react-native-elements@^2.0.0":
   "integrity" "sha512-nIFz47Sk/urOxZX+sqgWF2k7IVL0t9NGsVLg4HC7pN70bsjXMr4VUmS72zioxag3Du8xK1g7lw4vrRX3JQeVYg=="
   "resolved" "https://registry.npmjs.org/react-native-elements/-/react-native-elements-2.0.4.tgz"
@@ -6054,7 +6059,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^15.0.2"
 
-"react-native-vector-icons@^8.1.0", "react-native-vector-icons@>6.6.0":
+"react-native-vector-icons@^8.1.0", "react-native-vector-icons@>= 6.x.x", "react-native-vector-icons@>6.6.0":
   "integrity" "sha512-sHIdBB6Y0dHaot2fMXgy5J/hhCn5YuyN7SKDNFgPzL8KA1oF2/v7mgYMavnK7LIIs2dJoGnDANKf61dsU+TZlg=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-8.1.0.tgz"
   "version" "8.1.0"

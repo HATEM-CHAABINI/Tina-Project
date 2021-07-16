@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppActions, SignupActions } from '../actions'
 import RoundedCheckbox from "react-native-rounded-checkbox";
-
+import Icon from "react-native-dynamic-vector-icons";
 //const checkShapeSize = { width: 26 * hm, height: 26 * hm };
 class RegPassword extends Component {
   constructor(props) {
@@ -110,13 +110,25 @@ class RegPassword extends Component {
                 </TouchableOpacity>
 
               } */}
-              {Platform.OS === 'ios' ?
-                <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} />
 
-                :
-                <RoundedCheckbox style={styles.checkBox} component={<CheckPsw width={20 * em} height={20 * em} />} outerBorderColor={"#928DA6"} checkedColor={"#F6F5FA"} outerSize={20 * em} uncheckedColor={"#F6F5FA"} onPress={(checked) => this.setState({ isTermChecked: checked })} />
+              <CheckBox style={styles.checkBox} value={this.state.isTermChecked} onValueChange={(isSelected) => this.setState({ isTermChecked: isSelected })} />
 
-              }
+
+              {/* // <RoundedCheckbox style={styles.checkBox} 
+                //   outerBorderColor={"#928DA6"}
+                //   checkedColor={"#F6F5FA"}
+                //   outerSize={20 * em}
+                //   innerSize={19 * em}
+                //   uncheckedColor={"#F6F5FA"}
+                //   // component={<Icon
+                //   //   size={10}
+                //   //   name="check"
+                //   //   type="Entypo"
+                //   //   color={this.state.isTermChecked ? "#251b4d" : "#251b4d"}
+                //   // />}
+                //   onPress={() => this.setState({ isTermChecked: !this.state.isTermChecked })} />*/}
+
+
               <Text style={styles.TermsText}>
                 En cochant cette case j'accepte les
                 <Text style={styles.linkText} onPress={() => { Actions.cgu(); }}> Conditions d'utilisation </Text>
@@ -132,7 +144,7 @@ class RegPassword extends Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </View >
     )
   }
 }
@@ -241,7 +253,8 @@ const styles = {
     //justifyContent: "flex-start",
     // alignItems: "flex-start"
     alignSelf: "flex-start",
-    borderColor: "#928DA6"
+    borderColor: "#928DA6",
+
   }
 }
 

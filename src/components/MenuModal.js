@@ -369,6 +369,16 @@ class MenuModal extends Component {
                 </View>
               )}
 
+              {!isLoggedIn && (
+                <View style={styles.menuWrapper}>
+                  <Text style={styles.menuText}>Version sans publicité</Text>
+                  <TouchableOpacity style={styles.menuBtn} onPress={onPressSignIn} elevation={2}>
+                    {/* <LeftArrow width={15 * em} height={15 * em} color={"#928ea7"} /> */}
+                    <NonVersion width={15 * em} height={15 * em} />
+                  </TouchableOpacity>
+                </View>
+              )}
+
               {!isLoggedIn ?
                 (<View style={styles.menuWrapper}>
                   <Text style={styles.menuText}>Se connecter</Text>
@@ -404,7 +414,7 @@ class MenuModal extends Component {
               <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>À Propos</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressAbout} elevation={2}>
-                  <Image source={require('../Assets/tina-27x27.png')} style={{ width: 30 * em, height: 30 * em, resizeMode: "contain" }} />
+                  <Image source={require('../Assets/tina-menu.png')} style={{ width: 30 * em, height: 30 * em, resizeMode: "contain" }} />
                 </TouchableOpacity>
               </View>
 

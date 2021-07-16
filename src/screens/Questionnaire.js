@@ -362,7 +362,7 @@ class Questionnaire extends Component {
     if (this.props.qType == Q_TYPES.L) {
       return (<Image source={require('../Assets/tina-question-2.png')} style={{ width: scale(550), height: verticalScale(230), resizeMode: 'contain' }} />)
     } else if (this.props.qType == Q_TYPES.O) {
-      return (<Image source={require('../Assets/tina-question.png')} style={{ width: scale(500), height: verticalScale(220), resizeMode: 'contain' }} />)
+      return (<Image source={require('../Assets/tina-question-3.png')} style={{ width: scale(500), height: verticalScale(220), resizeMode: 'contain' }} />)
     } else if (this.props.qType == Q_TYPES.P) {
       return (<Image source={require('../Assets/tina-question.png')} style={{ width: scale(500), height: verticalScale(220), resizeMode: 'contain' }} />)
     } else if (this.props.qType == Q_TYPES.I) {
@@ -424,7 +424,7 @@ class Questionnaire extends Component {
                   <MenuBtn image={"close"} onPress={this.handleClose.bind(this)} />
                   {this.props.b == true ?
                     <TouchableOpacity style={{ position: 'absolute', left: 21 * em, top: 310 * em, zIndex: 7 }}
-                      onPress={() => this.handleBackk(this.props.qtype, qinfo)}>
+                      onPress={() => Actions.pop()}>
                       <View style={{
                         backgroundColor: "#FFF",
                         width: 39 * em, height: 39 * em,

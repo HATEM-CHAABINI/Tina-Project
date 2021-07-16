@@ -63,6 +63,7 @@ class RechercheR extends Component {
           histories.push({ ...item, dateString, title })
         })
         this.setState({ histories })
+        console.log("************************************** histories data ***********************************");
         console.log(this.state.histories);
       }
     },

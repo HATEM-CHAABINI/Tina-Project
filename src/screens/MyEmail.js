@@ -1,5 +1,5 @@
-import React, { Component} from 'react';
-import { View, Text, TouchableOpacity, StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import MenuBtn from '../components/MenuBtn';
 import { Actions } from 'react-native-router-flux';
 
@@ -13,7 +13,7 @@ import { checkUserEmail, updateUserInfo } from '../common/firebase/database';
 import MyTextInputSettings from '../components/MyTextInputSettings';
 
 class MyEmail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -21,74 +21,74 @@ class MyEmail extends Component {
     }
   }
 
-  UNSAFE_componentWillMount(){
-    const {_user} = this.props.auth.credential;
+  UNSAFE_componentWillMount() {
+    const { _user } = this.props.auth.credential;
     this.setState({
       email: _user.email
     })
   }
 
   handleOnClickSave = () => {
-    const {email} = this.state;
-    const {loginActions} = this.props;
-    const {_user} = this.props.auth.credential;
+    const { email } = this.state;
+    const { loginActions } = this.props;
+    const { _user } = this.props.auth.credential;
     const curemail = _user.email;
     const password = _user.password;
-    
-    if (!validateEmail(email)){
+
+    if (!validateEmail(email)) {
       showRootToast("S'il vous plaît, mettez une adresse email valide.")
-    }else{
+    } else {
       // Update the email on firebase auth.
       checkUserEmail(email).then(res => {
-        if (res){
+        if (res) {
           showRootToast("L'adresse e-mail existe déjà")
-        }else{
+        } else {
           //This is from firebase doc, because this kind of sensitive data (email change) needs the credentials should be recent one.
           //Othewise error occurs
-          loginInWithEmailPassword({email:curemail, password}).then(result => {
+          loginInWithEmailPassword({ email: curemail, password }).then(result => {
             let credential = result.credential;
-            loginActions.loginUpdateInfo({...credential, _user});
+            loginActions.loginUpdateInfo({ ...credential, _user });
             updateUserEmail(email).then(success => {
               // If susccessfully signed in, and changed the email successfully
-              if (success){
-                updateUserInfo({email}).then(r => {
-                  if (r){
+              if (success) {
+                updateUserInfo({ email }).then(r => {
+                  if (r) {
                     // Update user info with new credential, email
-                    loginActions.loginUpdateInfo({...credential, _user:{..._user, email}})
+                    loginActions.loginUpdateInfo({ ...credential, _user: { ..._user, email } })
                     Actions.pop();
                   }
-                });              
+                });
               }
             })
           })
-          
+
         }
       });
     }
   }
 
-  render(){
+  render() {
     return (
-        <View style={styles.mainContainer}>
-          <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
-          
-          <View style={styles.menuWrapper}>
-            <MenuBtn image={"close"} onPress={() => Actions.pop()}/>                  
-          </View>
+      <View style={styles.mainContainer}>
+        <StatusBar barstyle="light-content" backgroundColor={"#28c7ee"} />
 
-          <View style={styles.contentContainer}>
-            <Text style={styles.titleText}>Email</Text>
+        <View style={styles.menuWrapper}>
+          <MenuBtn image={"close"} onPress={() => Actions.pop()} />
+        </View>
 
-            <View style={styles.contentWrapper}>
-              <Text style={styles.descText}>Adresse email</Text>
-              <MyTextInputSettings style={styles.TextInput} autoFocus={true} value={this.state.email} handleChange={(text)=>this.setState({email:text})} />
+        <View style={styles.contentContainer}>
+          <Text style={styles.titleText}>Email</Text>
 
-              <TouchableOpacity style={styles.ActionButton} onPress={this.handleOnClickSave.bind(this)}>
-                  <Text style={styles.ActionText}>Valider</Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.contentWrapper}>
+            <Text style={styles.descText}>Adresse email</Text>
+            <MyTextInputSettings style={styles.TextInput} autoFocus={true} value={this.state.email} handleChange={(text) => this.setState({ email: text })} />
+
+            <TouchableOpacity style={styles.ActionButton} onPress={this.handleOnClickSave.bind(this)}>
+              <Text style={styles.ActionText}>Valider</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     )
   }
 }
@@ -104,60 +104,60 @@ const styles = {
     flex: 1
   },
 
-  menuWrapper:{
-    position:"absolute", 
-    left:20*em,
-    top:20*em
+  menuWrapper: {
+    position: "absolute",
+    left: 20 * em,
+    top: 20 * em
   },
 
   contentContainer: {
-    flexDirection: "column", 
-    marginTop: 90*em, 
-    paddingLeft:20*em, 
-    paddingRight: 20*em
+    flexDirection: "column",
+    marginTop: 90 * em,
+    paddingLeft: 20 * em,
+    paddingRight: 20 * em
   },
 
-  contentWrapper:{
-    flexDirection:"column",
-    paddingTop: 18*em,
+  contentWrapper: {
+    flexDirection: "column",
+    paddingTop: 18 * em,
   },
 
-  titleText:{
-    fontSize: 24*em,  
-    color:"#251b4d", 
-    fontFamily:"Merriweather-Black"
+  titleText: {
+    fontSize: 24 * em,
+    color: "#251b4d",
+    fontFamily: "Merriweather-Black"
   },
 
-  descText:{
-    fontSize: 13*em, 
-    marginTop: 11*em, 
-    color:"#928da6", 
-    fontFamily:"OpenSans-Regular"
+  descText: {
+    fontSize: 13 * em,
+    marginTop: 11 * em,
+    color: "#928da6",
+    fontFamily: "OpenSans-Regular"
   },
-  
+
   ActionButton: {
     overflow: 'hidden',
-    borderRadius: 18*em,
-    height: 50*em, 
+    borderRadius: 18 * em,
+    height: 50 * em,
     alignItems: 'center',
     backgroundColor: '#28c7ee',
     justifyContent: 'center',
-    marginTop: 100*em
+    marginTop: 120 * em
   },
 
-  TextInput:{
+  TextInput: {
     width: '98%',
-    height: 40*em, 
-    fontSize: 15*em, 
-    color:"#28c7ee", 
-    borderBottomWidth:1*em, 
-    borderBottomColor:"#28c7ee", 
-    fontFamily:"OpenSans-Regular"
+    height: 40 * em,
+    fontSize: 15 * em,
+    color: "#28c7ee",
+    borderBottomWidth: 1 * em,
+    borderBottomColor: "#28c7ee",
+    fontFamily: "OpenSans-Regular"
   },
 
-  ActionText:{
-    color:"#fff", 
-    fontSize: 14*em, 
+  ActionText: {
+    color: "#fff",
+    fontSize: 14 * em,
     fontFamily: "OpenSans-SemiBold"
   }
 }
@@ -171,5 +171,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-    mapStateToProps, 
-    mapDispatchToProps)(MyEmail);
+  mapStateToProps,
+  mapDispatchToProps)(MyEmail);

@@ -290,10 +290,16 @@ class MenuModal extends Component {
 
     console.log('===== showConfirmPayModal: ', token);
 
+    const { auth } = this.props;
+    const userInfo = (auth && auth.credential && auth.credential._user) || null;
+    console.log('===== userInfo: ', userInfo)
+    if (!userInfo) return;
+
     return (
       <ConfirmPaymentModal
         isModalVisible={showConfirmPayModal}
         token={token}
+        userInfo={userInfo}
         onPressPayer={this.doPayment}
         onPressCancel={() => this.setState({ showConfirmPayModal: false })}
         onPressScanCard={this.handlePayer}

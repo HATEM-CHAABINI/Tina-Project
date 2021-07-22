@@ -18,7 +18,7 @@ export default class ConfirmPaymentModal extends Component {
 
   renderTitle = (onPressCancel) => {
     return (
-    
+
       <View style={styles.titleContainer}>
         <View style={styles.titleLeft}>
           <Text style={styles.titleLeftText}>
@@ -64,7 +64,7 @@ export default class ConfirmPaymentModal extends Component {
   }
 
   renderCardInfo = (token, onPressScanCard) => {
-    const { country, brand, last4, expMonth, expYear, funding} = token.card;
+    const { country, brand, last4, expMonth, expYear, funding } = token.card;
     var cardImage = CREDIT_CARD_IMAGE;
     if (brand === 'Visa') cardImage = VISA_CARD_IMAGE;
     else if (brand === 'American Express') cardImage = AMERICAN_EXPRESS_CARD_IMAGE;
@@ -101,19 +101,24 @@ export default class ConfirmPaymentModal extends Component {
   };
 
   //from renderContactInfo
-  //<View style={styles.itemCenter}>
-    //      <Text style={styles.itemCenterText}>
-      //      bruno@tina.fr
-        //  </Text>
-        //</View>
+  // <View style={styles.itemCenter}>
+  //        <Text style={styles.itemCenterText}>
+  //          bruno@tina.fr
+  //        </Text>
+  //       </View>
 
-  renderContactInfo = () => {
+  renderContactInfo = (userInfo) => {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemLeft}>
           <Text style={styles.itemLeftText}>CONTACT</Text>
         </View>
-      
+        <View style={styles.itemCenter}>
+          <Text style={styles.itemCenterText}>
+            {userInfo.email}
+          </Text>
+        </View>
+
         <TouchableOpacity style={styles.itemRight} onPress={this.onClearCard}>
           <Image
             source={ARROW_RIGHT_IMAGE}
@@ -168,8 +173,10 @@ export default class ConfirmPaymentModal extends Component {
       onPressPayer,
       onPressCancel,
       onPressScanCard,
-      token
+      token,
+      userInfo
     } = this.props;
+
     return (
       <Modal
         isVisible={isModalVisible}
@@ -185,12 +192,12 @@ export default class ConfirmPaymentModal extends Component {
         <View style={styles.container}>
           {this.renderTitle(onPressCancel)}
           {this.renderTitleDivider()}
-          {(token && token.card) ? 
-            this.renderCardInfo(token, onPressScanCard) : 
+          {(token && token.card) ?
+            this.renderCardInfo(token, onPressScanCard) :
             this.renderEmptyCard(onPressScanCard)
           }
           {this.renderListDivider()}
-          {this.renderContactInfo()}
+          {this.renderContactInfo(userInfo)}
           {this.renderListDivider()}
           {this.renderTotal()}
           {this.renderButton(onPressPayer)}
@@ -209,11 +216,11 @@ const styles = {
   container: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingTop: 40,
+    paddingTop: 10,
     paddingBottom: 0,
     paddingHorizontal: 20,
     backgroundColor: '#cdcdcd',
-    height: height/5 * 3,
+    height: height / 5 * 3,
     width: width,
     bottom: 0
   },
@@ -221,7 +228,7 @@ const styles = {
     // marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 10
   },
   titleLeft: {
     flex: 5,
@@ -296,8 +303,8 @@ const styles = {
   },
   listDivider: {
     height: 1,
-    marginLeft: 30,
-    margingRight: 0,
+    // marginLeft: 0,
+    // margingRight: 0,
     backgroundColor: "#adadad",
     width: width,
   },

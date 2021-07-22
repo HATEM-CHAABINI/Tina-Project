@@ -141,7 +141,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#28c7ee',
     justifyContent: 'center',
-    marginTop: 50 * hm
+    marginTop: 40 * hm
   },
 
   TextInput: {

@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Tina from './svgicons/Tina'
 import LeftArrow from './svgicons/LeftArrow'
-import { em } from '../common/constants'
+import { em, hm } from '../common/constants'
 import ConfirmPaymentModal from './ConfirmPaymentModal';
 import stripe from 'tipsi-stripe'
 import { initStripe } from '../common/stripe/stripe';
@@ -420,7 +420,7 @@ class MenuModal extends Component {
               <View style={styles.menuWrapper}>
                 <Text style={styles.menuText}>À Propos</Text>
                 <TouchableOpacity style={styles.menuBtn} onPress={onPressAbout} elevation={2}>
-                  <Image source={require('../Assets/tina-menu.png')} style={{ width: 30 * em, height: 30 * em, resizeMode: "contain" }} />
+                  <Image source={require('../Assets/tina-menu100.png')} style={{ width: 27 * em, height: 27 * hm, resizeMode: "contain" }} />
                 </TouchableOpacity>
               </View>
 
